@@ -1,0 +1,1 @@
+want to allow the model to make own forecasts or use other people's forecasts. like xgboost or linear regression type forecasts. also web search want it to be able to make the own judgements about articles to read papers to read and so on. almost act like a person that is trying to be a superforecaster.

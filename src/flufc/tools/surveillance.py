@@ -84,20 +84,14 @@ def list_locations(query: str = "") -> str:
     return "\n".join(lines)
 
 
-@tool
-def get_flu_hospitalizations(location: str, weeks: int = 12) -> str:
-    """Weekly confirmed influenza hospital admissions (NHSN) for one location.
+def admissions_series(location, weeks=260):
+    """(location record, [(week ending, admissions)]) for one location.
 
-    This is the quantity FluSight forecasts. The series is weekly, dated by the
-    Saturday ending each week. The most recent week or two can revise upward as
-    late reports arrive, so treat the final point as provisional.
-
-    Args:
-        location: 'US', a state abbreviation, a state name, or a FIPS code.
-        weeks: How many recent weeks to return (1-260).
+    Shared by the display tool and the statistical models, so both are looking
+    at exactly the same numbers.
     """
     row = resolve_location(location)
-    weeks = max(1, min(int(weeks), 260))
+    weeks = max(1, min(int(weeks), 400))
     jurisdiction = _NHSN_NATIONAL if row["abbreviation"] == "US" \
         else row["abbreviation"]
 
@@ -122,6 +116,26 @@ def get_flu_hospitalizations(location: str, weeks: int = 12) -> str:
         if value is None:
             continue
         series.append((item["weekendingdate"][:10], float(value)))
+    if not series:
+        raise ToolError(f"NHSN has no admission counts for "
+                        f"{row['location_name']}")
+    return row, series
+
+
+@tool
+def get_flu_hospitalizations(location: str, weeks: int = 12) -> str:
+    """Weekly confirmed influenza hospital admissions (NHSN) for one location.
+
+    This is the quantity FluSight forecasts. The series is weekly, dated by the
+    Saturday ending each week. The most recent week or two can revise upward as
+    late reports arrive, so treat the final point as provisional.
+
+    Args:
+        location: 'US', a state abbreviation, a state name, or a FIPS code.
+        weeks: How many recent weeks to return (1-260).
+    """
+    weeks = max(1, min(int(weeks), 260))
+    row, series = admissions_series(location, weeks)
 
     per_100k = 100_000 / row["population"]
     lines = [f"Weekly influenza hospital admissions -- {row['location_name']} "

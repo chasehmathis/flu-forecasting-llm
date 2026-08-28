@@ -5,6 +5,7 @@
     flufc forecast --location US       full forecasting run -> CSV + transcript
     flufc score outputs/x.csv          weighted interval score vs. published truth
     flufc data hosp --location CA      call one data tool directly
+    flufc data compare --location CA   what the statistical models say
 """
 
 import argparse
@@ -111,7 +112,7 @@ def cmd_forecast(args):
 
     task = forecast_task(location["location_name"], location["location"],
                          reference_date, horizons)
-    agent = Agent(client, FORECAST_SYSTEM, "forecast", settings,
+    agent = Agent(client, FORECAST_SYSTEM, args.toolset, settings,
                   on_event=_reporter(args.verbose))
     print(f"{BOLD}forecasting{RESET} {location['location_name']} "
           f"@ {reference_date}  horizons {horizons}\n")
@@ -167,6 +168,21 @@ def cmd_data(args):
                  {"location": args.location, "weeks": args.weeks}),
         "ili": ("get_ili", {"region": args.location, "weeks": args.weeks}),
         "locations": ("list_locations", {"query": args.location or ""}),
+        "model": ("fit_forecast_model",
+                  {"location": args.location, "method": args.method,
+                   "reference_date": args.reference_date or "",
+                   "horizons": args.horizons}),
+        "compare": ("compare_forecast_models",
+                    {"location": args.location,
+                     "reference_date": args.reference_date or "",
+                     "horizons": args.horizons}),
+        "hub": ("get_hub_forecasts",
+                {"location": args.location,
+                 "reference_date": args.reference_date or "",
+                 "models": args.models or ""}),
+        "papers": ("search_literature",
+                   {"query": args.query or args.location,
+                    "max_results": args.weeks}),
     }
     name, call_args = mapping[args.what]
     result = tools.call(name, call_args, max_chars=100000)
@@ -211,6 +227,9 @@ def build_parser():
     fc.add_argument("--reference-date", help="Saturday, YYYY-MM-DD")
     fc.add_argument("--horizons", type=int, nargs="+", choices=HORIZONS)
     fc.add_argument("--out", help="where to write the submission CSV")
+    fc.add_argument("--toolset", default="forecast",
+                    choices=sorted(tools.TOOLSETS),
+                    help="forecast (everything) or quant (no reading)")
     fc.add_argument("--max-steps", type=int)
     fc.add_argument("--temperature", type=float)
     fc.set_defaults(fn=cmd_forecast)
@@ -220,9 +239,17 @@ def build_parser():
     score.set_defaults(fn=cmd_score)
 
     data = sub.add_parser("data", help="call a data tool directly")
-    data.add_argument("what", choices=["hosp", "ili", "locations"])
+    data.add_argument("what", choices=["hosp", "ili", "locations", "model",
+                                       "compare", "hub", "papers"])
     data.add_argument("--location", default="US")
-    data.add_argument("--weeks", type=int, default=12)
+    data.add_argument("--weeks", type=int, default=12,
+                      help="weeks of history (or results, for papers)")
+    data.add_argument("--method", default="loglinear",
+                      help="statistical model for 'data model'")
+    data.add_argument("--reference-date", help="Saturday, YYYY-MM-DD")
+    data.add_argument("--horizons", default="0,1,2,3")
+    data.add_argument("--models", help="hub models, comma separated")
+    data.add_argument("--query", help="search terms for 'data papers'")
     data.set_defaults(fn=cmd_data)
     return parser
 

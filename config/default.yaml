@@ -11,7 +11,8 @@ request_timeout: 600
 tool_mode: auto         # auto | prompt | native
 
 # --- agent loop --------------------------------------------------------------
-max_steps: 16           # tool calls before the agent must answer
+max_steps: 22           # tool calls before the agent must answer
+                        # (models + hub + reading needs more than research alone)
 max_tool_output_chars: 6000
 context_budget: 28000   # tokens; the server is started with max_model_len 32768
 

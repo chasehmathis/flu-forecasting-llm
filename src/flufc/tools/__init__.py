@@ -60,12 +60,16 @@ class ToolResult:
 REGISTRY = {}
 
 # Named bundles, so a task only sees the tools it should use.
+_SURVEILLANCE = ["list_locations", "get_flu_hospitalizations", "get_ili"]
+_RESEARCH = ["search_web", "fetch_url", "search_literature", "read_paper"]
+_QUANTITATIVE = ["fit_forecast_model", "compare_forecast_models",
+                 "get_hub_forecasts", "list_hub_models", "calculate"]
+
 TOOLSETS = {
-    "research": ["search_web", "fetch_url", "list_locations",
-                 "get_flu_hospitalizations", "get_ili", "calculate"],
-    "forecast": ["search_web", "fetch_url", "list_locations",
-                 "get_flu_hospitalizations", "get_ili", "calculate",
-                 "submit_forecast"],
+    "research": _SURVEILLANCE + _RESEARCH + _QUANTITATIVE,
+    "forecast": _SURVEILLANCE + _RESEARCH + _QUANTITATIVE + ["submit_forecast"],
+    # Numbers only: the statistical models, the hub, and no reading.
+    "quant": _SURVEILLANCE + _QUANTITATIVE + ["submit_forecast"],
 }
 
 
@@ -195,4 +199,5 @@ def call(name, arguments, *, context=None, max_chars=6000):
 
 
 # Importing the modules is what populates REGISTRY.
-from . import web, surveillance, compute, submit    # noqa: E402,F401
+from . import (web, surveillance, compute, models, hub, literature,
+               submit)                              # noqa: E402,F401
