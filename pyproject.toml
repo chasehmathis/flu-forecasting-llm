@@ -1,0 +1,23 @@
+[project]
+name = "flufc"
+version = "0.1.0"
+description = "An LLM harness that forecasts US influenza hospitalizations with a local Qwen server"
+requires-python = ">=3.10"
+dependencies = []              # the core harness is stdlib-only
+
+[project.optional-dependencies]
+analysis = ["numpy", "pandas", "matplotlib"]
+dev = ["pytest"]
+
+[project.scripts]
+flufc = "flufc.cli:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

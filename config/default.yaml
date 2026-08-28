@@ -1,0 +1,21 @@
+# Defaults for the harness. Every key can be overridden by an environment
+# variable of the same name, upper-cased and prefixed with FLUFC_
+# (e.g. FLUFC_MAX_STEPS=20), or by a CLI flag.
+
+# --- model -------------------------------------------------------------------
+endpoint:               # blank => discover from the running Slurm job
+model: qwen3.8-27b
+temperature: 0.3        # forecasting wants some determinism, not zero
+max_tokens: 4096         # the model reasons at length before it acts
+request_timeout: 600
+tool_mode: auto         # auto | prompt | native
+
+# --- agent loop --------------------------------------------------------------
+max_steps: 16           # tool calls before the agent must answer
+max_tool_output_chars: 6000
+context_budget: 28000   # tokens; the server is started with max_model_len 32768
+
+# --- tools -------------------------------------------------------------------
+search_backend: duckduckgo   # duckduckgo | tavily | brave | serper
+search_results: 6
+cache_ttl: 21600        # seconds to reuse a cached HTTP response (6h)
