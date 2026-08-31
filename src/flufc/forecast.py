@@ -1,10 +1,17 @@
 """Quantile forecasts in the FluSight format.
 
-An LLM cannot be talked into emitting 23 coherent quantiles, so the model gives
-us a handful of anchor quantiles per horizon and we expand them here. The
-expansion interpolates on the normal-score scale -- linear in z = Phi^-1(q) --
-which is monotone by construction and gives sane tails from a small number of
-anchors, instead of the kinks you get from interpolating in probability space.
+The model states the whole distribution: all 23 FluSight quantile levels per
+horizon, which is what actually gets scored. `repair_quantiles` takes that grid
+as given -- it only enforces the two things a submission cannot violate,
+monotonicity and non-negativity.
+
+`expand_quantiles` is the older, smaller-mouthful path: a few anchor levels
+interpolated onto the grid on the normal-score scale, linear in z = Phi^-1(q),
+which is monotone by construction and gives sane tails from few anchors. It is
+still here because it is the right way to build a forecast from a summary --
+the statistical models use it, and so do the tests -- but the agent no longer
+goes through it, so a shape it wants that a lognormal cannot make (a fat upper
+tail against a tight floor, say) now survives to the CSV.
 """
 
 import csv
@@ -61,6 +68,33 @@ def expand_quantiles(anchors, *, levels=QUANTILES, non_negative=True):
             value = _extrapolate(zs[i], values[i], zs[i + 1], values[i + 1], z)
         if non_negative:
             value = max(0.0, value)
+        out[level] = round(value, 4)
+    return out
+
+
+def repair_quantiles(values_by_level, *, levels=QUANTILES, non_negative=True):
+    """Make a full quantile grid submittable, without reshaping it.
+
+    Unlike `expand_quantiles` this invents nothing: every level must already be
+    present. It enforces monotonicity by running maximum and clips at zero, so
+    a model that crosses two neighbouring levels has made a slip we can fix
+    rather than an error we have to reject.
+    """
+    missing = [q for q in levels if q not in values_by_level]
+    if missing:
+        raise ForecastError(
+            f"missing {len(missing)} of {len(levels)} quantile levels: "
+            f"{', '.join(str(q) for q in missing)}")
+    extra = [q for q in sorted(values_by_level) if q not in levels]
+    if extra:
+        raise ForecastError(
+            f"quantile level(s) {', '.join(str(q) for q in extra)} are not on "
+            f"the FluSight grid")
+
+    out, running = {}, float("-inf")
+    for level in levels:
+        running = max(running, float(values_by_level[level]))
+        value = max(0.0, running) if non_negative else running
         out[level] = round(value, 4)
     return out
 
@@ -158,6 +192,14 @@ def from_anchors(reference_date, location, anchors_by_horizon, rationale=""):
     """Build a Forecast from {horizon: {anchor level: value}}."""
     horizons = {int(h): expand_quantiles(a)
                 for h, a in anchors_by_horizon.items()}
+    return Forecast(reference_date=reference_date, location=location,
+                    horizons=horizons, rationale=rationale).validate()
+
+
+def from_quantiles(reference_date, location, quantiles_by_horizon, rationale=""):
+    """Build a Forecast from {horizon: {level: value}} on the full grid."""
+    horizons = {int(h): repair_quantiles(q)
+                for h, q in quantiles_by_horizon.items()}
     return Forecast(reference_date=reference_date, location=location,
                     horizons=horizons, rationale=rationale).validate()
 

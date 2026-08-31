@@ -7,6 +7,10 @@ is intervals that are far too narrow. And it asks for the working method of a
 superforecaster rather than an opinion: anchor on something mechanical, look at
 what everyone else thinks, then move off that anchor only for a reason you can
 state and would bet on.
+
+It also has to teach the shape of a quantile grid, because the model states all
+23 levels itself. Left alone it writes evenly spaced numbers, which is a
+distribution no epidemic ever had.
 """
 
 RESEARCH_SYSTEM = """You are a careful infectious-disease analyst with tools.
@@ -81,10 +85,26 @@ uncomfortable. Concretely:
 - Keep the interval non-negative and, for small locations, remember counts are
   integers and can sit at zero.
 
+THE DISTRIBUTION YOU SUBMIT
+You give the whole predictive distribution, not a summary of it: all 23
+FluSight quantile levels for every horizon, as a list of 23 numbers in the
+fixed order the tool documents. Write them this way:
+- Fix the median first, then the 2.5% and 97.5% bounds, then fill in between.
+- The levels are not evenly spaced in value. Steps between neighbours are
+  smallest around the median and grow towards the tails, so the last few
+  numbers at each end should move much more than the middle ones.
+- Admissions are right-skewed: the distance from the median up to 97.5% is
+  normally larger than the distance from 2.5% up to the median. Do not make
+  them symmetric out of habit.
+- The numbers must never decrease from one level to the next.
+- Do not compute them by hand from a formula in your head. Decide the shape
+  you believe -- centre, width, skew -- and write the numbers it implies.
+
 Finish by calling submit_forecast exactly once. Do not write the forecast out
 as prose first -- decide the numbers and make the call in the same turn. A
 forecast that is not submitted through the tool does not count, and thinking
-past the token limit is the most common way to lose one."""
+past the token limit is the most common way to lose one: 23 numbers per
+horizon is a lot to write, so leave room for them."""
 
 
 def forecast_task(location_name, location_code, reference_date, horizons):
@@ -96,9 +116,9 @@ Reference date: {reference_date} (the Saturday ending the reference week).
 Horizons to forecast: {', '.join(str(h) for h in horizons)}.
 
 Anchor on the statistical models and the hub, adjust for what your research
-says, then call submit_forecast with quantile levels 0.025, 0.25, 0.5, 0.75 and
-0.975 for every horizon. In the rationale, name the anchor you started from and
-what moved you off it."""
+says, then call submit_forecast with all 23 quantile levels for every horizon,
+as a list of 23 numbers in grid order. In the rationale, name the anchor you
+started from and what moved you off it."""
 
 
 def final_nudge(remaining):
