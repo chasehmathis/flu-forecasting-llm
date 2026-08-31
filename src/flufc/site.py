@@ -15,6 +15,7 @@ the pipeline run in different places because of it.
 import datetime as dt
 import html
 import json
+import re
 from pathlib import Path
 
 from . import archive, charts
@@ -65,7 +66,21 @@ def build(root, out, *, cache_dir=None, truth=None, force=False,
     return written
 
 
+# Every page carries the time it was built, which would otherwise make the
+# nightly rebuild look like a change on a day when nothing happened -- a commit
+# a week, every week, recording only that the clock moved. Files are compared
+# with the timestamps masked out and left alone if that is all that differs.
+STAMP = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:[+-]\d{2}:\d{2})?"
+                   r"|\d{1,2} \w{3} \d{4}, \d{2}:\d{2} UTC")
+
+
 def _write(path, text):
+    if path.exists():
+        try:
+            if STAMP.sub("", path.read_text()) == STAMP.sub("", text):
+                return path
+        except OSError:
+            pass
     path.write_text(text)
     return path
 
@@ -458,9 +473,9 @@ def _quantile_table(record):
     return f"""
 <section class="card">
   <div class="card-head"><h2>The submission</h2></div>
-  <p class="muted">The model gives five anchor quantiles per horizon; the
-     harness expands them onto FluSight's 23-point grid by interpolating in
-     normal-score space. These are the anchors.</p>
+  <p class="muted">The model states all 23 FluSight quantile levels itself, so
+     the distribution below is its own and not an interpolation of a few
+     anchors. Five of the 23 are shown; the rest are in the CSV.</p>
   <div class="scroll"><table class="grid">
     <thead><tr>{header}</tr></thead><tbody>{''.join(rows)}</tbody>
   </table></div>

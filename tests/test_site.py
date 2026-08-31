@@ -260,3 +260,20 @@ def test_the_track_chart_marks_the_baseline():
     assert "bar-good" in svg and "bar-bad" in svg
     assert "1x" in svg
     assert charts.track([]) == ""
+
+
+def test_a_rebuild_that_changes_nothing_leaves_the_files_alone(tmp_path, hub):
+    """Otherwise the nightly job commits a clock every day."""
+    root, out = tmp_path / "forecasts", tmp_path / "docs"
+    archived(root)
+    build(root, out)
+    before = {p: p.stat().st_mtime_ns for p in out.rglob("*") if p.is_file()}
+
+    build(root, out)
+    after = {p: p.stat().st_mtime_ns for p in out.rglob("*") if p.is_file()}
+    assert before == after
+
+    # ...but a real change still lands.
+    archived(root, reference_date="2026-03-07", centres={0: 1400, 1: 1500})
+    build(root, out)
+    assert (out / "index.html").stat().st_mtime_ns != before[out / "index.html"]

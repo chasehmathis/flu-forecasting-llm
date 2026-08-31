@@ -7,3 +7,4 @@ outputs/runs/
 outputs/logs/
 outputs/*.csv
 .pytest_cache/
+.claude/
