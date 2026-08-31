@@ -3,7 +3,8 @@
 import pytest
 
 from flufc.forecast import (ForecastError, QUANTILES, expand_quantiles,
-                            from_anchors, most_recent_saturday)
+                            from_anchors, from_quantiles, most_recent_saturday,
+                            repair_quantiles)
 
 
 def test_expansion_is_monotone_and_hits_its_anchors():
@@ -51,6 +52,39 @@ def test_submission_rows_and_dates():
 def test_horizon_outside_flusight_range_is_rejected():
     with pytest.raises(ForecastError):
         from_anchors("2026-08-22", "US", {9: {0.025: 1, 0.5: 2, 0.975: 3}})
+
+
+def test_repair_takes_the_grid_as_given():
+    """It fixes what a submission cannot allow, and changes nothing else."""
+    given = {q: 100.0 + 10 * i for i, q in enumerate(QUANTILES)}
+    assert repair_quantiles(given) == {q: v for q, v in given.items()}
+
+
+def test_repair_fixes_crossings_and_negatives():
+    given = {q: 100.0 for q in QUANTILES}
+    given[0.5], given[0.55] = 900.0, 800.0      # crossed
+    given[0.01] = -50.0                         # impossible count
+    fixed = repair_quantiles(given)
+    values = [fixed[q] for q in QUANTILES]
+    assert values == sorted(values)
+    assert fixed[0.01] == 0.0
+    assert fixed[0.55] == 900.0                 # pulled up to its neighbour
+
+
+def test_repair_will_not_invent_a_missing_level():
+    given = {q: 100.0 for q in QUANTILES if q != 0.9}
+    with pytest.raises(ForecastError, match="missing 1 of 23"):
+        repair_quantiles(given)
+
+
+def test_from_quantiles_keeps_an_asymmetric_tail():
+    """What the anchor path could not express: a floor with a long tail."""
+    grid = {q: 500.0 + 100 * i for i, q in enumerate(QUANTILES)}
+    grid[0.975], grid[0.99] = 5000.0, 9000.0
+    f = from_quantiles("2026-08-22", "US", {0: grid})
+    assert f.horizons[0][0.99] == 9000.0
+    assert f.median(0) == grid[0.5]
+    assert len(list(f.rows())) == len(QUANTILES)
 
 
 def test_reference_date_is_a_saturday():

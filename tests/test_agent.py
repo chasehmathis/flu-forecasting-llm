@@ -1,11 +1,15 @@
 """The loop itself, driven by a scripted model so the tests are deterministic."""
 
+import json
+import math
 from dataclasses import dataclass
+from statistics import NormalDist
 
 import pytest
 
 from flufc.agent import Agent
 from flufc.config import Settings
+from flufc.forecast import QUANTILES
 from flufc.llm import Reply
 from flufc.protocol import render_tool_call
 
@@ -54,11 +58,12 @@ def test_tool_results_go_back_as_tool_messages():
 
 
 def test_terminal_tool_stops_the_loop_immediately():
-    levels = '{"0.025": 500, "0.25": 700, "0.5": 800, "0.75": 900, "0.975": 1200}'
+    grid = json.dumps([round(800 * math.exp(0.35 * NormalDist().inv_cdf(q)), 1)
+                       for q in QUANTILES])
     client = ScriptedClient([
         render_tool_call("submit_forecast", {
             "location": "US", "reference_date": "2026-08-22",
-            "quantiles": '{"0": %s}' % levels, "rationale": "flat"}),
+            "quantiles": '{"0": %s}' % grid, "rationale": "flat"}),
         "this reply should never be requested",
     ], settings())
     result = Agent(client, "sys", ["submit_forecast"], client.settings).run("go")

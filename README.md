@@ -169,12 +169,36 @@ flags to the sbatch file changes nothing else.
 
 ### Quantiles
 
-A language model cannot be talked into producing 23 coherent quantiles, so it
-gives five anchors per horizon (2.5, 25, 50, 75, 97.5) and `forecast.py`
-expands them onto the FluSight grid by interpolating linearly in
-z = Phi^-1(q). That is monotone by construction and gives reasonable tails from
-few anchors. Crossed quantiles are repaired rather than rejected -- a model
-that puts the 25th above the median made a slip, not an unrecoverable error.
+The model states the whole distribution: all 23 FluSight levels for every
+horizon, which is what actually gets scored. `submit_forecast` takes them as a
+list of 23 numbers in grid order -- around 500 characters for four horizons,
+against roughly four times that for an object keyed by level, which matters
+when the run is one truncated reply away from losing its forecast.
+
+It used to give five anchors (2.5, 25, 50, 75, 97.5) that `expand_quantiles`
+interpolated onto the grid linearly in z = Phi^-1(q). That is cheap and always
+monotone, but it is a lognormal by construction, so the only distribution the
+model could ever submit was the one the interpolator knew how to draw. Every
+shape worth having an opinion about -- a hard floor under a long upper tail, a
+fatter right side near an inflection, the bimodality of "either it has turned
+or it has not" -- was flattened on the way to the CSV. Asking for the grid
+directly costs the model a few dozen numbers and buys back the ability to say
+something the interpolator cannot.
+
+`repair_quantiles` then enforces only what a submission cannot violate:
+non-negative, and non-decreasing across levels. Crossed quantiles are repaired
+rather than rejected -- a model that puts the 25th above the median made a
+slip, not an unrecoverable error -- but a missing level is an error, because
+filling it in would be the interpolation this change exists to avoid.
+
+The anchor path is still there and still used by the statistical models, where
+a lognormal is exactly what is meant: their intervals come from a spread read
+off backtest residuals, so five anchors and 23 levels describe the same curve.
+
+What the prompt has to supply is the shape. Left to itself the model writes
+evenly spaced numbers, which is a distribution no epidemic ever had, so
+`FORECAST_SYSTEM` says explicitly that the steps between levels tighten around
+the median and stretch into the tails, and that admissions are right-skewed.
 
 ### Data
 

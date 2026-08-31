@@ -76,7 +76,8 @@ TOOLSETS = {
 def tool(fn=None, *, name=None, terminal=False):
     """Register a function as a tool. Usable bare or with keywords."""
     def register(target):
-        description, arg_docs = _parse_docstring(target.__doc__ or "")
+        names = tuple(inspect.signature(target).parameters)
+        description, arg_docs = _parse_docstring(target.__doc__ or "", names)
         entry = Tool(
             name=name or target.__name__,
             description=description,
@@ -89,14 +90,20 @@ def tool(fn=None, *, name=None, terminal=False):
     return register(fn) if fn is not None else register
 
 
-def _parse_docstring(doc):
-    """Split a docstring into (description, {arg: description})."""
+def _parse_docstring(doc, names=()):
+    """Split a docstring into (description, {arg: description}).
+
+    `names` is the function's actual parameters. Without it a continuation line
+    that happens to start "something:" reads as a new argument and silently
+    truncates the description above it -- which loses the only contract the
+    model ever sees for that parameter.
+    """
     doc = inspect.cleandoc(doc)
     head, _, tail = doc.partition("\nArgs:")
     arg_docs, current = {}, None
     for line in tail.splitlines():
         m = re.match(r"\s+(\w+):\s*(.*)$", line)
-        if m:
+        if m and (not names or m.group(1) in names):
             current = m.group(1)
             arg_docs[current] = m.group(2).strip()
         elif current and line.strip():
