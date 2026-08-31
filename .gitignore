@@ -4,5 +4,6 @@ __pycache__/
 .env
 data/cache/
 outputs/runs/
+outputs/logs/
 outputs/*.csv
 .pytest_cache/

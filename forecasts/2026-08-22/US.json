@@ -1,0 +1,42 @@
+{
+  "reference_date": "2026-08-22",
+  "location": "US",
+  "location_name": "US",
+  "target": "wk inc flu hosp",
+  "model_id": "qwen-agent/qwen3.8-27b",
+  "created_at": "2026-08-28T11:21:24",
+  "rationale": "Off-season US. Last observed week (2026-08-22) = 795, provisional and a floor (late reports revise upward). No FluSight hub submission this week (off-season), so no ensemble to beat. Anchor = gbt, the best backtested method (MAE h3 60, beats flat), medians 798/824/977 for h1-h3. I nudged centers modestly above gbt toward the seasonal method (918/976/1104) because both admissions (620\u2192677\u2192795, +17% last wk) and ILI (+8% last wk) show a mild early-fall uptick consistent with school-reopening seeding, and the last point is a floor. h0 centered at 810 to reflect expected upward revision of the provisional 795. Intervals widened with horizon and to cover the gbt-vs-seasonal method disagreement (1.27x at h1 to 1.48x at h3) plus inflection risk as the season could turn faster than it looks; h3 95% spans ~700-1550 (factor ~2.2). Would revise up if ILI keeps climbing past ~1.2% or a dominant H3N2 subclade emerges; would revise down if the uptick reverts to the ~650 summer baseline.",
+  "medians": {
+    "0": 810.0,
+    "1": 840.0,
+    "2": 890.0,
+    "3": 1030.0
+  },
+  "target_end_dates": {
+    "0": "2026-08-22",
+    "1": "2026-08-29",
+    "2": "2026-09-05",
+    "3": "2026-09-12"
+  },
+  "csv": "US.csv",
+  "run": {
+    "stopped": "terminal",
+    "tool_calls": 10,
+    "seconds": 222.0,
+    "prompt_tokens": 9694,
+    "completion_tokens": 10605,
+    "tools": [
+      "get_flu_hospitalizations",
+      "compare_forecast_models",
+      "get_hub_forecasts",
+      "get_ili",
+      "fit_forecast_model",
+      "fit_forecast_model",
+      "search_web",
+      "fetch_url",
+      "fetch_url",
+      "submit_forecast"
+    ],
+    "transcript": "outputs/runs/forecast-20260828-112124/transcript.json"
+  }
+}

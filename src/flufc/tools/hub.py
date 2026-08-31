@@ -15,6 +15,7 @@ Source: github.com/cdcepi/FluSight-forecast-hub, model-output/<model>/
 
 import csv
 import io
+import os
 import statistics
 
 from ..cache import FetchError, fetch, fetch_json
@@ -34,15 +35,30 @@ DEFAULT_MODELS = ("FluSight-ensemble", "FluSight-baseline")
 TARGET = "wk inc flu hosp"
 
 
+def _auth():
+    """Bearer token for the GitHub API, if the environment has one.
+
+    Anonymous callers get 60 API requests an hour, shared across everyone on
+    the same address -- which is fine from a login node and hopeless from a CI
+    runner. Anywhere a token exists (GitHub Actions sets one for free), use it.
+    Only the directory listing is affected; the submissions themselves come
+    from raw.githubusercontent.com, which is a CDN and is not rate limited the
+    same way.
+    """
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    return {"Authorization": f"Bearer {token}"} if token else {}
+
+
 def _listing(path=""):
     """Directory listing from the GitHub contents API (cached for a day)."""
     url = CONTENTS + (f"/{path}" if path else "")
     try:
-        return fetch_json(url, timeout=45, ttl=86400,
+        return fetch_json(url, timeout=45, ttl=86400, headers=_auth(),
                           cache_dir=active().cache_dir)
     except FetchError as e:
         raise ToolError(f"could not list the FluSight hub ({e}). GitHub rate "
-                        f"limits unauthenticated requests; try again shortly.")
+                        f"limits unauthenticated requests to 60 an hour; set "
+                        f"GITHUB_TOKEN, or try again shortly.")
 
 
 def hub_models():

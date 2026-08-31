@@ -14,6 +14,11 @@ The method it is pushed towards is the one a superforecaster uses: anchor on
 something mechanical, find out what everybody else thinks, then move off that
 anchor only for a reason you can write down.
 
+It runs itself. A cron job forecasts every week, the forecasts are committed
+the moment they are made, and a daily job scores them against the hub's
+published truth as it lands. The record is at
+**[chasehmathis.github.io/flu-forecasting-llm](https://chasehmathis.github.io/flu-forecasting-llm)**.
+
 ```
 $ flufc forecast --location US
 forecasting US @ 2026-08-22  horizons [0, 1, 2, 3]
@@ -65,7 +70,13 @@ flufc ask "Is flu activity rising in California?"
 flufc forecast --location US             # -> outputs/US-<date>-<stamp>.csv
 flufc forecast --location CA --horizons 0 1 2 --max-steps 20
 flufc forecast --location US --toolset quant   # models and hub, no reading
+flufc weekly                             # the scheduled run: forecast + publish
+flufc weekly --locations US CA NY         # several locations in one pass
+flufc site                               # rebuild docs/ from the archive
+
 flufc score outputs/US-2026-08-22-*.csv  # WIS, MAE, interval coverage
+flufc compete outputs/US-2026-02-07-*.csv      # ranked against every hub team
+flufc compete out.csv --models FluSight-ensemble,PSI-PROF
 
 flufc data hosp --location CA --weeks 8  # call a data tool directly
 flufc data ili  --location nat
@@ -97,6 +108,11 @@ cli.py         commands, progress display
   stats.py     the statistical models and their walk-forward backtest
   forecast.py  quantile expansion, FluSight CSV
   evaluate.py  weighted interval score against published truth
+  compete.py   the same score for every hub team, ranked
+  archive.py   forecasts/: the committed record, one directory per week
+  standings.py scoring the archive, and knowing when a score is final
+  site.py      docs/: the archive as pages a person can read
+  charts.py    fan charts and bar charts, as hand-written SVG
 ```
 
 ### Anchors, not opinions
@@ -176,6 +192,122 @@ z = Phi^-1(q). That is monotone by construction and gives reasonable tails from
 few anchors. Crossed quantiles are repaired rather than rejected -- a model
 that puts the 25th above the median made a slip, not an unrecoverable error.
 
+### Competing
+
+Scoring a forecast on its own tells you less than it looks like. A quiet week
+gives everybody a low WIS and a turning point gives everybody a high one, so
+the absolute number mostly measures the week. What measures the forecast is the
+rank: the same target weeks, the same truth, the same score, against the teams
+who submitted for that week.
+
+`flufc compete` reads every model in the hub's `model-output/` for the
+submission's reference date and location, scores them all exactly as it scores
+yours, and sorts:
+
+```
+$ flufc compete outputs/US-2026-02-07-20260828-113501.csv
+scored horizons 0, 1, 2, 3  (weeks ending 2026-02-07 to 2026-02-28)  44 other teams
+
+ rank  model                                  WIS    rel       MAE   50%   95%
+    1  NIH-Flu_ARIMA                        932.4   0.70    1439.0   75%  100%
+    2  Cornell_JHU-hierarchSIR             1057.5   0.80     851.2  100%  100%
+    ...
+    6  FluSight-baseline                   1323.2   1.00    1835.2   50%  100%
+   13  FluSight-ensemble                   1693.3   1.28    3064.8   50%  100%
+   28  you (US-2026-02-07-20260828-113501) 2000.1   1.51    3627.8   50%  100%
+
+rank 28 of 45 -- beat 16 of 44 teams (36%)
+WIS 1.51x the flat baseline (worse than doing nothing)
+the hub ensemble placed 13 with WIS 1693.3; you are 1.18x that
+```
+
+The `rel` column is WIS divided by `FluSight-baseline`, the flat reference
+every team is measured against, which is the one number that transfers across
+weeks: below 1.0 is a forecast that did something.
+
+Fairness costs a little coverage. A team is ranked only if it submitted every
+horizon that has published truth -- a model that covered one horizon out of
+four is answering a different question, so it is reported separately rather
+than allowed to win on the easy half. Horizons whose week has not happened yet
+drop out of the comparison for everyone.
+
+Two things have to be true before a competition means anything, and off-season
+neither is: the other teams have to have submitted for that week, and the truth
+has to be published. The hub receives forecasts only during the season, and its
+target file lags the NHSN release by a few weeks, so `compete` says plainly
+when there is nothing to score yet.
+
+### Publishing
+
+A forecast nobody can read is a CSV of twenty-three quantiles per horizon. So
+the runs that count go into `forecasts/`, which is committed, and `flufc site`
+turns that into a small static site under `docs/` -- what GitHub Pages serves.
+
+```
+forecasts/2026-02-07/US.csv          the submission, exactly as it was written
+forecasts/2026-02-07/US.json         the rationale, the model, the run's cost
+forecasts/2026-02-07/US.score.json   how it did -- filled in weeks later
+```
+
+The point of committing the CSV is that it is dated by git. A forecast is a
+claim about a week that has not happened, and it is only worth anything if it
+cannot be quietly revised once the week has. `flufc forecast` archives by
+default; `--no-archive` keeps a run out of the record.
+
+The site has one page listing the latest forecast for each location and the
+track record so far, and one page per forecast with the fan chart, the model's
+reasoning, the full quantile table and every FluSight team ranked beside it.
+Charts are inline SVG generated in `charts.py`, so the whole site is a few
+files of HTML and CSS with no build step and no dependencies.
+
+### Running it every week
+
+The pipeline splits along the only line that matters: **making a forecast needs
+the GPU, and finding out how it did does not.**
+
+```
+scripts/weekly.sh                    on the cluster, in cron, once a week
+  qwen up                            start the vLLM job, wait for it
+  flufc weekly --locations US        forecast, archive, rebuild the site
+  git commit && git push             publish
+
+.github/workflows/refresh.yml        on GitHub, every morning, no GPU
+  flufc site                         rescore the archive, rebuild, commit
+```
+
+The truth for a week lands a few weeks after it and then revises, so a forecast
+made in February may not get its rank until March. That is why the scoring half
+runs daily and the forecasting half weekly, and why nobody has to remember to
+go and look.
+
+```bash
+crontab -e
+0 8 * * 3 /accounts/grad/$USER/flu-forecasting-llm/scripts/weekly.sh
+```
+
+Wednesday at 08:00 is after the hub's submission deadline, so the other teams'
+forecasts for the week are already there to argue with. The script is safe to
+run twice: a location already in the archive for that reference date is left
+alone unless you pass `--force`, so a re-run after a partial failure finishes
+the week rather than overwriting a forecast that was made before the fact.
+
+Two things to set up once:
+
+- **GitHub Pages**: repository settings -> Pages -> deploy from branch `main`,
+  folder `/docs`. The site then lives at
+  `chasehmathis.github.io/flu-forecasting-llm`.
+- **Push access from the cluster**: the remote is `git@github.com:...`, so cron
+  needs a key it can use without a passphrase prompt. `FLUFC_PUSH=0` runs
+  everything and leaves the commit unpushed if you would rather do that part by
+  hand.
+
+`flufc site` caches each week's leaderboard next to the forecast and only
+recomputes the ones that can still change, so the daily refresh is a handful of
+HTTP requests rather than forty per forecast. The hub's directory listing goes
+through the GitHub API, which allows anonymous callers sixty requests an hour;
+the workflow passes its own `GITHUB_TOKEN`, and setting that variable locally
+helps if you are rebuilding repeatedly.
+
 ### Data
 
 | what | source | tool |
@@ -211,15 +343,22 @@ overflow, and hitting the step limit.
 
 ## Known limits
 
-- **One location per run.** A full FluSight submission is 53 locations; that
-  is a loop over `cmd_forecast` plus a CSV concatenation, not written yet.
-- **No backtesting.** Scoring works against published truth, but there is no
-  as-of data replay, so a run today cannot honestly be evaluated on a past
-  week -- the tools would see data that did not exist then. Delphi's `issues`
-  parameter is the way in when this matters.
-- **No baseline comparison in the CLI.** `evaluate.baseline_flat` exists, and
-  `flufc data compare` will tell you what the statistical models say, but
-  `flufc score` still does not print a reference column next to the WIS.
+- **One location per forecast.** `flufc weekly --locations US CA NY` loops, but
+  each run still forecasts one location and writes one CSV. A full FluSight
+  submission is 53 locations in a single file; that is a concatenation step
+  that is not written yet.
+- **No backtesting.** Scoring and ranking work against published truth, but
+  there is no as-of data replay, so a run today cannot honestly be evaluated on
+  a past week -- the tools would see data that did not exist then. Delphi's
+  `issues` parameter is the way in when this matters.
+- **Retrospective competition is not honest yet.** `flufc compete` will rank a
+  forecast for any past week, but without as-of replay a run made today saw
+  data the other teams did not, so the rank flatters it. The command says so;
+  the fix is the same one the previous bullet asks for. A forecast made in the
+  week it is for, and ranked once the truth lands, is the real test -- which is
+  exactly what the weekly cron job and the daily rescore produce, and why the
+  published track record is worth more than any number this repository can
+  generate about the past.
 - **The statistical intervals assume the recent past is representative.** They
   are read off backtest errors, so at a turn they are too narrow, not too wide.
   That is what the model's judgement is for, and the prompt says so.

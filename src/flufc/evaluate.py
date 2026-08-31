@@ -82,27 +82,31 @@ def read_submission(path):
     return grouped, meta
 
 
-def score_submission(path, truth=None, cache_dir=None):
-    """Score every (location, horizon) in a submission. Returns rows + totals."""
-    truth = truth if truth is not None else load_truth(cache_dir=cache_dir)
-    grouped, ends = read_submission(path)
+def score_horizons(quantiles_by_horizon, ends, location, truth):
+    """Score one model's horizons for one location. Returns per-horizon rows.
 
+    `quantiles_by_horizon` is {horizon: {level: value}} and `ends` is
+    {horizon: target_end_date}. Horizons whose week has no published truth come
+    back with None scores rather than being dropped -- a forecast for a week
+    that has not happened yet is not a failure.
+    """
     rows = []
-    for (location, reference_date, horizon), quantiles in sorted(grouped.items()):
-        target_end = ends[(location, reference_date, horizon)]
+    for horizon in sorted(quantiles_by_horizon):
+        quantiles = quantiles_by_horizon[horizon]
+        target_end = ends[horizon]
         observed = truth.get((target_end, location))
         row = {
             "location": location,
-            "reference_date": reference_date,
             "horizon": horizon,
             "target_end_date": target_end,
             "median": quantiles.get(0.5),
             "observed": observed,
         }
-        if observed is None:
+        if observed is None or 0.5 not in quantiles:
             row.update({"wis": None, "abs_error": None,
                         "cover_50": None, "cover_95": None,
-                        "note": "no truth published yet"})
+                        "note": "no truth published yet" if observed is None
+                                else "no median submitted"})
         else:
             row.update({
                 "wis": round(wis(observed, quantiles), 3),
@@ -112,7 +116,11 @@ def score_submission(path, truth=None, cache_dir=None):
                 "note": "",
             })
         rows.append(row)
+    return rows
 
+
+def summarize(rows):
+    """Mean WIS, MAE and coverage over the rows that could be scored."""
     scored = [r for r in rows if r["wis"] is not None]
     totals = {"n_scored": len(scored), "n_total": len(rows)}
     if scored:
@@ -125,7 +133,22 @@ def score_submission(path, truth=None, cache_dir=None):
             "coverage_95": round(
                 sum(r["cover_95"] for r in scored) / len(scored), 3),
         })
-    return rows, totals
+    return totals
+
+
+def score_submission(path, truth=None, cache_dir=None):
+    """Score every (location, horizon) in a submission. Returns rows + totals."""
+    truth = truth if truth is not None else load_truth(cache_dir=cache_dir)
+    grouped, ends = read_submission(path)
+
+    rows = []
+    for (location, reference_date, horizon), quantiles in sorted(grouped.items()):
+        key = (location, reference_date, horizon)
+        scored = score_horizons({horizon: quantiles}, {horizon: ends[key]},
+                                location, truth)[0]
+        scored["reference_date"] = reference_date
+        rows.append(scored)
+    return rows, summarize(rows)
 
 
 def baseline_flat(recent_values, horizons, spread=0.35):

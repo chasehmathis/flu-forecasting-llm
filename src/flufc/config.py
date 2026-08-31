@@ -99,6 +99,8 @@ class Settings:
     # paths
     cache_dir: Path = ROOT / "data" / "cache"
     output_dir: Path = ROOT / "outputs"
+    archive_dir: Path = ROOT / "forecasts"     # committed; the public record
+    site_dir: Path = ROOT / "docs"             # what GitHub Pages serves
 
     @classmethod
     def load(cls, **overrides):
@@ -114,7 +116,7 @@ class Settings:
         values.update({k: v for k, v in overrides.items()
                        if k in known and v is not None})
 
-        for name in ("cache_dir", "output_dir"):
+        for name in ("cache_dir", "output_dir", "archive_dir", "site_dir"):
             if name in values and values[name] is not None:
                 values[name] = Path(values[name])
 

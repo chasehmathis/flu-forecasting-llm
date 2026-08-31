@@ -1,0 +1,71 @@
+name: refresh standings
+
+# Scoring is the half of the pipeline that needs no GPU. The forecasts are
+# already in the repository; working out how they did means reading the hub's
+# published truth and the other teams' submissions, both public. So it runs
+# here, every morning, and the site is never more than a day behind the truth.
+#
+# The truth for a given week lands a few weeks late and then revises, which is
+# why this is daily rather than weekly: a forecast made in February may not get
+# its rank until March, and nobody should have to remember to go and look.
+
+on:
+  schedule:
+    - cron: "23 12 * * *"        # 12:23 UTC daily, after the CDC's usual drop
+  workflow_dispatch:             # and on demand, from the Actions tab
+  push:
+    paths:
+      - "forecasts/**"           # a new forecast landed: score it now
+      - "src/flufc/**"
+      - ".github/workflows/refresh.yml"
+
+permissions:
+  contents: write                # to commit the rebuilt site back
+
+concurrency:
+  group: refresh-standings       # never let two rebuilds race to push
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # The harness itself is stdlib-only, so there is nothing to install for
+      # the rebuild -- only the tests need anything.
+      - name: Run the tests
+        run: |
+          python -m pip install --quiet pytest
+          python -m pytest tests/ -q
+        env:
+          PYTHONPATH: src
+
+      - name: Rescore the archive and rebuild the site
+        run: python -m flufc.cli site
+        env:
+          PYTHONPATH: src
+          # The hub's directory listing goes through the GitHub API, which
+          # gives anonymous callers 60 requests an hour shared across every
+          # runner on the same address. The token the workflow already has
+          # lifts that.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish if anything changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs forecasts
+          if git diff --cached --quiet; then
+            echo "standings unchanged"
+            exit 0
+          fi
+          git commit -m "site: refresh standings $(date -u +%Y-%m-%d)"
+          # The cluster's weekly job pushes to the same branch, so land on top
+          # of whatever arrived while this was running rather than failing.
+          git pull --rebase
+          git push
