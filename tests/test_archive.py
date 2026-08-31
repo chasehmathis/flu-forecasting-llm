@@ -124,3 +124,19 @@ ENDS = {"0": "2026-02-07", "1": "2026-02-14"}
 ])
 def test_is_settled(score, settled, why):
     assert archive.is_settled(score) is settled, why
+
+
+def test_an_unchanged_score_keeps_its_timestamp(tmp_path):
+    """A nightly rescore that finds nothing new must not touch the file."""
+    record = make(tmp_path)
+    first = archive.write_score(record, {"scored_horizons": [0]})
+    path = tmp_path / REFERENCE / "US.score.json"
+    on_disk = path.read_text()
+
+    again = archive.write_score(record, {"scored_horizons": [0]})
+    assert again["computed_at"] == first["computed_at"]
+    assert path.read_text() == on_disk, "an unchanged score must not be rewritten"
+
+    changed = archive.write_score(record, {"scored_horizons": [0, 1]})
+    assert changed["scored_horizons"] == [0, 1]
+    assert path.read_text() != on_disk

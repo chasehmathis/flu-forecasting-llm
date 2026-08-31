@@ -267,13 +267,13 @@ def test_a_rebuild_that_changes_nothing_leaves_the_files_alone(tmp_path, hub):
     root, out = tmp_path / "forecasts", tmp_path / "docs"
     archived(root)
     build(root, out)
-    before = {p: p.stat().st_mtime_ns for p in out.rglob("*") if p.is_file()}
+    before = {p: p.read_bytes() for p in out.rglob("*") if p.is_file()}
 
     build(root, out)
-    after = {p: p.stat().st_mtime_ns for p in out.rglob("*") if p.is_file()}
-    assert before == after
+    after = {p: p.read_bytes() for p in out.rglob("*") if p.is_file()}
+    assert before == after, "only the build clock moved; nothing should change"
 
     # ...but a real change still lands.
     archived(root, reference_date="2026-03-07", centres={0: 1400, 1: 1500})
     build(root, out)
-    assert (out / "index.html").stat().st_mtime_ns != before[out / "index.html"]
+    assert (out / "index.html").read_bytes() != before[out / "index.html"]

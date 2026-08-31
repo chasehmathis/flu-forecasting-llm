@@ -130,8 +130,19 @@ def read_score(record):
 
 
 def write_score(record, score):
-    score = dict(score, version=SCORE_VERSION,
-                 computed_at=dt.datetime.now().isoformat(timespec="seconds"))
+    """Cache a score, unless the only thing that moved was the clock.
+
+    A forecast still waiting on truth is rescored every night, and almost every
+    night the answer is the same. Rewriting the file anyway would put a commit
+    in the history saying nothing but "checked again", so an unchanged score
+    keeps its original file and its original timestamp.
+    """
+    previous = read_score(record) or {}
+    score = dict(score, version=SCORE_VERSION)
+    if {k: v for k, v in previous.items() if k != "computed_at"} == score:
+        return previous
+
+    score["computed_at"] = dt.datetime.now().isoformat(timespec="seconds")
     Path(record["score_path"]).write_text(json.dumps(score, indent=2) + "\n")
     return score
 
