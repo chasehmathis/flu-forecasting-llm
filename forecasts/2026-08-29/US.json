@@ -1,0 +1,45 @@
+{
+  "reference_date": "2026-08-29",
+  "location": "US",
+  "location_name": "US",
+  "target": "wk inc flu hosp",
+  "model_id": "qwen-agent/qwen3.8-27b",
+  "created_at": "2026-08-31T19:23:13",
+  "rationale": "Anchor: statistical models, weighted by backtest error. GBT had the lowest backtest MAE at h3 (89.6) and its h0 median (796) matches the recent uptick; the seasonal analogue was best at h0 (98.3) and sits higher (892). No FluSight hub ensemble exists for this off-season week, so no ensemble prior. I started from the GBT medians (796/807/937/1189) and moved them up modestly to 830/870/960/1080: admissions have risen two weeks running (620\u2192677\u2192795, +17% last week) and national ILI has turned up from its July floor (0.87\u21920.94\u21921.11, +18% wk/wk), consistent with an early 2026-27 season start rather than noise; the provisional last week also tends to revise upward. I did not take the full seasonal-analogue level because the 2025-26 season only began rising in mid-October, so calendar-week analogues overstate near-term growth. Intervals are lognormal, right-skewed, and widened well beyond the model backtest intervals (e.g. h3 700-1710 vs GBT 797-1775) because we are near a possible seasonal inflection where flu can turn faster than it looks, and the backtest intervals assume the near future resembles the recent flat summer. I would revise upward if ILI keeps doubling its weekly growth or if state-level admissions show a sustained multi-week rise; downward if the uptick stalls and ILI reverts to ~0.9.",
+  "medians": {
+    "0": 860.0,
+    "1": 883.0,
+    "2": 955.0,
+    "3": 1055.0
+  },
+  "target_end_dates": {
+    "0": "2026-08-29",
+    "1": "2026-09-05",
+    "2": "2026-09-12",
+    "3": "2026-09-19"
+  },
+  "csv": "US.csv",
+  "run": {
+    "stopped": "terminal",
+    "tool_calls": 13,
+    "seconds": 695.9,
+    "prompt_tokens": 13264,
+    "completion_tokens": 34095,
+    "tools": [
+      "get_flu_hospitalizations",
+      "compare_forecast_models",
+      "get_hub_forecasts",
+      "search_web",
+      "get_ili",
+      "fetch_url",
+      "fit_forecast_model",
+      "fit_forecast_model",
+      "get_flu_hospitalizations",
+      "calculate",
+      "calculate",
+      "calculate",
+      "submit_forecast"
+    ],
+    "transcript": "/accounts/grad/cmathis/flu-forecasting-llm/outputs/runs/forecast-20260831-192313/transcript.json"
+  }
+}

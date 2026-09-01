@@ -1,11 +1,46 @@
 {
-  "generated_at": "2026-08-31T21:09:27+00:00",
+  "generated_at": "2026-09-01T02:25:11+00:00",
   "summary": {
-    "n_forecasts": 1,
+    "n_forecasts": 2,
     "n_scored": 0,
-    "n_pending": 1
+    "n_pending": 2
   },
   "forecasts": [
+    {
+      "reference_date": "2026-08-29",
+      "location": "US",
+      "location_name": "US",
+      "model_id": "qwen-agent/qwen3.8-27b",
+      "created_at": "2026-08-31T19:23:13",
+      "medians": {
+        "0": 860.0,
+        "1": 883.0,
+        "2": 955.0,
+        "3": 1055.0
+      },
+      "target_end_dates": {
+        "0": "2026-08-29",
+        "1": "2026-09-05",
+        "2": "2026-09-12",
+        "3": "2026-09-19"
+      },
+      "score": {
+        "scored_horizons": [],
+        "unscored_horizons": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "truth_last_date": "2026-07-04",
+        "observed": {
+          "0": null,
+          "1": null,
+          "2": null,
+          "3": null
+        }
+      }
+    },
     {
       "reference_date": "2026-08-22",
       "location": "US",
