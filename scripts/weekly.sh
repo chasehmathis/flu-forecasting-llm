@@ -40,6 +40,31 @@ exec > >(tee -a "$LOG") 2>&1
 
 say() { echo "[$(date +%H:%M:%S)] $*"; }
 
+# Only one run at a time, across every machine that shares this home
+# directory. Cron is per-node here but $HOME is not, so the same entry can sit
+# on more than one login node and fire twice at the same minute -- and the
+# "already in the archive" check does not help when both runs start before
+# either has written anything. mkdir is the one operation NFS makes atomic.
+LOCK="$REPO/outputs/.weekly.lock"
+if mkdir "$LOCK" 2>/dev/null; then
+    echo "$(hostname -s) $$ $(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$LOCK/owner"
+    trap 'rm -rf "$LOCK"' EXIT
+else
+    OWNER=$(cat "$LOCK/owner" 2>/dev/null || echo "unknown")
+    # A run killed mid-flight would otherwise block every later one, so a lock
+    # older than six hours is treated as wreckage rather than a live run.
+    if [ -n "$(find "$LOCK" -maxdepth 0 -mmin +360 2>/dev/null)" ]; then
+        say "breaking a stale lock held by $OWNER"
+        rm -rf "$LOCK"
+        mkdir "$LOCK" 2>/dev/null || { say "lost the race for the lock"; exit 0; }
+        echo "$(hostname -s) $$ $(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$LOCK/owner"
+        trap 'rm -rf "$LOCK"' EXIT
+    else
+        say "another run holds the lock ($OWNER); nothing to do"
+        exit 0
+    fi
+fi
+
 say "weekly run in $REPO, locations: $LOCATIONS"
 
 # Start from whatever is on the remote: the daily rescore writes to docs/ too,
