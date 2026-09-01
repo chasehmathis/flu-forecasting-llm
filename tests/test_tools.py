@@ -137,3 +137,40 @@ def test_submit_forecast_rejects_levels_off_the_grid():
         "location": "US", "reference_date": "2026-08-22",
         "quantiles": json.dumps({"0": levels}), "rationale": "flat"})
     assert not result.ok and "not on the FluSight grid" in result.output
+
+
+# -- calculate: quantile grids in one call ------------------------------------
+
+def calc(expression):
+    return tools.call("calculate", {"expression": expression})
+
+
+def test_calculate_builds_a_quantile_grid_in_one_call():
+    """23 levels is too many to spend a step on each, so a comprehension works."""
+    result = calc("[round(830 * exp(z * 0.166)) for z in "
+                  "[-1.96, -1.28, 0, 1.28, 1.96]]")
+    assert result.ok
+    assert result.output.endswith("= [599, 671, 830, 1026, 1149]")
+
+
+def test_calculate_filters_a_comprehension():
+    assert calc("[x * 2 for x in [1, 2, 3] if x > 1]").output.endswith("= [4, 6]")
+
+
+def test_calculate_comprehension_variable_does_not_escape():
+    """The loop variable is scoped to the comprehension, not left behind."""
+    assert not calc("[x for x in [1, 2]] + [x]").ok
+
+
+def test_calculate_still_refuses_attributes_and_unknown_names():
+    for expression in ("[x.real for x in [1]]", "[y for x in [1, 2]]",
+                       "__import__('os')", "[a for a in [1] for b in [2]]"):
+        assert not calc(expression).ok, f"{expression} should be refused"
+
+
+def test_calculate_will_not_build_an_enormous_list():
+    """[0] * 10**9 allocates before any later check could reject it."""
+    for expression in ("[0] * 10**9", "[[0] * 99999 for x in [1]]"):
+        result = calc(expression)
+        assert not result.ok and "limit" in result.output
+    assert calc("[0] * 5").output.endswith("= [0, 0, 0, 0, 0]")
