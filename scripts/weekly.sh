@@ -29,6 +29,7 @@ LOCATIONS=${FLUFC_LOCATIONS:-US}
 PUSH=${FLUFC_PUSH:-1}
 STOP_MODEL=${FLUFC_STOP_MODEL:-0}
 QWEN=${QWEN_BIN:-$HOME/.local/bin/qwen}
+EMAIL=${FLUFC_EMAIL:-}
 
 cd "$REPO" || { echo "no such directory: $REPO" >&2; exit 2; }
 export PYTHONPATH="$REPO/src${PYTHONPATH:+:$PYTHONPATH}"
@@ -40,6 +41,31 @@ exec > >(tee -a "$LOG") 2>&1
 
 say() { echo "[$(date +%H:%M:%S)] $*"; }
 
+OUTCOME="did not finish"
+
+# What the run did, in the form of something worth opening. Cron's own MAILTO
+# would send the whole log every week, which is a reliable way to teach the
+# reader to ignore it; this sends the four lines that change.
+finish() {
+    local code=$?
+    rm -rf "$LOCK"
+    [ -n "$EMAIL" ] || return
+    {
+        echo "$OUTCOME"
+        echo
+        echo "host      $(hostname -s)"
+        echo "reference $(cd "$REPO" && python3 -c 'import sys; sys.path.insert(0,"src"); from flufc.forecast import most_recent_saturday; print(most_recent_saturday())' 2>/dev/null || echo '?')"
+        echo "exit      $code"
+        echo "log       $REPO/$LOG"
+        echo
+        echo "https://github.com/chasehmathis/flu-forecasting-llm"
+        echo
+        echo "--- last 25 lines ---"
+        tail -25 "$LOG" 2>/dev/null
+    } | mail -s "flufc weekly: $OUTCOME" "$EMAIL" 2>/dev/null \
+      && say "emailed $EMAIL" || say "could not send mail to $EMAIL"
+}
+
 # Only one run at a time, across every machine that shares this home
 # directory. Cron is per-node here but $HOME is not, so the same entry can sit
 # on more than one login node and fire twice at the same minute -- and the
@@ -48,7 +74,7 @@ say() { echo "[$(date +%H:%M:%S)] $*"; }
 LOCK="$REPO/outputs/.weekly.lock"
 if mkdir "$LOCK" 2>/dev/null; then
     echo "$(hostname -s) $$ $(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$LOCK/owner"
-    trap 'rm -rf "$LOCK"' EXIT
+    trap finish EXIT
 else
     OWNER=$(cat "$LOCK/owner" 2>/dev/null || echo "unknown")
     # A run killed mid-flight would otherwise block every later one, so a lock
@@ -58,7 +84,7 @@ else
         rm -rf "$LOCK"
         mkdir "$LOCK" 2>/dev/null || { say "lost the race for the lock"; exit 0; }
         echo "$(hostname -s) $$ $(date -u +%Y-%m-%dT%H:%M:%SZ)" > "$LOCK/owner"
-        trap 'rm -rf "$LOCK"' EXIT
+        trap finish EXIT
     else
         say "another run holds the lock ($OWNER); nothing to do"
         exit 0
@@ -86,6 +112,8 @@ say "forecasting"
 python3 -m flufc.cli weekly --locations $LOCATIONS
 STATUS=$?
 say "flufc weekly exited $STATUS"
+SUMMARY=$(grep -E "^made [0-9]" "$LOG" | tail -1)
+OUTCOME="${SUMMARY:-no summary} (exit $STATUS)"
 
 if [ "$STOP_MODEL" = "1" ] && [ -x "$QWEN" ]; then
     say "releasing the GPU"
@@ -102,6 +130,7 @@ fi
 git add forecasts docs 2>/dev/null
 if git diff --cached --quiet; then
     say "nothing new to publish"
+    OUTCOME="$OUTCOME, nothing new to publish"
     exit $STATUS
 fi
 
@@ -116,5 +145,6 @@ git commit -q -m "forecasts: ${NEW:-site rebuild}" \
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 say "pushing $BRANCH"
 git push origin "$BRANCH" || { say "push failed -- commit is local"; exit 5; }
+OUTCOME="$OUTCOME, published"
 say "published: https://github.com/chasehmathis/flu-forecasting-llm"
 exit $STATUS
