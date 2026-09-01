@@ -8,3 +8,6 @@ outputs/logs/
 outputs/*.csv
 .pytest_cache/
 .claude/
+
+# setuptools build metadata
+*.egg-info/
