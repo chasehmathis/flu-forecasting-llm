@@ -17,6 +17,10 @@
 #   ./scripts/weekly.sh                 forecast, rebuild, commit, push
 #   FLUFC_LOCATIONS="US CA NY" ./scripts/weekly.sh
 #   FLUFC_PUSH=0 ./scripts/weekly.sh    do everything but publish
+#   FLUFC_EMAIL=you@example.com ./scripts/weekly.sh   mail the summary
+#
+# The mail only goes out for a week that forecast something or tried and
+# failed; a re-run that finds every location already in the archive is silent.
 #
 # Install (Wednesdays at 08:00, after the hub's submission deadline):
 #   crontab -e
@@ -43,6 +47,11 @@ say() { echo "[$(date +%H:%M:%S)] $*"; }
 
 OUTCOME="did not finish"
 
+# Mail goes out unless the run turns out to have been a no-op; see QUIET below.
+# Starting at 0 means a crash, which never reaches that check, is still
+# reported -- silence should mean "nothing happened", not "something broke".
+QUIET=0
+
 # What the run did, in the form of something worth opening. Cron's own MAILTO
 # would send the whole log every week, which is a reliable way to teach the
 # reader to ignore it; this sends the four lines that change.
@@ -50,6 +59,7 @@ finish() {
     local code=$?
     rm -rf "$LOCK"
     [ -n "$EMAIL" ] || return
+    [ "$QUIET" = 0 ] || { say "nothing forecast this week; no mail"; return; }
     {
         echo "$OUTCOME"
         echo
@@ -114,6 +124,18 @@ STATUS=$?
 say "flufc weekly exited $STATUS"
 SUMMARY=$(grep -E "^made [0-9]" "$LOG" | tail -1)
 OUTCOME="${SUMMARY:-no summary} (exit $STATUS)"
+
+# A re-run in a week whose locations are already in the archive forecasts
+# nothing and has nothing to say, so it says nothing: mail is for a week that
+# produced a forecast, or tried to and failed. An unreadable summary counts as
+# a failure and is mailed, on the theory that a run which cannot report what it
+# did is itself the news.
+if [ "$STATUS" = 0 ] \
+   && [ "$(awk '{print $2}' <<<"$SUMMARY")" = "0" ] \
+   && [ "$(awk '{print $6}' <<<"$SUMMARY")" = "0" ]; then
+    QUIET=1
+    say "made nothing (every location was already in the archive)"
+fi
 
 if [ "$STOP_MODEL" = "1" ] && [ -x "$QWEN" ]; then
     say "releasing the GPU"
