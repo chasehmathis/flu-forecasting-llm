@@ -35,6 +35,13 @@ STOP_MODEL=${FLUFC_STOP_MODEL:-0}
 QWEN=${QWEN_BIN:-$HOME/.local/bin/qwen}
 EMAIL=${FLUFC_EMAIL:-}
 
+# cron hands us a nearly empty environment, and USER is not in it. The qwen
+# helper indexes its Slurm job and its scratch log dir off USER under `set -u`,
+# so an unset one killed the run before it forecast anything (2026-09-02).
+# Exporting it here means the cron entry does not depend on a login shell
+# having set it, whichever node the job lands on.
+export USER="${USER:-$(id -un)}"
+
 cd "$REPO" || { echo "no such directory: $REPO" >&2; exit 2; }
 export PYTHONPATH="$REPO/src${PYTHONPATH:+:$PYTHONPATH}"
 
