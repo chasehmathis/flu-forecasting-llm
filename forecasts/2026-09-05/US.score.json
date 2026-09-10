@@ -1,0 +1,32 @@
+{
+  "reference_date": "2026-09-05",
+  "location": "US",
+  "scored_horizons": [],
+  "unscored_horizons": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "target_end_dates": {
+    "0": "2026-09-05",
+    "1": "2026-09-12",
+    "2": "2026-09-19",
+    "3": "2026-09-26"
+  },
+  "truth_last_date": "2026-07-04",
+  "baseline_wis": null,
+  "n_partial": 0,
+  "n_missing": 0,
+  "entries": [],
+  "hub_medians": {},
+  "observed": {
+    "0": null,
+    "1": null,
+    "2": null,
+    "3": null
+  },
+  "you": null,
+  "version": 1,
+  "computed_at": "2026-09-10T08:05:54"
+}
