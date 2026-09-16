@@ -235,6 +235,49 @@ def test_a_missing_history_does_not_stop_the_build(tmp_path, hub):
     assert (out / "index.html").exists()
 
 
+
+# -- the preliminary NHSN view ------------------------------------------------
+
+NHSN = HISTORY + [(ENDS[0], 1000.0)]          # the second week not out yet
+
+
+def test_nhsn_scores_what_it_has_and_waits_on_the_rest(tmp_path):
+    record = archived(tmp_path)
+    nhsn = standings.preliminary(record, NHSN)
+
+    assert nhsn["truth_last_date"] == ENDS[0]
+    assert (nhsn["n_scored"], nhsn["n_total"]) == (1, 2)
+    assert nhsn["rows"][0]["observed"] == 1000.0
+    assert nhsn["rows"][1]["wis"] is None
+    # The flat baseline sits at 910, the last week before the reference date;
+    # a median of 1050 against 1000 is closer, so it beats it.
+    assert nhsn["rel_wis"] < 1
+
+
+def test_nhsn_with_nothing_published_has_no_score(tmp_path):
+    nhsn = standings.preliminary(archived(tmp_path), HISTORY)
+    assert nhsn["n_scored"] == 0 and "rel_wis" not in nhsn
+    assert standings.preliminary(archived(tmp_path), [])["truth_last_date"] is None
+
+
+def test_the_site_has_a_tab_per_source(tmp_path, hub):
+    root, out = tmp_path / "forecasts", tmp_path / "docs"
+    archived(root)
+    site.build(root, out, records=refresh(root),
+               history_fn=lambda location: NHSN)
+
+    for page in (out / "index.html", out / "f" / "2026-02-07-US.html"):
+        text = page.read_text()
+        assert 'data-tab="hub"' in text and 'data-tab="nhsn"' in text
+        assert 'data-pane="nhsn"' in text
+        assert "<b>1 of 2</b> horizons have NHSN data" in text
+    assert "Ranked <b>3 of 4</b> teams" in (out / "index.html").read_text()
+
+    feed = json.loads((out / "standings.json").read_text())
+    assert feed["forecasts"][0]["nhsn_preliminary"]["n_scored"] == 1
+    assert feed["nhsn_preliminary_summary"]["n_scored"] == 1
+
+
 # -- the charts ---------------------------------------------------------------
 
 def test_the_fan_places_weeks_on_a_date_scale():

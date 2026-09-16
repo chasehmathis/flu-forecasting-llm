@@ -115,6 +115,16 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
        padding: 1px 5px; border-radius: 4px; }
 footer { padding: 8px 20px 48px; }
 footer p { max-width: 68ch; font-size: 13.5px; }
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line);
+        margin: 0 0 22px; }
+.tab { padding: 8px 14px; border: 1px solid transparent; border-bottom: 0;
+       border-radius: 8px 8px 0 0; color: var(--muted); font-size: 14px;
+       font-weight: 600; margin-bottom: -1px; }
+.tab:hover { text-decoration: none; color: var(--ink); }
+.tab.on { background: var(--panel); border-color: var(--line);
+          color: var(--ink); }
+html:not(.js) .tabs { display: none; }
+html.js .pane:not(.on) { display: none; }
 @media (max-width: 620px) {
   .card { padding: 16px; } h1 { font-size: 23px; }
   .card-head { flex-direction: column; gap: 4px; }

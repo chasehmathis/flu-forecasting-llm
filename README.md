@@ -284,6 +284,16 @@ reasoning, the full quantile table and every FluSight team ranked beside it.
 Charts are inline SVG generated in `charts.py`, so the whole site is a few
 files of HTML and CSS with no build step and no dependencies.
 
+Every page has two tabs, one per source of truth. **FluSight hub truth** is
+the official record: the hub's target file, the full field, the rank. **NHSN
+(preliminary)** scores the same forecasts against the raw NHSN series, which
+keeps publishing when the hub's target file goes quiet out of season. Those
+numbers are testing numbers: NHSN still revises its recent weeks, and with no
+field to rank against, "vs. flat" is a flat baseline built from the last NHSN
+week before each reference date, not `FluSight-baseline`. They are recomputed
+on every build and never written to the score files. The choice of tab is
+remembered across pages, and `#hub` / `#nhsn` on a URL picks one.
+
 ### Running it every week
 
 The pipeline splits along the only line that matters: **making a forecast needs

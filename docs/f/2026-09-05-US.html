@@ -5,6 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>US - 2026-09-05 &middot; flu forecasts</title>
 <link rel="stylesheet" href="../style.css">
+<script>
+document.documentElement.classList.add("js");
+document.addEventListener("DOMContentLoaded", function () {
+  var KEY = "flufc-source", names = ["hub", "nhsn"];
+  function show(name) {
+    if (names.indexOf(name) < 0) name = "hub";
+    document.querySelectorAll("[data-pane]").forEach(function (el) {
+      el.classList.toggle("on", el.dataset.pane === name);
+    });
+    document.querySelectorAll("[data-tab]").forEach(function (el) {
+      var on = el.dataset.tab === name;
+      el.classList.toggle("on", on);
+      el.setAttribute("aria-selected", on);
+    });
+    try { localStorage.setItem(KEY, name); } catch (e) {}
+    document.querySelectorAll("a[href^='f/'], a[href^='../index.html']")
+      .forEach(function (a) { a.hash = name; });
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  show(location.hash.slice(1) || saved);
+  document.querySelectorAll("[data-tab]").forEach(function (el) {
+    el.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      history.replaceState(null, "", "#" + el.dataset.tab);
+      show(el.dataset.tab);
+    });
+  });
+});
+</script>
 </head>
 <body>
 <header class="top">
@@ -16,7 +46,12 @@
   </div>
 </header>
 <main class="wrap">
-<p class="status pending">Waiting on truth. The hub has published through <b>2026-07-04</b>; this forecast covers 2026-09-05, 2026-09-12, 2026-09-19, 2026-09-26.</p>
+
+<nav class="tabs" role="tablist">
+  <a class="tab" role="tab" href="#hub" data-tab="hub">FluSight hub truth</a>
+  <a class="tab" role="tab" href="#nhsn" data-tab="nhsn">NHSN (preliminary)</a>
+</nav>
+<div class="pane" id="pane-hub" data-pane="hub"><p class="status pending">Waiting on truth. The hub has published through <b>2026-07-04</b>; this forecast covers 2026-09-05, 2026-09-12, 2026-09-19, 2026-09-26.</p>
 <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-09-05">
 <line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
 <text class="axis" x="46" y="290.0" text-anchor="end">0</text>
@@ -46,7 +81,47 @@
 <circle class="dot-median" cx="746.0" cy="225.5" r="3.5"/>
 </svg>
 <p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval</p>
-<div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th></tr></thead><tbody><tr><td>0</td><td>2026-09-05</td><td><b>1,080</b></td></tr><tr><td>+1</td><td>2026-09-12</td><td><b>1,290</b></td></tr><tr><td>+2</td><td>2026-09-19</td><td><b>1,480</b></td></tr><tr><td>+3</td><td>2026-09-26</td><td><b>1,530</b></td></tr></tbody></table></div>
+<div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th></tr></thead><tbody><tr><td>0</td><td>2026-09-05</td><td><b>1,080</b></td></tr><tr><td>+1</td><td>2026-09-12</td><td><b>1,290</b></td></tr><tr><td>+2</td><td>2026-09-19</td><td><b>1,480</b></td></tr><tr><td>+3</td><td>2026-09-26</td><td><b>1,530</b></td></tr></tbody></table></div></div>
+<div class="pane" id="pane-nhsn" data-pane="nhsn">
+<p class="status pending">Testing numbers. Scored against the latest NHSN
+   release, published through <b>2026-09-12</b>, which the
+   CDC still revises for recent weeks. Out of season there is no FluSight field
+   to rank against, so &ldquo;vs. flat&rdquo; is a flat baseline built here
+   from the last NHSN week before each reference date &mdash; not
+   FluSight-baseline. The hub tab is the official record.</p>
+<p class="status good"><b>2 of 4</b> horizons have NHSN data &middot; WIS <b>94.3</b> &middot; <b>0.38x</b> the flat baseline's WIS (better) &middot; 95% interval coverage 100%.</p>
+<svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-09-05">
+<line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
+<text class="axis" x="46" y="290.0" text-anchor="end">0</text>
+<line class="grid" x1="54" y1="206.9" x2="746" y2="206.9"/>
+<text class="axis" x="46" y="210.9" text-anchor="end">2.0k</text>
+<line class="grid" x1="54" y1="127.8" x2="746" y2="127.8"/>
+<text class="axis" x="46" y="131.8" text-anchor="end">4.0k</text>
+<line class="grid" x1="54" y1="48.6" x2="746" y2="48.6"/>
+<text class="axis" x="46" y="52.6" text-anchor="end">6.0k</text>
+<text class="axis" x="54.0" y="304.0" text-anchor="start">21 Mar</text>
+<text class="axis" x="130.9" y="304.0" text-anchor="middle">11 Apr</text>
+<text class="axis" x="207.8" y="304.0" text-anchor="middle">2 May</text>
+<text class="axis" x="284.7" y="304.0" text-anchor="middle">23 May</text>
+<text class="axis" x="361.6" y="304.0" text-anchor="middle">13 Jun</text>
+<text class="axis" x="438.4" y="304.0" text-anchor="middle">4 Jul</text>
+<text class="axis" x="515.3" y="304.0" text-anchor="middle">25 Jul</text>
+<text class="axis" x="592.2" y="304.0" text-anchor="middle">15 Aug</text>
+<text class="axis" x="669.1" y="304.0" text-anchor="middle">5 Sep</text>
+<text class="axis" x="746.0" y="304.0" text-anchor="end">26 Sep</text>
+<polygon class="band-95" points="694.7,226.5 669.1,232.0 694.7,213.4 720.4,195.9 746.0,185.2 746.0,249.6 720.4,247.9 694.7,250.1 669.1,252.2 694.7,226.5"/>
+<polygon class="band-50" points="694.7,226.5 669.1,239.7 694.7,228.4 720.4,218.1 746.0,213.9 746.0,235.2 720.4,235.5 694.7,240.8 669.1,246.6 694.7,226.5"/>
+<polyline class="line-history" fill="none" points="54.0,44.9 79.6,153.9 105.3,170.8 130.9,197.3 156.5,208.9 182.1,211.6 207.8,220.8 233.4,227.5 259.0,234.0 284.7,236.4 310.3,243.8 335.9,244.9 361.6,251.7 387.2,254.7 412.8,256.3 438.4,257.0 464.1,256.3 489.7,259.7 515.3,258.5 541.0,260.2 566.6,261.0 592.2,258.6 617.9,251.5 643.5,250.6 669.1,237.5 694.7,226.5"/>
+<polyline class="line-median" fill="none" points="694.7,226.5 669.1,243.3 694.7,235.0 720.4,227.5 746.0,225.5"/>
+<circle class="dot-median" cx="669.1" cy="243.3" r="3.5"/>
+<circle class="dot-median" cx="694.7" cy="235.0" r="3.5"/>
+<circle class="dot-median" cx="720.4" cy="227.5" r="3.5"/>
+<circle class="dot-median" cx="746.0" cy="225.5" r="3.5"/>
+<circle class="dot-observed" cx="669.1" cy="237.5" r="4"/>
+<circle class="dot-observed" cx="694.7" cy="226.5" r="4"/>
+</svg>
+<p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval <span class="key k-truth"></span>what happened</p>
+<div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>NHSN</th><th>WIS</th><th>abs error</th><th>in 50%</th><th>in 95%</th></tr></thead><tbody><tr><td>0</td><td>2026-09-05</td><td><b>1,080</b></td><td><b>1,227</b></td><td>78.4</td><td>147</td><td><span class="bad">no</span></td><td><span class="good">yes</span></td></tr><tr><td>+1</td><td>2026-09-12</td><td><b>1,290</b></td><td><b>1,503</b></td><td>110.3</td><td>213</td><td><span class="bad">no</span></td><td><span class="good">yes</span></td></tr><tr><td>+2</td><td>2026-09-19</td><td><b>1,480</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+3</td><td>2026-09-26</td><td><b>1,530</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr></tbody></table></div></div>
 <div class="why"><h3>Why this forecast</h3><p>Anchor: the seasonal model (best backtest MAE at h3, 121.7, tied with gbt at 119.6), which gives medians h1 1230, h2 1416, h3 1408. The hub has no submission (off-season), so no ensemble to lean on. I moved off the anchor upward for an early, accelerating start of the 2026-2027 season: NHSN admissions have climbed since mid-August (691→871→887→1062, +20% last week) and ILINet %ILI is rising sharply (0.87→0.94→1.12→1.32, +18-19% wk/wk), both above the seasonal baseline for these calendar weeks. I nudged medians to h0 1080 (observed 1062 is provisional and revises up), h1 1290, h2 1480, h3 1530. Intervals are widened well beyond the backtest bands (log sd 0.12→0.26 across horizons) because we are at a possible inflection where flu turns faster than it looks, the last observed point is a floor more than a centre, and the statistical methods disagree by up to 1.7x at h3. Right-skewed throughout.</p></div>
 
 <section class="card">

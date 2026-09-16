@@ -15,8 +15,10 @@ unattended.
 """
 
 from .archive import is_settled, read_score, records, write_score
+from .archive import quantiles as archive_quantiles
 from .compete import BASELINE, ENSEMBLE, CompetitionError, leaderboard
-from .evaluate import load_truth
+from .evaluate import (baseline_flat, load_truth, score_horizons, summarize,
+                       wis)
 
 # What the site shows. Carrying every team's per-horizon rows would make the
 # archive heavy for nobody's benefit.
@@ -124,6 +126,50 @@ def _hub_medians(location, reference_date):
         if medians:
             out[model] = medians
     return out
+
+
+def preliminary(record, series):
+    """A provisional score against the raw NHSN series, not the hub's truth.
+
+    The hub's target file stops updating out of season, but NHSN keeps
+    publishing, so this is the only number available for a summer forecast.
+    It is not what FluSight ranks on: NHSN revises its recent weeks, and there
+    is no field to rank against, so the yardstick is a flat baseline built
+    here from the last NHSN week before the reference date -- not the hub's
+    FluSight-baseline. Never cached; it is recomputed on every build.
+    """
+    location = record["location"]
+    ends = {int(h): d for h, d in (record.get("target_end_dates") or {}).items()}
+    truth = {(date, location): value for date, value in series}
+    rows = score_horizons(archive_quantiles(record), ends, location, truth)
+    out = {"truth_last_date": max((d for d, _ in series), default=None),
+           "rows": rows, **summarize(rows)}
+
+    before = [v for d, v in series if d < record["reference_date"]]
+    done = [r for r in rows if r["wis"] is not None]
+    if before and done:
+        flat = baseline_flat(before, [r["horizon"] for r in done])
+        base = sum(wis(r["observed"], flat[r["horizon"]])
+                   for r in done) / len(done)
+        out["baseline_wis"] = round(base, 3)
+        out["rel_wis"] = round(out["mean_wis"] / base, 3) if base else None
+    return out
+
+
+def preliminary_summary(found):
+    """The NHSN track record, pooled over every horizon that has a value."""
+    rows = [r for rec in found for r in (rec.get("nhsn") or {}).get("rows", [])]
+    total = {"n_forecasts": len(found),
+             "n_with_data": sum(1 for rec in found
+                                if (rec.get("nhsn") or {}).get("n_scored")),
+             **summarize(rows)}
+    rels = [rec["nhsn"]["rel_wis"] for rec in found
+            if (rec.get("nhsn") or {}).get("rel_wis") is not None]
+    if rels:
+        total["mean_rel_wis"] = round(sum(rels) / len(rels), 3)
+        total["beat_baseline"] = sum(1 for r in rels if r < 1)
+        total["n_rel"] = len(rels)
+    return total
 
 
 def scored(found):

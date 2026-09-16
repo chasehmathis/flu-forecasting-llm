@@ -20,7 +20,8 @@ from pathlib import Path
 
 from . import archive, charts
 from .compete import BASELINE, ENSEMBLE
-from .standings import refresh, scored, summary
+from .standings import (preliminary, preliminary_summary, refresh, scored,
+                        summary)
 
 REPO_URL = "https://github.com/chasehmathis/flu-forecasting-llm"
 HISTORY_WEEKS = 26
@@ -48,7 +49,10 @@ def build(root, out, *, cache_dir=None, truth=None, force=False,
     out = Path(out)
     found = records if records is not None else refresh(
         root, cache_dir=cache_dir, truth=truth, force=force, on_event=on_event)
-    histories = _histories(found, history_fn, on_event)
+    series = _histories(found, history_fn, on_event)
+    for record in found:
+        record["nhsn"] = preliminary(record, series.get(record["location"], []))
+    histories = {loc: s[-HISTORY_WEEKS:] for loc, s in series.items()}
 
     out.mkdir(parents=True, exist_ok=True)
     (out / "f").mkdir(exist_ok=True)
@@ -86,15 +90,23 @@ def _write(path, text):
 
 
 def _histories(found, history_fn, on_event=None):
-    """Recent NHSN history per location, for the charts. Optional: no chart
-    is better than no site, so a failed fetch is not fatal."""
+    """NHSN history per location, for the charts and the preliminary scores.
+    Optional: no chart is better than no site, so a failed fetch is not fatal.
+
+    Reaches back far enough to cover the oldest forecast's target weeks, not
+    just the chart's window."""
     if history_fn is None:
+        oldest = min((r["reference_date"] for r in found), default=None)
+        weeks = HISTORY_WEEKS
+        if oldest:
+            age = (dt.date.today() - dt.date.fromisoformat(oldest)).days // 7
+            weeks += max(0, age)
         from .tools import ToolError
         from .tools.surveillance import admissions_series
 
         def history_fn(location):
             try:
-                return admissions_series(location, weeks=HISTORY_WEEKS)[1]
+                return admissions_series(location, weeks=weeks)[1]
             except (ToolError, OSError):
                 return []
 
@@ -115,6 +127,7 @@ def _feed(found):
         "generated_at": dt.datetime.now(dt.timezone.utc)
                           .isoformat(timespec="seconds"),
         "summary": summary(found),
+        "nhsn_preliminary_summary": preliminary_summary(found),
         "forecasts": [{
             "reference_date": r["reference_date"],
             "location": r["location"],
@@ -124,6 +137,7 @@ def _feed(found):
             "medians": r.get("medians"),
             "target_end_dates": r.get("target_end_dates"),
             "score": _slim(r.get("score")),
+            "nhsn_preliminary": _slim_nhsn(r.get("nhsn")),
         } for r in found],
     }
 
@@ -139,6 +153,14 @@ def _slim(score):
                       for k in ("rank", "field", "beat", "mean_wis", "rel_wis",
                                 "mean_abs_error", "coverage_50", "coverage_95")}
     return out
+
+
+def _slim_nhsn(nhsn):
+    if not nhsn:
+        return None
+    keep = ("truth_last_date", "n_scored", "mean_wis", "rel_wis",
+            "baseline_wis", "mean_abs_error", "coverage_50", "coverage_95")
+    return {k: nhsn.get(k) for k in keep if nhsn.get(k) is not None}
 
 
 # -- reading a score ----------------------------------------------------------
@@ -195,14 +217,16 @@ def _others(record):
     return out
 
 
-def _chart(record, history):
+def _chart(record, history, observed=None):
     quantiles = archive.quantiles(record)
     ends = record.get("target_end_dates") or {}
     forecast = {ends[str(h)]: q for h, q in quantiles.items()
                 if str(h) in ends}
     if not forecast:
         return ""
-    return charts.fan(history, forecast, observed=_observed(record),
+    if observed is None:
+        observed = _observed(record)
+    return charts.fan(history, forecast, observed=observed,
                       others=_others(record),
                       title=f"{record.get('location_name')} forecast from "
                             f"{record['reference_date']}")
@@ -214,14 +238,17 @@ def _index(found, histories):
     if not found:
         return _page("No forecasts yet", "", EMPTY, depth=0)
 
-    totals = summary(found)
-    body = [_summary_strip(totals)]
-
+    hub = [_summary_strip(summary(found))]
     for record, note in _front(found):
-        body.append(_card(record, histories.get(record["location"], []), note))
+        hub.append(_card(record, histories.get(record["location"], []), note))
+    hub.append(_track_section(found))
 
-    body.append(_track_section(found))
-    body.append(_glossary())
+    nhsn = [_nhsn_caveat(found), _nhsn_strip(preliminary_summary(found))]
+    for record in archive.latest_per_location(found):
+        nhsn.append(_nhsn_card(record, histories.get(record["location"], [])))
+    nhsn.append(_nhsn_track(found))
+
+    body = [_tabs(hub, nhsn), _glossary()]
     return _page("Flu forecasts", _subtitle(found), "\n".join(body), depth=0)
 
 
@@ -296,14 +323,14 @@ def _card(record, history, note=""):
 </section>"""
 
 
-def _legend(record):
+def _legend(record, observed=None):
     others = _others(record)
     keys = ["<span class=\"key k-history\"></span>observed admissions",
             "<span class=\"key k-median\"></span>model median",
             "<span class=\"key k-band\"></span>50% / 95% interval"]
     for i, model in enumerate(sorted(others)):
         keys.append(f'<span class="key k-other other-{i}"></span>{_esc(model)}')
-    if _observed(record):
+    if _observed(record) if observed is None else observed:
         keys.append('<span class="key k-truth"></span>what happened')
     return '<p class="legend">' + " ".join(keys) + "</p>"
 
@@ -427,6 +454,162 @@ def _glossary():
 </section>"""
 
 
+# -- the preliminary NHSN view -----------------------------------------------
+
+def _tabs(hub, nhsn):
+    """Two views of the same forecasts, one per source of truth. Without
+    JavaScript both are shown, one after the other."""
+    def pane(name, parts):
+        inner = "\n".join(p for p in parts if p)
+        return f'<div class="pane" id="pane-{name}" data-pane="{name}">{inner}</div>'
+    return f"""
+<nav class="tabs" role="tablist">
+  <a class="tab" role="tab" href="#hub" data-tab="hub">FluSight hub truth</a>
+  <a class="tab" role="tab" href="#nhsn" data-tab="nhsn">NHSN (preliminary)</a>
+</nav>
+{pane("hub", hub)}
+{pane("nhsn", nhsn)}"""
+
+
+def _nhsn_caveat(found):
+    last = max(((r.get("nhsn") or {}).get("truth_last_date") or ""
+                for r in found), default="")
+    return f"""
+<p class="status pending">Testing numbers. Scored against the latest NHSN
+   release, published through <b>{_esc(last or "nothing yet")}</b>, which the
+   CDC still revises for recent weeks. Out of season there is no FluSight field
+   to rank against, so &ldquo;vs. flat&rdquo; is a flat baseline built here
+   from the last NHSN week before each reference date &mdash; not
+   {_esc(BASELINE)}. The hub tab is the official record.</p>"""
+
+
+def _nhsn_status(record):
+    nhsn = record.get("nhsn") or {}
+    if not nhsn.get("n_scored"):
+        weeks = ", ".join(sorted((record.get("target_end_dates") or {}).values()))
+        return ("pending",
+                f"NHSN has published through "
+                f"<b>{_esc(nhsn.get('truth_last_date') or 'nothing yet')}</b>; "
+                f"this forecast covers {_esc(weeks)}.")
+    bits = [f"<b>{nhsn['n_scored']} of {nhsn['n_total']}</b> horizons have "
+            f"NHSN data",
+            f"WIS <b>{nhsn['mean_wis']:,.1f}</b>"]
+    rel = nhsn.get("rel_wis")
+    if rel is not None:
+        verdict = "better" if rel < 1 else "worse"
+        bits.append(f"<b>{rel:.2f}x</b> the flat baseline's WIS ({verdict})")
+    bits.append(f"95% interval coverage {_pct(nhsn.get('coverage_95'))}")
+    tone = "pending" if rel is None else ("good" if rel < 1 else "bad")
+    return (tone, " &middot; ".join(bits) + ".")
+
+
+def _nhsn_observed(record):
+    return {r["target_end_date"]: r["observed"]
+            for r in (record.get("nhsn") or {}).get("rows", [])
+            if r["observed"] is not None}
+
+
+def _nhsn_card(record, history):
+    tone, status = _nhsn_status(record)
+    observed = _nhsn_observed(record)
+    return f"""
+<section class="card">
+  <div class="card-head">
+    <h2>{_esc(record.get('location_name') or record['location'])}
+        <span class="muted">week of {_esc(record['reference_date'])}</span>
+        <span class="tag">latest forecast</span></h2>
+    <a class="more" href="f/{_esc(record['slug'])}.html#nhsn">full detail &rarr;</a>
+  </div>
+  <p class="status {tone}">{status}</p>
+  {_chart(record, history, observed)}
+  {_legend(record, observed)}
+  {_nhsn_table(record)}
+</section>"""
+
+
+def _nhsn_table(record):
+    rows = (record.get("nhsn") or {}).get("rows") or []
+    if not rows:
+        return ""
+    body = []
+    for r in rows:
+        h = r["horizon"]
+        pending = r["observed"] is None
+        cells = [f"+{h}" if h > 0 else str(h), _esc(r["target_end_date"]),
+                 f"<b>{_n(r['median'])}</b>",
+                 '<span class="muted">pending</span>' if pending
+                 else f"<b>{_n(r['observed'])}</b>",
+                 _n(r["wis"], 1), _n(r["abs_error"]),
+                 _yes(r["cover_50"]), _yes(r["cover_95"])]
+        body.append("<tr>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
+    head = "".join(f"<th>{h}</th>" for h in
+                   ["horizon", "week ending", "model median", "NHSN",
+                    "WIS", "abs error", "in 50%", "in 95%"])
+    return (f'<div class="scroll"><table class="grid">'
+            f"<thead><tr>{head}</tr></thead>"
+            f"<tbody>{''.join(body)}</tbody></table></div>")
+
+
+def _yes(value):
+    if value is None:
+        return "&mdash;"
+    return '<span class="good">yes</span>' if value else '<span class="bad">no</span>'
+
+
+def _nhsn_strip(totals):
+    if not totals.get("n_scored"):
+        return (f'<div class="strip"><div class="stat"><b>'
+                f'{totals["n_forecasts"]}</b><span>forecasts made</span></div>'
+                f'<div class="stat"><b>0</b><span>horizons with NHSN data'
+                f'</span></div></div>')
+    rel = totals.get("mean_rel_wis")
+    cells = [
+        (f"{totals['n_scored']}/{totals['n_total']}", "horizons with NHSN data"),
+        (f"{totals['mean_wis']:,.1f}", "mean WIS"),
+        ("&mdash;" if rel is None else f"{rel:.2f}x", "mean WIS vs. flat"),
+        (f"{totals.get('beat_baseline', 0)}/{totals.get('n_rel', 0)}",
+         "beat the flat baseline"),
+        (_pct(totals.get("coverage_50")), "50% coverage"),
+        (_pct(totals.get("coverage_95")), "95% coverage"),
+    ]
+    stats = "".join(f'<div class="stat"><b>{value}</b><span>{label}</span></div>'
+                    for value, label in cells)
+    return f'<div class="strip">{stats}</div>'
+
+
+def _nhsn_track(found):
+    rows = []
+    for record in found:
+        nhsn = record.get("nhsn") or {}
+        rel = nhsn.get("rel_wis")
+        rel_cell = ('<span class="muted">&mdash;</span>' if rel is None else
+                    f'<span class="{"good" if rel < 1 else "bad"}">'
+                    f'{rel:.2f}x</span>')
+        rows.append(
+            "<tr>"
+            f'<td><a href="f/{_esc(record["slug"])}.html#nhsn">'
+            f'{_esc(record["reference_date"])}</a></td>'
+            f"<td>{_esc(record.get('location_name') or record['location'])}</td>"
+            f"<td>{nhsn.get('n_scored', 0)} / {nhsn.get('n_total', 0)}</td>"
+            f"<td>{_n(nhsn.get('mean_wis'), 1)}</td>"
+            f"<td>{rel_cell}</td>"
+            f"<td>{_n(nhsn.get('mean_abs_error'))}</td>"
+            f"<td>{_pct(nhsn.get('coverage_50'))}</td>"
+            f"<td>{_pct(nhsn.get('coverage_95'))}</td>"
+            "</tr>")
+    return f"""
+<section class="card">
+  <div class="card-head"><h2>Track record (preliminary)</h2></div>
+  <p class="muted">Every forecast in the archive, scored on whichever horizons
+     NHSN has already published. Recomputed on every build, never cached.</p>
+  <div class="scroll"><table class="grid">
+    <thead><tr><th>week of</th><th>location</th><th>horizons</th>
+      <th>WIS</th><th>vs. flat</th><th>MAE</th><th>50%</th>
+      <th>95%</th></tr></thead>
+    <tbody>{''.join(rows)}</tbody></table></div>
+</section>"""
+
+
 # -- the detail page ----------------------------------------------------------
 
 def _detail(record, history):
@@ -434,12 +617,18 @@ def _detail(record, history):
     score = record.get("score") or {}
     title = (f"{record.get('location_name') or record['location']} "
              f"&mdash; {record['reference_date']}")
-    body = [f'<p class="status {tone}">{status}</p>',
-            _chart(record, history), _legend(record),
-            _horizon_table(record),
+    hub = [f'<p class="status {tone}">{status}</p>',
+           _chart(record, history), _legend(record),
+           _horizon_table(record), _leaderboard(score)]
+    nhsn_tone, nhsn_status = _nhsn_status(record)
+    observed = _nhsn_observed(record)
+    nhsn = [_nhsn_caveat([record]),
+            f'<p class="status {nhsn_tone}">{nhsn_status}</p>',
+            _chart(record, history, observed), _legend(record, observed),
+            _nhsn_table(record)]
+    body = [_tabs(hub, nhsn),
             _rationale(record),
             _quantile_table(record),
-            _leaderboard(score),
             _provenance(record)]
     return _page(title, _detail_subtitle(record), "\n".join(b for b in body if b),
                  depth=1)
@@ -579,6 +768,7 @@ def _page(title, subtitle, body, depth=0):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{head}</title>
 <link rel="stylesheet" href="{up}style.css">
+<script>{TABS_JS}</script>
 </head>
 <body>
 <header class="top">
@@ -600,6 +790,40 @@ def _page(title, subtitle, body, depth=0):
 </footer>
 </body>
 </html>
+"""
+
+
+# Picks a pane from the URL hash, else the last one chosen on any page, else
+# the hub. Storage can be unavailable; the page works without it.
+TABS_JS = """
+document.documentElement.classList.add("js");
+document.addEventListener("DOMContentLoaded", function () {
+  var KEY = "flufc-source", names = ["hub", "nhsn"];
+  function show(name) {
+    if (names.indexOf(name) < 0) name = "hub";
+    document.querySelectorAll("[data-pane]").forEach(function (el) {
+      el.classList.toggle("on", el.dataset.pane === name);
+    });
+    document.querySelectorAll("[data-tab]").forEach(function (el) {
+      var on = el.dataset.tab === name;
+      el.classList.toggle("on", on);
+      el.setAttribute("aria-selected", on);
+    });
+    try { localStorage.setItem(KEY, name); } catch (e) {}
+    document.querySelectorAll("a[href^='f/'], a[href^='../index.html']")
+      .forEach(function (a) { a.hash = name; });
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  show(location.hash.slice(1) || saved);
+  document.querySelectorAll("[data-tab]").forEach(function (el) {
+    el.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      history.replaceState(null, "", "#" + el.dataset.tab);
+      show(el.dataset.tab);
+    });
+  });
+});
 """
 
 
@@ -725,6 +949,16 @@ code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
        padding: 1px 5px; border-radius: 4px; }
 footer { padding: 8px 20px 48px; }
 footer p { max-width: 68ch; font-size: 13.5px; }
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line);
+        margin: 0 0 22px; }
+.tab { padding: 8px 14px; border: 1px solid transparent; border-bottom: 0;
+       border-radius: 8px 8px 0 0; color: var(--muted); font-size: 14px;
+       font-weight: 600; margin-bottom: -1px; }
+.tab:hover { text-decoration: none; color: var(--ink); }
+.tab.on { background: var(--panel); border-color: var(--line);
+          color: var(--ink); }
+html:not(.js) .tabs { display: none; }
+html.js .pane:not(.on) { display: none; }
 @media (max-width: 620px) {
   .card { padding: 16px; } h1 { font-size: 23px; }
   .card-head { flex-direction: column; gap: 4px; }
