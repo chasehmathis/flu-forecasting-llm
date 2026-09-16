@@ -1,0 +1,44 @@
+{
+  "reference_date": "2026-09-12",
+  "location": "US",
+  "location_name": "US",
+  "target": "wk inc flu hosp",
+  "model_id": "qwen-agent/qwen3.8-27b",
+  "created_at": "2026-09-16T08:24:10",
+  "rationale": "Anchor: the statistical-model consensus from compare_forecast_models (h1 1609, h2 1886, h3 2326), with the hub empty for this off-season week (last submissions May), so no ensemble to lean on. I moved off the consensus toward the higher end (h1 1750, h2 2000, h3 2350) because the recent trajectory is a clear early-season takeoff: admissions 692\u2192872\u2192895\u21921227\u21921503 over the last five weeks (+22% wk/wk) and ILI climbing 0.87%\u21921.51%, matching the 2024-25 pattern where a September rise preceded a steep October-November climb. The last observed point (1503) is provisional and likely to revise upward, so I treat it as a floor. I kept h0 near the observed 1503 (median 1550) since it is already partly observed. Uncertainty widens with horizon and is right-skewed (lognormal): h3 spans ~825-6693 to cover both the gbt high (3505) and the seasonal/persistence low, reflecting the 2x spread among methods at h3 and the risk that an early start either accelerates into a strong season or stalls.",
+  "medians": {
+    "0": 1550.0,
+    "1": 1750.0,
+    "2": 2000.0,
+    "3": 2350.0
+  },
+  "target_end_dates": {
+    "0": "2026-09-12",
+    "1": "2026-09-19",
+    "2": "2026-09-26",
+    "3": "2026-10-03"
+  },
+  "csv": "US.csv",
+  "run": {
+    "stopped": "terminal",
+    "tool_calls": 12,
+    "seconds": 582.1,
+    "prompt_tokens": 13890,
+    "completion_tokens": 18648,
+    "tools": [
+      "get_flu_hospitalizations",
+      "compare_forecast_models",
+      "get_hub_forecasts",
+      "get_ili",
+      "get_flu_hospitalizations",
+      "search_web",
+      "calculate",
+      "calculate",
+      "calculate",
+      "calculate",
+      "calculate",
+      "submit_forecast"
+    ],
+    "transcript": "/accounts/grad/cmathis/flu-forecasting-llm/outputs/runs/forecast-20260916-082410/transcript.json"
+  }
+}
