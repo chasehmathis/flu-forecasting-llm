@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <p class="crumb"><a href="index.html">flu-forecasting-llm</a>
        &middot; <a href="https://github.com/chasehmathis/flu-forecasting-llm">source</a></p>
     <h1>Flu forecasts</h1>
-    <p class="lede">A language model forecasts US influenza hospital admissions every week, and is scored against the FluSight-ensemble and the forty-odd other teams who submit to the CDC's FluSight hub. 4 forecast(s) on the record. Rebuilt 23 Sep 2026, 17:15 UTC.</p>
+    <p class="lede">A language model forecasts US influenza hospital admissions every week, and is scored against the FluSight-ensemble and the forty-odd other teams who submit to the CDC's FluSight hub. 5 forecast(s) on the record. Rebuilt 23 Sep 2026, 21:00 UTC.</p>
   </div>
 </header>
 <main class="wrap">
@@ -51,47 +51,49 @@ document.addEventListener("DOMContentLoaded", function () {
   <a class="tab" role="tab" href="#hub" data-tab="hub">FluSight hub truth</a>
   <a class="tab" role="tab" href="#nhsn" data-tab="nhsn">NHSN (preliminary)</a>
 </nav>
-<div class="pane" id="pane-hub" data-pane="hub"><div class="strip"><div class="stat"><b>4</b><span>forecasts made</span></div><div class="stat"><b>4</b><span>waiting on truth</span></div></div>
+<div class="pane" id="pane-hub" data-pane="hub"><div class="strip"><div class="stat"><b>5</b><span>forecasts made</span></div><div class="stat"><b>5</b><span>waiting on truth</span></div></div>
 
 <section class="card">
   <div class="card-head">
     <h2>US
-        <span class="muted">week of 2026-09-12</span>
+        <span class="muted">week of 2026-09-19</span>
         <span class="tag">latest forecast</span></h2>
-    <a class="more" href="f/2026-09-12-US.html">full detail &rarr;</a>
+    <a class="more" href="f/2026-09-19-US.html">full detail &rarr;</a>
   </div>
-  <p class="status pending">Waiting on truth. The hub has published through <b>2026-07-04</b>; this forecast covers 2026-09-12, 2026-09-19, 2026-09-26, 2026-10-03.</p>
-  <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-09-12">
+  <p class="status pending">Waiting on truth. The hub has published through <b>2026-07-04</b>; this forecast covers 2026-09-19, 2026-09-26, 2026-10-03, 2026-10-10.</p>
+  <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-09-19">
 <line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
 <text class="axis" x="46" y="290.0" text-anchor="end">0</text>
-<line class="grid" x1="54" y1="201.1" x2="746" y2="201.1"/>
-<text class="axis" x="46" y="205.1" text-anchor="end">2.0k</text>
-<line class="grid" x1="54" y1="116.1" x2="746" y2="116.1"/>
-<text class="axis" x="46" y="120.1" text-anchor="end">4.0k</text>
-<line class="grid" x1="54" y1="31.2" x2="746" y2="31.2"/>
-<text class="axis" x="46" y="35.2" text-anchor="end">6.0k</text>
+<line class="grid" x1="54" y1="222.0" x2="746" y2="222.0"/>
+<text class="axis" x="46" y="226.0" text-anchor="end">2.5k</text>
+<line class="grid" x1="54" y1="158.1" x2="746" y2="158.1"/>
+<text class="axis" x="46" y="162.1" text-anchor="end">5.0k</text>
+<line class="grid" x1="54" y1="94.1" x2="746" y2="94.1"/>
+<text class="axis" x="46" y="98.1" text-anchor="end">7.5k</text>
+<line class="grid" x1="54" y1="30.1" x2="746" y2="30.1"/>
+<text class="axis" x="46" y="34.1" text-anchor="end">10k</text>
 <text class="axis" x="54.0" y="304.0" text-anchor="start">28 Mar</text>
-<text class="axis" x="130.9" y="304.0" text-anchor="middle">18 Apr</text>
-<text class="axis" x="207.8" y="304.0" text-anchor="middle">9 May</text>
-<text class="axis" x="284.7" y="304.0" text-anchor="middle">30 May</text>
-<text class="axis" x="361.6" y="304.0" text-anchor="middle">20 Jun</text>
-<text class="axis" x="438.4" y="304.0" text-anchor="middle">11 Jul</text>
-<text class="axis" x="515.3" y="304.0" text-anchor="middle">1 Aug</text>
-<text class="axis" x="592.2" y="304.0" text-anchor="middle">22 Aug</text>
-<text class="axis" x="669.1" y="304.0" text-anchor="middle">12 Sep</text>
-<text class="axis" x="746.0" y="304.0" text-anchor="end">3 Oct</text>
-<polygon class="band-95" points="694.7,202.6 669.1,188.6 694.7,157.3 720.4,117.3 746.0,44.9 746.0,244.7 720.4,243.2 694.7,243.1 669.1,241.5 694.7,202.6"/>
-<polygon class="band-50" points="694.7,202.6 669.1,210.7 694.7,196.3 720.4,178.5 746.0,150.8 746.0,212.3 720.4,218.9 694.7,224.5 669.1,228.5 694.7,202.6"/>
-<polyline class="line-history" fill="none" points="54.0,144.2 79.6,162.3 105.3,190.8 130.9,203.2 156.5,206.0 182.1,215.9 207.8,223.0 233.4,230.0 259.0,232.5 284.7,240.6 310.3,241.7 335.9,249.0 361.6,252.3 387.2,254.1 412.8,254.8 438.4,254.1 464.1,257.8 489.7,256.4 515.3,258.1 541.0,259.2 566.6,256.5 592.2,248.9 617.9,247.0 643.5,233.6 669.1,221.6 694.7,202.6"/>
-<polyline class="line-median" fill="none" points="694.7,202.6 669.1,220.2 694.7,211.7 720.4,201.1 746.0,186.2"/>
-<circle class="dot-median" cx="669.1" cy="220.2" r="3.5"/>
-<circle class="dot-median" cx="694.7" cy="211.7" r="3.5"/>
-<circle class="dot-median" cx="720.4" cy="201.1" r="3.5"/>
+<text class="axis" x="128.1" y="304.0" text-anchor="middle">18 Apr</text>
+<text class="axis" x="202.3" y="304.0" text-anchor="middle">9 May</text>
+<text class="axis" x="276.4" y="304.0" text-anchor="middle">30 May</text>
+<text class="axis" x="350.6" y="304.0" text-anchor="middle">20 Jun</text>
+<text class="axis" x="424.7" y="304.0" text-anchor="middle">11 Jul</text>
+<text class="axis" x="498.9" y="304.0" text-anchor="middle">1 Aug</text>
+<text class="axis" x="573.0" y="304.0" text-anchor="middle">22 Aug</text>
+<text class="axis" x="647.1" y="304.0" text-anchor="middle">12 Sep</text>
+<text class="axis" x="721.3" y="304.0" text-anchor="middle">3 Oct</text>
+<polygon class="band-95" points="671.9,235.7 671.9,210.3 696.6,168.6 721.3,121.6 746.0,44.9 746.0,236.7 721.3,244.3 696.6,249.8 671.9,248.6 671.9,235.7"/>
+<polygon class="band-50" points="671.9,235.7 671.9,227.4 696.6,208.2 721.3,185.2 746.0,150.8 746.0,207.7 721.3,223.1 696.6,234.1 671.9,240.0 671.9,235.7"/>
+<polyline class="line-history" fill="none" points="54.0,200.6 78.7,211.5 103.4,228.6 128.1,236.1 152.9,237.8 177.6,243.8 202.3,248.1 227.0,252.2 251.7,253.8 276.4,258.6 301.1,259.3 325.9,263.7 350.6,265.7 375.3,266.8 400.0,267.2 424.7,266.8 449.4,269.0 474.1,268.2 498.9,269.2 523.6,269.8 548.3,268.2 573.0,263.6 597.7,262.5 622.4,254.4 647.1,247.2 671.9,235.7"/>
+<polyline class="line-median" fill="none" points="671.9,235.7 671.9,234.8 696.6,223.3 721.3,208.0 746.0,186.2"/>
+<circle class="dot-median" cx="671.9" cy="234.8" r="3.5"/>
+<circle class="dot-median" cx="696.6" cy="223.3" r="3.5"/>
+<circle class="dot-median" cx="721.3" cy="208.0" r="3.5"/>
 <circle class="dot-median" cx="746.0" cy="186.2" r="3.5"/>
 </svg>
   <p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval</p>
-  <div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th></tr></thead><tbody><tr><td>0</td><td>2026-09-12</td><td><b>1,550</b></td></tr><tr><td>+1</td><td>2026-09-19</td><td><b>1,750</b></td></tr><tr><td>+2</td><td>2026-09-26</td><td><b>2,000</b></td></tr><tr><td>+3</td><td>2026-10-03</td><td><b>2,350</b></td></tr></tbody></table></div>
-  <div class="why"><h3>Why this forecast</h3><p>Anchor: the statistical-model consensus from compare_forecast_models (h1 1609, h2 1886, h3 2326), with the hub empty for this off-season week (last submissions May), so no ensemble to lean on. I moved off the consensus toward the higher end (h1 1750, h2 2000, h3 2350) because the recent trajectory is a clear early-season takeoff: admissions 692→872→895→1227→1503 over the last five weeks (+22% wk/wk) and ILI climbing 0.87%→1.51%, matching the 2024-25 pattern where a September rise preceded a steep October-November climb. The last observed point (1503) is provisional and likely to revise upward, so I treat it as a floor. I kept h0 near the observed 1503 (median 1550) since it is already partly observed. Uncertainty widens with horizon and is right-skewed (lognormal): h3 spans ~825-6693 to cover both the gbt high (3505) and the seasonal/persistence low, reflecting the 2x spread among methods at h3 and the risk that an early start either accelerates into a strong season or stalls.</p></div>
+  <div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th></tr></thead><tbody><tr><td>0</td><td>2026-09-19</td><td><b>2,000</b></td></tr><tr><td>+1</td><td>2026-09-26</td><td><b>2,450</b></td></tr><tr><td>+2</td><td>2026-10-03</td><td><b>3,050</b></td></tr><tr><td>+3</td><td>2026-10-10</td><td><b>3,900</b></td></tr></tbody></table></div>
+  <div class="why"><h3>Why this forecast</h3><p>Anchor: backtest-weighted statistical models. GBT had the lowest h3 MAE (218) and seasonal the lowest h1/h2; I blended their medians (h1 2450, h2 3050, h3 3900), pulling h3 down from GBT&#x27;s 5303 because the 2024-25 analogue (a mild season with a low September base) suggests the current early rise is more like a normal-season start than a severe one. No hub ensemble exists for this week (off-season), so no external prior to beat. Adjustments: ILINet %ILI is rising (0.87→1.58 over 5 weeks) and admissions have grown ~25%/wk for 4 weeks, confirming a genuine early-season start rather than noise, so I kept the upward trajectory rather than flattening it. The last observed week (1964) is provisional and likely to revise upward, so h0 median sits slightly above it (2000) with a wide interval. Intervals widen with horizon and are right-skewed (lognormal with larger upper sigma) to cover the possibility of a faster takeoff: h3 spans 1688-11108, covering both a stall and a 2023-24-style early surge. What would change my mind: a flattening of %ILI or admissions next week would argue for a lower h2/h3; a jump to &gt;3000 in the next observed week would argue for moving toward the GBT upper tail.</p></div>
 </section>
 
 <section class="card">
@@ -104,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <thead><tr><th>week of</th><th>location</th><th>rank</th>
       <th>vs. baseline</th><th>vs. ensemble</th><th>WIS</th>
       <th>95% coverage</th></tr></thead>
-    <tbody><tr><td><a href="f/2026-09-12-US.html">2026-09-12</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td><a href="f/2026-09-05-US.html">2026-09-05</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td><a href="f/2026-08-29-US.html">2026-08-29</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td><a href="f/2026-08-22-US.html">2026-08-22</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr></tbody></table></div>
+    <tbody><tr><td><a href="f/2026-09-19-US.html">2026-09-19</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td><a href="f/2026-09-12-US.html">2026-09-12</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td><a href="f/2026-09-05-US.html">2026-09-05</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td><a href="f/2026-08-29-US.html">2026-08-29</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td><a href="f/2026-08-22-US.html">2026-08-22</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr></tbody></table></div>
 </section></div>
 <div class="pane" id="pane-nhsn" data-pane="nhsn">
 <p class="status pending">Testing numbers. Scored against the latest NHSN
@@ -113,48 +115,49 @@ document.addEventListener("DOMContentLoaded", function () {
    to rank against, so &ldquo;vs. flat&rdquo; is a flat baseline built here
    from the last NHSN week before each reference date &mdash; not
    FluSight-baseline. The hub tab is the official record.</p>
-<div class="strip"><div class="stat"><b>13/16</b><span>horizons with NHSN data</span></div><div class="stat"><b>207.0</b><span>mean WIS</span></div><div class="stat"><b>0.67x</b><span>mean WIS vs. flat</span></div><div class="stat"><b>3/4</b><span>beat the flat baseline</span></div><div class="stat"><b>31%</b><span>50% coverage</span></div><div class="stat"><b>77%</b><span>95% coverage</span></div></div>
+<div class="strip"><div class="stat"><b>14/20</b><span>horizons with NHSN data</span></div><div class="stat"><b>197.9</b><span>mean WIS</span></div><div class="stat"><b>0.61x</b><span>mean WIS vs. flat</span></div><div class="stat"><b>4/5</b><span>beat the flat baseline</span></div><div class="stat"><b>36%</b><span>50% coverage</span></div><div class="stat"><b>79%</b><span>95% coverage</span></div></div>
 
 <section class="card">
   <div class="card-head">
     <h2>US
-        <span class="muted">week of 2026-09-12</span>
+        <span class="muted">week of 2026-09-19</span>
         <span class="tag">latest forecast</span></h2>
-    <a class="more" href="f/2026-09-12-US.html#nhsn">full detail &rarr;</a>
+    <a class="more" href="f/2026-09-19-US.html#nhsn">full detail &rarr;</a>
   </div>
-  <p class="status good"><b>2 of 4</b> horizons have NHSN data &middot; WIS <b>102.4</b> &middot; <b>0.38x</b> the flat baseline's WIS (better) &middot; 95% interval coverage 100%.</p>
-  <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-09-12">
+  <p class="status good"><b>1 of 4</b> horizons have NHSN data &middot; WIS <b>80.0</b> &middot; <b>0.34x</b> the flat baseline's WIS (better) &middot; 95% interval coverage 100%.</p>
+  <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-09-19">
 <line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
 <text class="axis" x="46" y="290.0" text-anchor="end">0</text>
-<line class="grid" x1="54" y1="201.1" x2="746" y2="201.1"/>
-<text class="axis" x="46" y="205.1" text-anchor="end">2.0k</text>
-<line class="grid" x1="54" y1="116.1" x2="746" y2="116.1"/>
-<text class="axis" x="46" y="120.1" text-anchor="end">4.0k</text>
-<line class="grid" x1="54" y1="31.2" x2="746" y2="31.2"/>
-<text class="axis" x="46" y="35.2" text-anchor="end">6.0k</text>
+<line class="grid" x1="54" y1="222.0" x2="746" y2="222.0"/>
+<text class="axis" x="46" y="226.0" text-anchor="end">2.5k</text>
+<line class="grid" x1="54" y1="158.1" x2="746" y2="158.1"/>
+<text class="axis" x="46" y="162.1" text-anchor="end">5.0k</text>
+<line class="grid" x1="54" y1="94.1" x2="746" y2="94.1"/>
+<text class="axis" x="46" y="98.1" text-anchor="end">7.5k</text>
+<line class="grid" x1="54" y1="30.1" x2="746" y2="30.1"/>
+<text class="axis" x="46" y="34.1" text-anchor="end">10k</text>
 <text class="axis" x="54.0" y="304.0" text-anchor="start">28 Mar</text>
-<text class="axis" x="130.9" y="304.0" text-anchor="middle">18 Apr</text>
-<text class="axis" x="207.8" y="304.0" text-anchor="middle">9 May</text>
-<text class="axis" x="284.7" y="304.0" text-anchor="middle">30 May</text>
-<text class="axis" x="361.6" y="304.0" text-anchor="middle">20 Jun</text>
-<text class="axis" x="438.4" y="304.0" text-anchor="middle">11 Jul</text>
-<text class="axis" x="515.3" y="304.0" text-anchor="middle">1 Aug</text>
-<text class="axis" x="592.2" y="304.0" text-anchor="middle">22 Aug</text>
-<text class="axis" x="669.1" y="304.0" text-anchor="middle">12 Sep</text>
-<text class="axis" x="746.0" y="304.0" text-anchor="end">3 Oct</text>
-<polygon class="band-95" points="694.7,202.6 669.1,188.6 694.7,157.3 720.4,117.3 746.0,44.9 746.0,244.7 720.4,243.2 694.7,243.1 669.1,241.5 694.7,202.6"/>
-<polygon class="band-50" points="694.7,202.6 669.1,210.7 694.7,196.3 720.4,178.5 746.0,150.8 746.0,212.3 720.4,218.9 694.7,224.5 669.1,228.5 694.7,202.6"/>
-<polyline class="line-history" fill="none" points="54.0,144.2 79.6,162.3 105.3,190.8 130.9,203.2 156.5,206.0 182.1,215.9 207.8,223.0 233.4,230.0 259.0,232.5 284.7,240.6 310.3,241.7 335.9,249.0 361.6,252.3 387.2,254.1 412.8,254.8 438.4,254.1 464.1,257.8 489.7,256.4 515.3,258.1 541.0,259.2 566.6,256.5 592.2,248.9 617.9,247.0 643.5,233.6 669.1,221.6 694.7,202.6"/>
-<polyline class="line-median" fill="none" points="694.7,202.6 669.1,220.2 694.7,211.7 720.4,201.1 746.0,186.2"/>
-<circle class="dot-median" cx="669.1" cy="220.2" r="3.5"/>
-<circle class="dot-median" cx="694.7" cy="211.7" r="3.5"/>
-<circle class="dot-median" cx="720.4" cy="201.1" r="3.5"/>
+<text class="axis" x="128.1" y="304.0" text-anchor="middle">18 Apr</text>
+<text class="axis" x="202.3" y="304.0" text-anchor="middle">9 May</text>
+<text class="axis" x="276.4" y="304.0" text-anchor="middle">30 May</text>
+<text class="axis" x="350.6" y="304.0" text-anchor="middle">20 Jun</text>
+<text class="axis" x="424.7" y="304.0" text-anchor="middle">11 Jul</text>
+<text class="axis" x="498.9" y="304.0" text-anchor="middle">1 Aug</text>
+<text class="axis" x="573.0" y="304.0" text-anchor="middle">22 Aug</text>
+<text class="axis" x="647.1" y="304.0" text-anchor="middle">12 Sep</text>
+<text class="axis" x="721.3" y="304.0" text-anchor="middle">3 Oct</text>
+<polygon class="band-95" points="671.9,235.7 671.9,210.3 696.6,168.6 721.3,121.6 746.0,44.9 746.0,236.7 721.3,244.3 696.6,249.8 671.9,248.6 671.9,235.7"/>
+<polygon class="band-50" points="671.9,235.7 671.9,227.4 696.6,208.2 721.3,185.2 746.0,150.8 746.0,207.7 721.3,223.1 696.6,234.1 671.9,240.0 671.9,235.7"/>
+<polyline class="line-history" fill="none" points="54.0,200.6 78.7,211.5 103.4,228.6 128.1,236.1 152.9,237.8 177.6,243.8 202.3,248.1 227.0,252.2 251.7,253.8 276.4,258.6 301.1,259.3 325.9,263.7 350.6,265.7 375.3,266.8 400.0,267.2 424.7,266.8 449.4,269.0 474.1,268.2 498.9,269.2 523.6,269.8 548.3,268.2 573.0,263.6 597.7,262.5 622.4,254.4 647.1,247.2 671.9,235.7"/>
+<polyline class="line-median" fill="none" points="671.9,235.7 671.9,234.8 696.6,223.3 721.3,208.0 746.0,186.2"/>
+<circle class="dot-median" cx="671.9" cy="234.8" r="3.5"/>
+<circle class="dot-median" cx="696.6" cy="223.3" r="3.5"/>
+<circle class="dot-median" cx="721.3" cy="208.0" r="3.5"/>
 <circle class="dot-median" cx="746.0" cy="186.2" r="3.5"/>
-<circle class="dot-observed" cx="669.1" cy="221.6" r="4"/>
-<circle class="dot-observed" cx="694.7" cy="202.6" r="4"/>
+<circle class="dot-observed" cx="671.9" cy="235.7" r="4"/>
 </svg>
   <p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval <span class="key k-truth"></span>what happened</p>
-  <div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>NHSN</th><th>WIS</th><th>abs error</th><th>in 50%</th><th>in 95%</th></tr></thead><tbody><tr><td>0</td><td>2026-09-12</td><td><b>1,550</b></td><td><b>1,517</b></td><td>67.9</td><td>33</td><td><span class="good">yes</span></td><td><span class="good">yes</span></td></tr><tr><td>+1</td><td>2026-09-19</td><td><b>1,750</b></td><td><b>1,964</b></td><td>137.0</td><td>214</td><td><span class="good">yes</span></td><td><span class="good">yes</span></td></tr><tr><td>+2</td><td>2026-09-26</td><td><b>2,000</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+3</td><td>2026-10-03</td><td><b>2,350</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr></tbody></table></div>
+  <div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>NHSN</th><th>WIS</th><th>abs error</th><th>in 50%</th><th>in 95%</th></tr></thead><tbody><tr><td>0</td><td>2026-09-19</td><td><b>2,000</b></td><td><b>1,964</b></td><td>80.0</td><td>36</td><td><span class="good">yes</span></td><td><span class="good">yes</span></td></tr><tr><td>+1</td><td>2026-09-26</td><td><b>2,450</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+2</td><td>2026-10-03</td><td><b>3,050</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+3</td><td>2026-10-10</td><td><b>3,900</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr></tbody></table></div>
 </section>
 
 <section class="card">
@@ -165,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <thead><tr><th>week of</th><th>location</th><th>horizons</th>
       <th>WIS</th><th>vs. flat</th><th>MAE</th><th>50%</th>
       <th>95%</th></tr></thead>
-    <tbody><tr><td><a href="f/2026-09-12-US.html#nhsn">2026-09-12</a></td><td>US</td><td>2 / 4</td><td>102.4</td><td><span class="good">0.38x</span></td><td>124</td><td>100%</td><td>100%</td></tr><tr><td><a href="f/2026-09-05-US.html#nhsn">2026-09-05</a></td><td>US</td><td>3 / 4</td><td>156.1</td><td><span class="good">0.45x</span></td><td>288</td><td>0%</td><td>100%</td></tr><tr><td><a href="f/2026-08-29-US.html#nhsn">2026-08-29</a></td><td>US</td><td>4 / 4</td><td>360.6</td><td><span class="bad">1.24x</span></td><td>470</td><td>25%</td><td>25%</td></tr><tr><td><a href="f/2026-08-22-US.html#nhsn">2026-08-22</a></td><td>US</td><td>4 / 4</td><td>143.8</td><td><span class="good">0.62x</span></td><td>243</td><td>25%</td><td>100%</td></tr></tbody></table></div>
+    <tbody><tr><td><a href="f/2026-09-19-US.html#nhsn">2026-09-19</a></td><td>US</td><td>1 / 4</td><td>80.0</td><td><span class="good">0.34x</span></td><td>36</td><td>100%</td><td>100%</td></tr><tr><td><a href="f/2026-09-12-US.html#nhsn">2026-09-12</a></td><td>US</td><td>2 / 4</td><td>102.4</td><td><span class="good">0.38x</span></td><td>124</td><td>100%</td><td>100%</td></tr><tr><td><a href="f/2026-09-05-US.html#nhsn">2026-09-05</a></td><td>US</td><td>3 / 4</td><td>156.1</td><td><span class="good">0.45x</span></td><td>288</td><td>0%</td><td>100%</td></tr><tr><td><a href="f/2026-08-29-US.html#nhsn">2026-08-29</a></td><td>US</td><td>4 / 4</td><td>360.6</td><td><span class="bad">1.24x</span></td><td>470</td><td>25%</td><td>25%</td></tr><tr><td><a href="f/2026-08-22-US.html#nhsn">2026-08-22</a></td><td>US</td><td>4 / 4</td><td>143.8</td><td><span class="good">0.62x</span></td><td>243</td><td>25%</td><td>100%</td></tr></tbody></table></div>
 </section></div>
 
 <section class="card note">

@@ -1,24 +1,69 @@
 {
-  "generated_at": "2026-09-23T17:15:50+00:00",
+  "generated_at": "2026-09-23T21:00:28+00:00",
   "summary": {
-    "n_forecasts": 4,
+    "n_forecasts": 5,
     "n_scored": 0,
-    "n_pending": 4
+    "n_pending": 5
   },
   "nhsn_preliminary_summary": {
-    "n_forecasts": 4,
-    "n_with_data": 4,
-    "n_scored": 13,
-    "n_total": 16,
-    "mean_wis": 206.96,
-    "mean_abs_error": 304.769,
-    "coverage_50": 0.308,
-    "coverage_95": 0.769,
-    "mean_rel_wis": 0.673,
-    "beat_baseline": 3,
-    "n_rel": 4
+    "n_forecasts": 5,
+    "n_with_data": 5,
+    "n_scored": 14,
+    "n_total": 20,
+    "mean_wis": 197.889,
+    "mean_abs_error": 285.571,
+    "coverage_50": 0.357,
+    "coverage_95": 0.786,
+    "mean_rel_wis": 0.606,
+    "beat_baseline": 4,
+    "n_rel": 5
   },
   "forecasts": [
+    {
+      "reference_date": "2026-09-19",
+      "location": "US",
+      "location_name": "US",
+      "model_id": "qwen-agent/qwen3.8-27b",
+      "created_at": "2026-09-23T14:00:25",
+      "medians": {
+        "0": 2000.0,
+        "1": 2450.0,
+        "2": 3050.0,
+        "3": 3900.0
+      },
+      "target_end_dates": {
+        "0": "2026-09-19",
+        "1": "2026-09-26",
+        "2": "2026-10-03",
+        "3": "2026-10-10"
+      },
+      "score": {
+        "scored_horizons": [],
+        "unscored_horizons": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "truth_last_date": "2026-07-04",
+        "observed": {
+          "0": null,
+          "1": null,
+          "2": null,
+          "3": null
+        }
+      },
+      "nhsn_preliminary": {
+        "truth_last_date": "2026-09-19",
+        "n_scored": 1,
+        "mean_wis": 79.963,
+        "rel_wis": 0.338,
+        "baseline_wis": 236.282,
+        "mean_abs_error": 36.0,
+        "coverage_50": 1.0,
+        "coverage_95": 1.0
+      }
+    },
     {
       "reference_date": "2026-09-12",
       "location": "US",
