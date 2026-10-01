@@ -22,7 +22,7 @@
     {
       "model": "you (US)",
       "rank": 1,
-      "mean_wis": 292.113,
+      "mean_wis": 292.112,
       "rel_wis": null,
       "mean_abs_error": 487.5,
       "coverage_50": 0.0,
@@ -46,7 +46,7 @@
   "you": {
     "model": "you (US)",
     "rank": 1,
-    "mean_wis": 292.113,
+    "mean_wis": 292.112,
     "rel_wis": null,
     "mean_abs_error": 487.5,
     "coverage_50": 0.0,
@@ -112,5 +112,5 @@
     ]
   },
   "version": 1,
-  "computed_at": "2026-09-30T21:37:30"
+  "computed_at": "2026-10-01T04:37:58"
 }
