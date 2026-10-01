@@ -1,11 +1,12 @@
 {
   "reference_date": "2026-09-12",
   "location": "US",
-  "scored_horizons": [],
-  "unscored_horizons": [
+  "scored_horizons": [
     0,
     1,
-    2,
+    2
+  ],
+  "unscored_horizons": [
     3
   ],
   "target_end_dates": {
@@ -14,19 +15,89 @@
     "2": "2026-09-26",
     "3": "2026-10-03"
   },
-  "truth_last_date": "2026-07-04",
+  "truth_last_date": "2026-09-26",
   "baseline_wis": null,
   "n_partial": 0,
-  "n_missing": 0,
-  "entries": [],
+  "n_missing": 95,
+  "entries": [
+    {
+      "model": "you (US)",
+      "rank": 1,
+      "mean_wis": 165.511,
+      "rel_wis": null,
+      "mean_abs_error": 271.667,
+      "coverage_50": 1.0,
+      "coverage_95": 1.0,
+      "wis_by_horizon": {
+        "0": 67.015,
+        "1": 160.045,
+        "2": 269.474
+      },
+      "is_you": true
+    }
+  ],
   "hub_medians": {},
   "observed": {
-    "0": null,
-    "1": null,
-    "2": null,
+    "0": 1537.0,
+    "1": 2037.0,
+    "2": 2515.0,
     "3": null
   },
-  "you": null,
+  "you": {
+    "model": "you (US)",
+    "rank": 1,
+    "mean_wis": 165.511,
+    "rel_wis": null,
+    "mean_abs_error": 271.667,
+    "coverage_50": 1.0,
+    "coverage_95": 1.0,
+    "wis_by_horizon": {
+      "0": 67.015,
+      "1": 160.045,
+      "2": 269.474
+    },
+    "is_you": true,
+    "beat": 0,
+    "field": 0,
+    "rows": [
+      {
+        "location": "US",
+        "horizon": 0,
+        "target_end_date": "2026-09-12",
+        "median": 1550.0,
+        "observed": 1537.0,
+        "wis": 67.015,
+        "abs_error": 13.0,
+        "cover_50": true,
+        "cover_95": true,
+        "note": ""
+      },
+      {
+        "location": "US",
+        "horizon": 1,
+        "target_end_date": "2026-09-19",
+        "median": 1750.0,
+        "observed": 2037.0,
+        "wis": 160.045,
+        "abs_error": 287.0,
+        "cover_50": true,
+        "cover_95": true,
+        "note": ""
+      },
+      {
+        "location": "US",
+        "horizon": 2,
+        "target_end_date": "2026-09-26",
+        "median": 2000.0,
+        "observed": 2515.0,
+        "wis": 269.474,
+        "abs_error": 515.0,
+        "cover_50": true,
+        "cover_95": true,
+        "note": ""
+      }
+    ]
+  },
   "version": 1,
-  "computed_at": "2026-09-16T08:24:11"
+  "computed_at": "2026-09-30T21:37:28"
 }

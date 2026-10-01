@@ -1,24 +1,80 @@
 {
-  "generated_at": "2026-09-30T18:02:12+00:00",
+  "generated_at": "2026-10-01T04:37:34+00:00",
   "summary": {
-    "n_forecasts": 5,
+    "n_forecasts": 6,
     "n_scored": 0,
-    "n_pending": 5
+    "n_pending": 6
   },
   "nhsn_preliminary_summary": {
-    "n_forecasts": 5,
-    "n_with_data": 5,
-    "n_scored": 17,
-    "n_total": 20,
-    "mean_wis": 238.32,
-    "mean_abs_error": 344.059,
-    "coverage_50": 0.412,
-    "coverage_95": 0.824,
-    "mean_rel_wis": 0.642,
-    "beat_baseline": 4,
-    "n_rel": 5
+    "n_forecasts": 6,
+    "n_with_data": 6,
+    "n_scored": 18,
+    "n_total": 24,
+    "mean_wis": 230.097,
+    "mean_abs_error": 329.667,
+    "coverage_50": 0.444,
+    "coverage_95": 0.833,
+    "mean_rel_wis": 0.593,
+    "beat_baseline": 5,
+    "n_rel": 6
   },
   "forecasts": [
+    {
+      "reference_date": "2026-09-26",
+      "location": "US",
+      "location_name": "US",
+      "model_id": "qwen-agent/qwen3.8-27b",
+      "created_at": "2026-09-30T21:37:23",
+      "medians": {
+        "0": 2600.0,
+        "1": 3200.0,
+        "2": 4100.0,
+        "3": 6800.0
+      },
+      "target_end_dates": {
+        "0": "2026-09-26",
+        "1": "2026-10-03",
+        "2": "2026-10-10",
+        "3": "2026-10-17"
+      },
+      "score": {
+        "scored_horizons": [
+          0
+        ],
+        "unscored_horizons": [
+          1,
+          2,
+          3
+        ],
+        "truth_last_date": "2026-09-26",
+        "observed": {
+          "0": 2515.0,
+          "1": null,
+          "2": null,
+          "3": null
+        },
+        "you": {
+          "rank": 1,
+          "field": 0,
+          "beat": 0,
+          "mean_wis": 90.291,
+          "rel_wis": null,
+          "mean_abs_error": 85.0,
+          "coverage_50": 1.0,
+          "coverage_95": 1.0
+        }
+      },
+      "nhsn_preliminary": {
+        "truth_last_date": "2026-09-26",
+        "n_scored": 1,
+        "mean_wis": 90.291,
+        "rel_wis": 0.349,
+        "baseline_wis": 259.055,
+        "mean_abs_error": 85.0,
+        "coverage_50": 1.0,
+        "coverage_95": 1.0
+      }
+    },
     {
       "reference_date": "2026-09-19",
       "location": "US",
@@ -38,19 +94,30 @@
         "3": "2026-10-10"
       },
       "score": {
-        "scored_horizons": [],
-        "unscored_horizons": [
+        "scored_horizons": [
           0,
-          1,
+          1
+        ],
+        "unscored_horizons": [
           2,
           3
         ],
-        "truth_last_date": "2026-07-04",
+        "truth_last_date": "2026-09-26",
         "observed": {
-          "0": null,
-          "1": null,
+          "0": 2037.0,
+          "1": 2515.0,
           "2": null,
           "3": null
+        },
+        "you": {
+          "rank": 1,
+          "field": 0,
+          "beat": 0,
+          "mean_wis": 122.222,
+          "rel_wis": null,
+          "mean_abs_error": 51.0,
+          "coverage_50": 1.0,
+          "coverage_95": 1.0
         }
       },
       "nhsn_preliminary": {
@@ -83,19 +150,30 @@
         "3": "2026-10-03"
       },
       "score": {
-        "scored_horizons": [],
-        "unscored_horizons": [
+        "scored_horizons": [
           0,
           1,
-          2,
+          2
+        ],
+        "unscored_horizons": [
           3
         ],
-        "truth_last_date": "2026-07-04",
+        "truth_last_date": "2026-09-26",
         "observed": {
-          "0": null,
-          "1": null,
-          "2": null,
+          "0": 1537.0,
+          "1": 2037.0,
+          "2": 2515.0,
           "3": null
+        },
+        "you": {
+          "rank": 1,
+          "field": 0,
+          "beat": 0,
+          "mean_wis": 165.511,
+          "rel_wis": null,
+          "mean_abs_error": 271.667,
+          "coverage_50": 1.0,
+          "coverage_95": 1.0
         }
       },
       "nhsn_preliminary": {
@@ -128,25 +206,35 @@
         "3": "2026-09-26"
       },
       "score": {
-        "scored_horizons": [],
-        "unscored_horizons": [
+        "scored_horizons": [
           0,
           1,
           2,
           3
         ],
-        "truth_last_date": "2026-07-04",
+        "unscored_horizons": [],
+        "truth_last_date": "2026-09-26",
         "observed": {
-          "0": null,
-          "1": null,
-          "2": null,
-          "3": null
+          "0": 1241.0,
+          "1": 1537.0,
+          "2": 2037.0,
+          "3": 2515.0
+        },
+        "you": {
+          "rank": 1,
+          "field": 0,
+          "beat": 0,
+          "mean_wis": 292.113,
+          "rel_wis": null,
+          "mean_abs_error": 487.5,
+          "coverage_50": 0.0,
+          "coverage_95": 1.0
         }
       },
       "nhsn_preliminary": {
         "truth_last_date": "2026-09-26",
         "n_scored": 4,
-        "mean_wis": 292.112,
+        "mean_wis": 292.113,
         "rel_wis": 0.595,
         "baseline_wis": 490.57,
         "mean_abs_error": 487.5,
@@ -173,19 +261,29 @@
         "3": "2026-09-19"
       },
       "score": {
-        "scored_horizons": [],
-        "unscored_horizons": [
+        "scored_horizons": [
           0,
           1,
           2,
           3
         ],
-        "truth_last_date": "2026-07-04",
+        "unscored_horizons": [],
+        "truth_last_date": "2026-09-26",
         "observed": {
-          "0": null,
-          "1": null,
-          "2": null,
-          "3": null
+          "0": 919.0,
+          "1": 1241.0,
+          "2": 1537.0,
+          "3": 2037.0
+        },
+        "you": {
+          "rank": 1,
+          "field": 0,
+          "beat": 0,
+          "mean_wis": 385.878,
+          "rel_wis": null,
+          "mean_abs_error": 495.25,
+          "coverage_50": 0.25,
+          "coverage_95": 0.25
         }
       },
       "nhsn_preliminary": {
@@ -218,25 +316,35 @@
         "3": "2026-09-12"
       },
       "score": {
-        "scored_horizons": [],
-        "unscored_horizons": [
+        "scored_horizons": [
           0,
           1,
           2,
           3
         ],
-        "truth_last_date": "2026-07-04",
+        "unscored_horizons": [],
+        "truth_last_date": "2026-09-26",
         "observed": {
-          "0": null,
-          "1": null,
-          "2": null,
-          "3": null
+          "0": 874.0,
+          "1": 919.0,
+          "2": 1241.0,
+          "3": 1537.0
+        },
+        "you": {
+          "rank": 1,
+          "field": 0,
+          "beat": 0,
+          "mean_wis": 149.626,
+          "rel_wis": null,
+          "mean_abs_error": 250.25,
+          "coverage_50": 0.25,
+          "coverage_95": 1.0
         }
       },
       "nhsn_preliminary": {
         "truth_last_date": "2026-09-26",
         "n_scored": 4,
-        "mean_wis": 149.627,
+        "mean_wis": 149.626,
         "rel_wis": 0.633,
         "baseline_wis": 236.357,
         "mean_abs_error": 250.25,

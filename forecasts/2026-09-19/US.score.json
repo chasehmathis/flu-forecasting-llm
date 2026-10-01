@@ -1,10 +1,11 @@
 {
   "reference_date": "2026-09-19",
   "location": "US",
-  "scored_horizons": [],
-  "unscored_horizons": [
+  "scored_horizons": [
     0,
-    1,
+    1
+  ],
+  "unscored_horizons": [
     2,
     3
   ],
@@ -14,19 +15,75 @@
     "2": "2026-10-03",
     "3": "2026-10-10"
   },
-  "truth_last_date": "2026-07-04",
+  "truth_last_date": "2026-09-26",
   "baseline_wis": null,
   "n_partial": 0,
-  "n_missing": 0,
-  "entries": [],
+  "n_missing": 95,
+  "entries": [
+    {
+      "model": "you (US)",
+      "rank": 1,
+      "mean_wis": 122.222,
+      "rel_wis": null,
+      "mean_abs_error": 51.0,
+      "coverage_50": 1.0,
+      "coverage_95": 1.0,
+      "wis_by_horizon": {
+        "0": 80.006,
+        "1": 164.439
+      },
+      "is_you": true
+    }
+  ],
   "hub_medians": {},
   "observed": {
-    "0": null,
-    "1": null,
+    "0": 2037.0,
+    "1": 2515.0,
     "2": null,
     "3": null
   },
-  "you": null,
+  "you": {
+    "model": "you (US)",
+    "rank": 1,
+    "mean_wis": 122.222,
+    "rel_wis": null,
+    "mean_abs_error": 51.0,
+    "coverage_50": 1.0,
+    "coverage_95": 1.0,
+    "wis_by_horizon": {
+      "0": 80.006,
+      "1": 164.439
+    },
+    "is_you": true,
+    "beat": 0,
+    "field": 0,
+    "rows": [
+      {
+        "location": "US",
+        "horizon": 0,
+        "target_end_date": "2026-09-19",
+        "median": 2000.0,
+        "observed": 2037.0,
+        "wis": 80.006,
+        "abs_error": 37.0,
+        "cover_50": true,
+        "cover_95": true,
+        "note": ""
+      },
+      {
+        "location": "US",
+        "horizon": 1,
+        "target_end_date": "2026-09-26",
+        "median": 2450.0,
+        "observed": 2515.0,
+        "wis": 164.439,
+        "abs_error": 65.0,
+        "cover_50": true,
+        "cover_95": true,
+        "note": ""
+      }
+    ]
+  },
   "version": 1,
-  "computed_at": "2026-09-23T14:00:26"
+  "computed_at": "2026-09-30T21:37:27"
 }

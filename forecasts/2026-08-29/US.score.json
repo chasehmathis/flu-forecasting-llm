@@ -1,32 +1,116 @@
 {
   "reference_date": "2026-08-29",
   "location": "US",
-  "scored_horizons": [],
-  "unscored_horizons": [
+  "scored_horizons": [
     0,
     1,
     2,
     3
   ],
+  "unscored_horizons": [],
   "target_end_dates": {
     "0": "2026-08-29",
     "1": "2026-09-05",
     "2": "2026-09-12",
     "3": "2026-09-19"
   },
-  "truth_last_date": "2026-07-04",
+  "truth_last_date": "2026-09-26",
   "baseline_wis": null,
   "n_partial": 0,
-  "n_missing": 0,
-  "entries": [],
+  "n_missing": 95,
+  "entries": [
+    {
+      "model": "you (US)",
+      "rank": 1,
+      "mean_wis": 385.878,
+      "rel_wis": null,
+      "mean_abs_error": 495.25,
+      "coverage_50": 0.25,
+      "coverage_95": 0.25,
+      "wis_by_horizon": {
+        "0": 35.865,
+        "1": 251.33,
+        "2": 444.128,
+        "3": 812.189
+      },
+      "is_you": true
+    }
+  ],
   "hub_medians": {},
   "observed": {
-    "0": null,
-    "1": null,
-    "2": null,
-    "3": null
+    "0": 919.0,
+    "1": 1241.0,
+    "2": 1537.0,
+    "3": 2037.0
   },
-  "you": null,
+  "you": {
+    "model": "you (US)",
+    "rank": 1,
+    "mean_wis": 385.878,
+    "rel_wis": null,
+    "mean_abs_error": 495.25,
+    "coverage_50": 0.25,
+    "coverage_95": 0.25,
+    "wis_by_horizon": {
+      "0": 35.865,
+      "1": 251.33,
+      "2": 444.128,
+      "3": 812.189
+    },
+    "is_you": true,
+    "beat": 0,
+    "field": 0,
+    "rows": [
+      {
+        "location": "US",
+        "horizon": 0,
+        "target_end_date": "2026-08-29",
+        "median": 860.0,
+        "observed": 919.0,
+        "wis": 35.865,
+        "abs_error": 59.0,
+        "cover_50": true,
+        "cover_95": true,
+        "note": ""
+      },
+      {
+        "location": "US",
+        "horizon": 1,
+        "target_end_date": "2026-09-05",
+        "median": 883.0,
+        "observed": 1241.0,
+        "wis": 251.33,
+        "abs_error": 358.0,
+        "cover_50": false,
+        "cover_95": false,
+        "note": ""
+      },
+      {
+        "location": "US",
+        "horizon": 2,
+        "target_end_date": "2026-09-12",
+        "median": 955.0,
+        "observed": 1537.0,
+        "wis": 444.128,
+        "abs_error": 582.0,
+        "cover_50": false,
+        "cover_95": false,
+        "note": ""
+      },
+      {
+        "location": "US",
+        "horizon": 3,
+        "target_end_date": "2026-09-19",
+        "median": 1055.0,
+        "observed": 2037.0,
+        "wis": 812.189,
+        "abs_error": 982.0,
+        "cover_50": false,
+        "cover_95": false,
+        "note": ""
+      }
+    ]
+  },
   "version": 1,
-  "computed_at": "2026-08-31T19:23:13"
+  "computed_at": "2026-09-30T21:37:31"
 }
