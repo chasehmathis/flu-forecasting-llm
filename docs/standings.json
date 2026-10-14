@@ -1,9 +1,16 @@
 {
-  "generated_at": "2026-10-14T15:00:12+00:00",
+  "generated_at": "2026-10-14T15:00:42+00:00",
   "summary": {
     "n_forecasts": 7,
-    "n_scored": 0,
-    "n_pending": 7
+    "n_scored": 1,
+    "n_pending": 6,
+    "mean_rel_wis": 0.517,
+    "beat_baseline": 1,
+    "mean_rank": 22.0,
+    "mean_field": 50.0,
+    "beat_share": 0.58,
+    "beat_ensemble": 0,
+    "n_vs_ensemble": 1
   },
   "nhsn_preliminary_summary": {
     "n_forecasts": 7,
@@ -38,19 +45,32 @@
         "3": "2026-10-31"
       },
       "score": {
-        "scored_horizons": [],
+        "scored_horizons": [
+          0
+        ],
         "unscored_horizons": [
-          0,
           1,
           2,
           3
         ],
-        "truth_last_date": "2026-10-03",
+        "truth_last_date": "2026-10-10",
+        "baseline_wis": 429.597,
+        "vs_ensemble": 1.207,
         "observed": {
-          "0": null,
+          "0": 3835.0,
           "1": null,
           "2": null,
           "3": null
+        },
+        "you": {
+          "rank": 22,
+          "field": 50,
+          "beat": 29,
+          "mean_wis": 222.183,
+          "rel_wis": 0.517,
+          "mean_abs_error": 265.0,
+          "coverage_50": 1.0,
+          "coverage_95": 1.0
         }
       },
       "nhsn_preliminary": {
@@ -85,26 +105,26 @@
       "score": {
         "scored_horizons": [
           0,
-          1
+          1,
+          2
         ],
         "unscored_horizons": [
-          2,
           3
         ],
-        "truth_last_date": "2026-10-03",
+        "truth_last_date": "2026-10-10",
         "observed": {
-          "0": 2621.0,
-          "1": 3246.0,
-          "2": null,
+          "0": 2660.0,
+          "1": 3420.0,
+          "2": 3835.0,
           "3": null
         },
         "you": {
           "rank": 1,
           "field": 0,
           "beat": 0,
-          "mean_wis": 104.862,
+          "mean_wis": 158.786,
           "rel_wis": null,
-          "mean_abs_error": 33.5,
+          "mean_abs_error": 181.667,
           "coverage_50": 1.0,
           "coverage_95": 1.0
         }
@@ -142,25 +162,24 @@
         "scored_horizons": [
           0,
           1,
-          2
-        ],
-        "unscored_horizons": [
+          2,
           3
         ],
-        "truth_last_date": "2026-10-03",
+        "unscored_horizons": [],
+        "truth_last_date": "2026-10-10",
         "observed": {
-          "0": 2056.0,
-          "1": 2621.0,
-          "2": 3246.0,
-          "3": null
+          "0": 2070.0,
+          "1": 2660.0,
+          "2": 3420.0,
+          "3": 3835.0
         },
         "you": {
           "rank": 1,
           "field": 0,
           "beat": 0,
-          "mean_wis": 168.987,
+          "mean_wis": 226.069,
           "rel_wis": null,
-          "mean_abs_error": 141.0,
+          "mean_abs_error": 178.75,
           "coverage_50": 1.0,
           "coverage_95": 1.0
         }
@@ -202,20 +221,20 @@
           3
         ],
         "unscored_horizons": [],
-        "truth_last_date": "2026-10-03",
+        "truth_last_date": "2026-10-10",
         "observed": {
-          "0": 1540.0,
-          "1": 2056.0,
-          "2": 2621.0,
-          "3": 3246.0
+          "0": 1554.0,
+          "1": 2070.0,
+          "2": 2660.0,
+          "3": 3420.0
         },
         "you": {
           "rank": 1,
           "field": 0,
           "beat": 0,
-          "mean_wis": 253.101,
+          "mean_wis": 279.872,
           "rel_wis": null,
-          "mean_abs_error": 458.25,
+          "mean_abs_error": 513.5,
           "coverage_50": 0.5,
           "coverage_95": 1.0
         }

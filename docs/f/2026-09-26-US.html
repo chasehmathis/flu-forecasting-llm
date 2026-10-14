@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <a class="tab" role="tab" href="#hub" data-tab="hub">FluSight hub truth</a>
   <a class="tab" role="tab" href="#nhsn" data-tab="nhsn">NHSN (preliminary)</a>
 </nav>
-<div class="pane" id="pane-hub" data-pane="hub"><p class="status bad">Ranked <b>1 of 1</b> teams. Horizons 2, 3 are still waiting on truth.</p>
+<div class="pane" id="pane-hub" data-pane="hub"><p class="status bad">Ranked <b>1 of 1</b> teams. Horizons 3 are still waiting on truth.</p>
 <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-09-26">
 <line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
 <text class="axis" x="46" y="290.0" text-anchor="end">0</text>
@@ -78,20 +78,21 @@ document.addEventListener("DOMContentLoaded", function () {
 <circle class="dot-median" cx="692.8" cy="223.0" r="3.5"/>
 <circle class="dot-median" cx="719.4" cy="205.3" r="3.5"/>
 <circle class="dot-median" cx="746.0" cy="152.1" r="3.5"/>
-<circle class="dot-observed" cx="666.2" cy="234.4" r="4"/>
-<circle class="dot-observed" cx="692.8" cy="222.1" r="4"/>
+<circle class="dot-observed" cx="666.2" cy="233.6" r="4"/>
+<circle class="dot-observed" cx="692.8" cy="218.7" r="4"/>
+<circle class="dot-observed" cx="719.4" cy="210.5" r="4"/>
 </svg>
 <p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval <span class="key k-truth"></span>what happened</p>
-<div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>observed</th></tr></thead><tbody><tr><td>0</td><td>2026-09-26</td><td><b>2,600</b></td><td><b>2,621</b></td></tr><tr><td>+1</td><td>2026-10-03</td><td><b>3,200</b></td><td><b>3,246</b></td></tr><tr><td>+2</td><td>2026-10-10</td><td><b>4,100</b></td><td><span class="muted">pending</span></td></tr><tr><td>+3</td><td>2026-10-17</td><td><b>6,800</b></td><td><span class="muted">pending</span></td></tr></tbody></table></div>
+<div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>observed</th></tr></thead><tbody><tr><td>0</td><td>2026-09-26</td><td><b>2,600</b></td><td><b>2,660</b></td></tr><tr><td>+1</td><td>2026-10-03</td><td><b>3,200</b></td><td><b>3,420</b></td></tr><tr><td>+2</td><td>2026-10-10</td><td><b>4,100</b></td><td><b>3,835</b></td></tr><tr><td>+3</td><td>2026-10-17</td><td><b>6,800</b></td><td><span class="muted">pending</span></td></tr></tbody></table></div>
 
 <section class="card">
   <div class="card-head"><h2>Against the field</h2></div>
   <p class="muted">Every FluSight team scored on the same weeks
-     (2026-09-26, 2026-10-03) with the same truth. 117 team(s) did not submit for this week and 0 covered only some horizons; both are left out of the ranking.</p>
+     (2026-09-26, 2026-10-03, 2026-10-10) with the same truth. 117 team(s) did not submit for this week and 0 covered only some horizons; both are left out of the ranking.</p>
   <div class="scroll"><table class="grid board">
     <thead><tr><th>rank</th><th>model</th><th>WIS</th><th>rel</th>
       <th>MAE</th><th>50%</th><th>95%</th></tr></thead>
-    <tbody><tr class="you"><td>1</td><td>you (US)</td><td>104.9</td><td>&mdash;</td><td>33.5</td><td>100%</td><td>100%</td></tr></tbody>
+    <tbody><tr class="you"><td>1</td><td>you (US)</td><td>158.8</td><td>&mdash;</td><td>181.7</td><td>100%</td><td>100%</td></tr></tbody>
   </table></div>
 </section></div>
 <div class="pane" id="pane-nhsn" data-pane="nhsn">
