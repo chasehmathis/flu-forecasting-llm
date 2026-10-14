@@ -1,0 +1,46 @@
+{
+  "reference_date": "2026-10-10",
+  "location": "US",
+  "scored_horizons": [],
+  "unscored_horizons": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "target_end_dates": {
+    "0": "2026-10-10",
+    "1": "2026-10-17",
+    "2": "2026-10-24",
+    "3": "2026-10-31"
+  },
+  "truth_last_date": "2026-10-03",
+  "baseline_wis": null,
+  "n_partial": 0,
+  "n_missing": 0,
+  "entries": [],
+  "hub_medians": {
+    "FluSight-ensemble": {
+      "0": 3959.0,
+      "1": 4490.0,
+      "2": 5580.0,
+      "3": 6480.0
+    },
+    "FluSight-baseline": {
+      "-1": 3246.0,
+      "0": 3246.0,
+      "1": 3246.0,
+      "2": 3246.0,
+      "3": 3246.0
+    }
+  },
+  "observed": {
+    "0": null,
+    "1": null,
+    "2": null,
+    "3": null
+  },
+  "you": null,
+  "version": 1,
+  "computed_at": "2026-10-13T22:05:24"
+}
