@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>US - 2026-10-17 &middot; flu forecasts</title>
+<link rel="stylesheet" href="../style.css">
+<script>
+document.documentElement.classList.add("js");
+document.addEventListener("DOMContentLoaded", function () {
+  var KEY = "flufc-source", names = ["hub", "nhsn"];
+  function show(name) {
+    if (names.indexOf(name) < 0) name = "hub";
+    document.querySelectorAll("[data-pane]").forEach(function (el) {
+      el.classList.toggle("on", el.dataset.pane === name);
+    });
+    document.querySelectorAll("[data-tab]").forEach(function (el) {
+      var on = el.dataset.tab === name;
+      el.classList.toggle("on", on);
+      el.setAttribute("aria-selected", on);
+    });
+    try { localStorage.setItem(KEY, name); } catch (e) {}
+    document.querySelectorAll("a[href^='f/'], a[href^='../index.html']")
+      .forEach(function (a) { a.hash = name; });
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  show(location.hash.slice(1) || saved);
+  document.querySelectorAll("[data-tab]").forEach(function (el) {
+    el.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      history.replaceState(null, "", "#" + el.dataset.tab);
+      show(el.dataset.tab);
+    });
+  });
+});
+</script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="crumb"><a href="../index.html">flu-forecasting-llm</a>
+       &middot; <a href="https://github.com/chasehmathis/flu-forecasting-llm">source</a></p>
+    <h1>US &mdash; 2026-10-17</h1>
+    <p class="lede">Forecast made 2026-10-21T08:21:07, by <code>qwen-agent/qwen3.8-27b</code>, after 15 tool calls.</p>
+  </div>
+</header>
+<main class="wrap">
+
+<nav class="tabs" role="tablist">
+  <a class="tab" role="tab" href="#hub" data-tab="hub">FluSight hub truth</a>
+  <a class="tab" role="tab" href="#nhsn" data-tab="nhsn">NHSN (preliminary)</a>
+</nav>
+<div class="pane" id="pane-hub" data-pane="hub"><p class="status pending">Waiting on truth. The hub has published through <b>2026-10-10</b>; this forecast covers 2026-10-17, 2026-10-24, 2026-10-31, 2026-11-07.</p>
+<svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-10-17">
+<line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
+<text class="axis" x="46" y="290.0" text-anchor="end">0</text>
+<line class="grid" x1="54" y1="215.1" x2="746" y2="215.1"/>
+<text class="axis" x="46" y="219.1" text-anchor="end">10k</text>
+<line class="grid" x1="54" y1="144.2" x2="746" y2="144.2"/>
+<text class="axis" x="46" y="148.2" text-anchor="end">20k</text>
+<line class="grid" x1="54" y1="73.3" x2="746" y2="73.3"/>
+<text class="axis" x="46" y="77.3" text-anchor="end">30k</text>
+<line class="grid" x1="54" y1="2.4" x2="746" y2="2.4"/>
+<text class="axis" x="46" y="6.4" text-anchor="end">40k</text>
+<text class="axis" x="54.0" y="304.0" text-anchor="start">18 Apr</text>
+<text class="axis" x="125.6" y="304.0" text-anchor="middle">9 May</text>
+<text class="axis" x="197.2" y="304.0" text-anchor="middle">30 May</text>
+<text class="axis" x="268.8" y="304.0" text-anchor="middle">20 Jun</text>
+<text class="axis" x="340.3" y="304.0" text-anchor="middle">11 Jul</text>
+<text class="axis" x="411.9" y="304.0" text-anchor="middle">1 Aug</text>
+<text class="axis" x="483.5" y="304.0" text-anchor="middle">22 Aug</text>
+<text class="axis" x="555.1" y="304.0" text-anchor="middle">12 Sep</text>
+<text class="axis" x="626.7" y="304.0" text-anchor="middle">3 Oct</text>
+<text class="axis" x="698.3" y="304.0" text-anchor="middle">24 Oct</text>
+<polygon class="band-95" points="650.6,258.8 674.4,221.5 698.3,184.5 722.1,126.2 746.0,44.9 746.0,257.0 722.1,259.7 698.3,263.1 674.4,266.1 650.6,258.8"/>
+<polygon class="band-50" points="650.6,258.8 674.4,242.2 698.3,223.7 722.1,197.6 746.0,165.6 746.0,227.9 722.1,238.4 698.3,248.7 674.4,256.7 650.6,258.8"/>
+<polyline class="line-history" fill="none" points="54.0,272.2 77.9,272.6 101.7,274.3 125.6,275.5 149.4,276.6 173.3,277.1 197.2,278.4 221.0,278.6 244.9,279.8 268.8,280.4 292.6,280.7 316.5,280.8 340.3,280.7 364.2,281.3 388.1,281.1 411.9,281.3 435.8,281.5 459.7,281.1 483.5,279.8 507.4,279.5 531.2,277.2 555.1,275.0 579.0,271.3 602.8,267.1 626.7,261.8 650.6,258.8"/>
+<polyline class="line-other other-0" fill="none" points="650.6,258.8 674.4,258.8 698.3,258.8 722.1,258.8 746.0,258.8"/>
+<polyline class="line-other other-1" fill="none" points="650.6,258.8 674.4,251.8 698.3,245.7 722.1,237.9 746.0,230.3"/>
+<polyline class="line-median" fill="none" points="650.6,258.8 674.4,250.2 698.3,237.8 722.1,221.1 746.0,202.3"/>
+<circle class="dot-median" cx="674.4" cy="250.2" r="3.5"/>
+<circle class="dot-median" cx="698.3" cy="237.8" r="3.5"/>
+<circle class="dot-median" cx="722.1" cy="221.1" r="3.5"/>
+<circle class="dot-median" cx="746.0" cy="202.3" r="3.5"/>
+</svg>
+<p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval <span class="key k-other other-0"></span>FluSight-baseline <span class="key k-other other-1"></span>FluSight-ensemble</p>
+<div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>baseline</th><th>ensemble</th></tr></thead><tbody><tr><td>0</td><td>2026-10-17</td><td><b>5,050</b></td><td>3,835 <span class="muted">(1.32x)</span></td><td>4,831 <span class="muted">(1.05x)</span></td></tr><tr><td>+1</td><td>2026-10-24</td><td><b>6,800</b></td><td>3,835 <span class="muted">(1.77x)</span></td><td>5,679 <span class="muted">(1.20x)</span></td></tr><tr><td>+2</td><td>2026-10-31</td><td><b>9,150</b></td><td>3,835 <span class="muted">(2.39x)</span></td><td>6,785 <span class="muted">(1.35x)</span></td></tr><tr><td>+3</td><td>2026-11-07</td><td><b>11,800</b></td><td>3,835 <span class="muted">(3.08x)</span></td><td>7,863 <span class="muted">(1.50x)</span></td></tr></tbody></table></div></div>
+<div class="pane" id="pane-nhsn" data-pane="nhsn">
+<p class="status pending">Testing numbers. Scored against the latest NHSN
+   release, published through <b>2026-10-10</b>, which the
+   CDC still revises for recent weeks. Out of season there is no FluSight field
+   to rank against, so &ldquo;vs. flat&rdquo; is a flat baseline built here
+   from the last NHSN week before each reference date &mdash; not
+   FluSight-baseline. The hub tab is the official record.</p>
+<p class="status pending">NHSN has published through <b>2026-10-10</b>; this forecast covers 2026-10-17, 2026-10-24, 2026-10-31, 2026-11-07.</p>
+<svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-10-17">
+<line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
+<text class="axis" x="46" y="290.0" text-anchor="end">0</text>
+<line class="grid" x1="54" y1="215.1" x2="746" y2="215.1"/>
+<text class="axis" x="46" y="219.1" text-anchor="end">10k</text>
+<line class="grid" x1="54" y1="144.2" x2="746" y2="144.2"/>
+<text class="axis" x="46" y="148.2" text-anchor="end">20k</text>
+<line class="grid" x1="54" y1="73.3" x2="746" y2="73.3"/>
+<text class="axis" x="46" y="77.3" text-anchor="end">30k</text>
+<line class="grid" x1="54" y1="2.4" x2="746" y2="2.4"/>
+<text class="axis" x="46" y="6.4" text-anchor="end">40k</text>
+<text class="axis" x="54.0" y="304.0" text-anchor="start">18 Apr</text>
+<text class="axis" x="125.6" y="304.0" text-anchor="middle">9 May</text>
+<text class="axis" x="197.2" y="304.0" text-anchor="middle">30 May</text>
+<text class="axis" x="268.8" y="304.0" text-anchor="middle">20 Jun</text>
+<text class="axis" x="340.3" y="304.0" text-anchor="middle">11 Jul</text>
+<text class="axis" x="411.9" y="304.0" text-anchor="middle">1 Aug</text>
+<text class="axis" x="483.5" y="304.0" text-anchor="middle">22 Aug</text>
+<text class="axis" x="555.1" y="304.0" text-anchor="middle">12 Sep</text>
+<text class="axis" x="626.7" y="304.0" text-anchor="middle">3 Oct</text>
+<text class="axis" x="698.3" y="304.0" text-anchor="middle">24 Oct</text>
+<polygon class="band-95" points="650.6,258.8 674.4,221.5 698.3,184.5 722.1,126.2 746.0,44.9 746.0,257.0 722.1,259.7 698.3,263.1 674.4,266.1 650.6,258.8"/>
+<polygon class="band-50" points="650.6,258.8 674.4,242.2 698.3,223.7 722.1,197.6 746.0,165.6 746.0,227.9 722.1,238.4 698.3,248.7 674.4,256.7 650.6,258.8"/>
+<polyline class="line-history" fill="none" points="54.0,272.2 77.9,272.6 101.7,274.3 125.6,275.5 149.4,276.6 173.3,277.1 197.2,278.4 221.0,278.6 244.9,279.8 268.8,280.4 292.6,280.7 316.5,280.8 340.3,280.7 364.2,281.3 388.1,281.1 411.9,281.3 435.8,281.5 459.7,281.1 483.5,279.8 507.4,279.5 531.2,277.2 555.1,275.0 579.0,271.3 602.8,267.1 626.7,261.8 650.6,258.8"/>
+<polyline class="line-other other-0" fill="none" points="650.6,258.8 674.4,258.8 698.3,258.8 722.1,258.8 746.0,258.8"/>
+<polyline class="line-other other-1" fill="none" points="650.6,258.8 674.4,251.8 698.3,245.7 722.1,237.9 746.0,230.3"/>
+<polyline class="line-median" fill="none" points="650.6,258.8 674.4,250.2 698.3,237.8 722.1,221.1 746.0,202.3"/>
+<circle class="dot-median" cx="674.4" cy="250.2" r="3.5"/>
+<circle class="dot-median" cx="698.3" cy="237.8" r="3.5"/>
+<circle class="dot-median" cx="722.1" cy="221.1" r="3.5"/>
+<circle class="dot-median" cx="746.0" cy="202.3" r="3.5"/>
+</svg>
+<p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval <span class="key k-other other-0"></span>FluSight-baseline <span class="key k-other other-1"></span>FluSight-ensemble</p>
+<div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>NHSN</th><th>WIS</th><th>abs error</th><th>in 50%</th><th>in 95%</th></tr></thead><tbody><tr><td>0</td><td>2026-10-17</td><td><b>5,050</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+1</td><td>2026-10-24</td><td><b>6,800</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+2</td><td>2026-10-31</td><td><b>9,150</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+3</td><td>2026-11-07</td><td><b>11,800</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr></tbody></table></div></div>
+<div class="why"><h3>Why this forecast</h3><p>Anchor: the statistical-model consensus (h0 5348, h1 8117, h2 13225, h3 19112) vs the FluSight hub ensemble (h0 4831, h1 5679, h2 6785, h3 7863). The last observed week (2026-10-10) is 3835 and provisional, so it is a floor, not a centre. I split the gap between the two anchors but leaned toward the statistical models because the season is starting early and rising unusually fast: ILI has climbed from 0.87% (Aug 8) to 2.07% (Oct 10), and Truveta reports late-September influenza-associated hospitalization rates ~3x higher than the same point in the prior six seasons, with a rise 2.5x faster. That early/fast start supports the higher seasonal/gbt/loglinear estimates over the hub&#x27;s flatter trajectory. Medians: h0 5050, h1 6800, h2 9150, h3 11800. Intervals are right-skewed (upper tail ~1.9-2.5x the median, lower tail ~0.5-0.6x) and widen with horizon (sigma 0.30 -&gt; 0.54), reflecting the large method disagreement at h2/h3 (up to 2.2x spread), the inflection risk as flu accelerates, and the fact that recent weeks revise upward as late reports arrive.</p></div>
+
+<section class="card">
+  <div class="card-head"><h2>The submission</h2></div>
+  <p class="muted">The model states all 23 FluSight quantile levels itself, so
+     the distribution below is its own and not an interpolation of a few
+     anchors. Five of the 23 are shown; the rest are in the CSV.</p>
+  <div class="scroll"><table class="grid">
+    <thead><tr><th>horizon</th><th>week ending</th><th>2.5%</th><th>25%</th><th>median</th><th>75%</th><th>97.5%</th></tr></thead><tbody><tr><td>0</td><td>2026-10-17</td><td>2,805</td><td>4,126</td><td>5,050</td><td>6,182</td><td>9,092</td></tr><tr><td>+1</td><td>2026-10-24</td><td>3,229</td><td>5,264</td><td>6,800</td><td>8,785</td><td>14,321</td></tr><tr><td>+2</td><td>2026-10-31</td><td>3,714</td><td>6,711</td><td>9,150</td><td>12,476</td><td>22,541</td></tr><tr><td>+3</td><td>2026-11-07</td><td>4,095</td><td>8,200</td><td>11,800</td><td>16,980</td><td>34,005</td></tr></tbody>
+  </table></div>
+</section>
+
+<section class="card">
+  <div class="card-head"><h2>Provenance</h2></div>
+  <table class="grid meta"><tbody><tr><th>made</th><td>2026-10-21T08:21:07</td></tr><tr><th>model</th><td>qwen-agent/qwen3.8-27b</td></tr><tr><th>stopped</th><td>terminal</td></tr><tr><th>tool calls</th><td>15</td></tr><tr><th>wall clock</th><td>556s</td></tr><tr><th>tokens</th><td>15,053 prompt / 25,576 completion</td></tr><tr><th>tools used</th><td>calculate &times;5, compare_forecast_models, fetch_url &times;3, get_flu_hospitalizations, get_hub_forecasts, get_ili, search_web &times;2, submit_forecast</td></tr></tbody></table>
+  <p class="muted"><a href="https://github.com/chasehmathis/flu-forecasting-llm/blob/main/forecasts/2026-10-17/US.csv">the submission CSV</a> as it was
+     written, in the repository.</p>
+</section>
+</main>
+<footer class="wrap">
+  <p class="muted">Forecasts are made by a locally served Qwen with tools, and
+     scored with the weighted interval score against the FluSight hub's
+     published truth. Everything here is generated from the CSVs in
+     <code>forecasts/</code> by <code>flufc site</code>.</p>
+</footer>
+</body>
+</html>

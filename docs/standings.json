@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-10-14T15:00:42+00:00",
+  "generated_at": "2026-10-21T15:21:18+00:00",
   "summary": {
-    "n_forecasts": 7,
+    "n_forecasts": 8,
     "n_scored": 1,
-    "n_pending": 6,
+    "n_pending": 7,
     "mean_rel_wis": 0.517,
     "beat_baseline": 1,
     "mean_rank": 22.0,
@@ -13,10 +13,10 @@
     "n_vs_ensemble": 1
   },
   "nhsn_preliminary_summary": {
-    "n_forecasts": 7,
+    "n_forecasts": 8,
     "n_with_data": 7,
     "n_scored": 24,
-    "n_total": 28,
+    "n_total": 32,
     "mean_wis": 261.572,
     "mean_abs_error": 366.542,
     "coverage_50": 0.5,
@@ -26,6 +26,45 @@
     "n_rel": 7
   },
   "forecasts": [
+    {
+      "reference_date": "2026-10-17",
+      "location": "US",
+      "location_name": "US",
+      "model_id": "qwen-agent/qwen3.8-27b",
+      "created_at": "2026-10-21T08:21:07",
+      "medians": {
+        "0": 5050.0,
+        "1": 6800.0,
+        "2": 9150.0,
+        "3": 11800.0
+      },
+      "target_end_dates": {
+        "0": "2026-10-17",
+        "1": "2026-10-24",
+        "2": "2026-10-31",
+        "3": "2026-11-07"
+      },
+      "score": {
+        "scored_horizons": [],
+        "unscored_horizons": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "truth_last_date": "2026-10-10",
+        "observed": {
+          "0": null,
+          "1": null,
+          "2": null,
+          "3": null
+        }
+      },
+      "nhsn_preliminary": {
+        "truth_last_date": "2026-10-10",
+        "n_scored": 0
+      }
+    },
     {
       "reference_date": "2026-10-10",
       "location": "US",

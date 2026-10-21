@@ -1,0 +1,47 @@
+{
+  "reference_date": "2026-10-17",
+  "location": "US",
+  "location_name": "US",
+  "target": "wk inc flu hosp",
+  "model_id": "qwen-agent/qwen3.8-27b",
+  "created_at": "2026-10-21T08:21:07",
+  "rationale": "Anchor: the statistical-model consensus (h0 5348, h1 8117, h2 13225, h3 19112) vs the FluSight hub ensemble (h0 4831, h1 5679, h2 6785, h3 7863). The last observed week (2026-10-10) is 3835 and provisional, so it is a floor, not a centre. I split the gap between the two anchors but leaned toward the statistical models because the season is starting early and rising unusually fast: ILI has climbed from 0.87% (Aug 8) to 2.07% (Oct 10), and Truveta reports late-September influenza-associated hospitalization rates ~3x higher than the same point in the prior six seasons, with a rise 2.5x faster. That early/fast start supports the higher seasonal/gbt/loglinear estimates over the hub's flatter trajectory. Medians: h0 5050, h1 6800, h2 9150, h3 11800. Intervals are right-skewed (upper tail ~1.9-2.5x the median, lower tail ~0.5-0.6x) and widen with horizon (sigma 0.30 -> 0.54), reflecting the large method disagreement at h2/h3 (up to 2.2x spread), the inflection risk as flu accelerates, and the fact that recent weeks revise upward as late reports arrive.",
+  "medians": {
+    "0": 5050.0,
+    "1": 6800.0,
+    "2": 9150.0,
+    "3": 11800.0
+  },
+  "target_end_dates": {
+    "0": "2026-10-17",
+    "1": "2026-10-24",
+    "2": "2026-10-31",
+    "3": "2026-11-07"
+  },
+  "csv": "US.csv",
+  "run": {
+    "stopped": "terminal",
+    "tool_calls": 15,
+    "seconds": 555.5,
+    "prompt_tokens": 15053,
+    "completion_tokens": 25576,
+    "tools": [
+      "get_flu_hospitalizations",
+      "compare_forecast_models",
+      "get_hub_forecasts",
+      "get_ili",
+      "search_web",
+      "search_web",
+      "fetch_url",
+      "fetch_url",
+      "fetch_url",
+      "calculate",
+      "calculate",
+      "calculate",
+      "calculate",
+      "calculate",
+      "submit_forecast"
+    ],
+    "transcript": "/accounts/grad/cmathis/flu-forecasting-llm/outputs/runs/forecast-20261021-082107/transcript.json"
+  }
+}
