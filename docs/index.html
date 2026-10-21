@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <p class="crumb"><a href="index.html">flu-forecasting-llm</a>
        &middot; <a href="https://github.com/chasehmathis/flu-forecasting-llm">source</a></p>
     <h1>Flu forecasts</h1>
-    <p class="lede">A language model forecasts US influenza hospital admissions every week, and is scored against the FluSight-ensemble and the forty-odd other teams who submit to the CDC's FluSight hub. 8 forecast(s) on the record. Rebuilt 21 Oct 2026, 15:21 UTC.</p>
+    <p class="lede">A language model forecasts US influenza hospital admissions every week, and is scored against the FluSight-ensemble and the forty-odd other teams who submit to the CDC's FluSight hub. 8 forecast(s) on the record. Rebuilt 21 Oct 2026, 17:24 UTC.</p>
   </div>
 </header>
 <main class="wrap">
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <a class="tab" role="tab" href="#hub" data-tab="hub">FluSight hub truth</a>
   <a class="tab" role="tab" href="#nhsn" data-tab="nhsn">NHSN (preliminary)</a>
 </nav>
-<div class="pane" id="pane-hub" data-pane="hub"><div class="strip"><div class="stat"><b>0.52x</b><span>mean WIS vs. baseline</span></div><div class="stat"><b>1/1</b><span>beat the baseline</span></div><div class="stat"><b>22</b><span>mean rank of ~51</span></div><div class="stat"><b>58%</b><span>of teams beaten</span></div><div class="stat"><b>0/1</b><span>beat the ensemble</span></div><div class="stat"><b>7</b><span>still pending</span></div></div>
+<div class="pane" id="pane-hub" data-pane="hub"><div class="strip"><div class="stat"><b>0.49x</b><span>mean WIS vs. baseline</span></div><div class="stat"><b>2/2</b><span>beat the baseline</span></div><div class="stat"><b>28</b><span>mean rank of ~56</span></div><div class="stat"><b>50%</b><span>of teams beaten</span></div><div class="stat"><b>0/2</b><span>beat the ensemble</span></div><div class="stat"><b>6</b><span>still pending</span></div></div>
 
 <section class="card">
   <div class="card-head">
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <span class="tag">latest forecast</span></h2>
     <a class="more" href="f/2026-10-17-US.html">full detail &rarr;</a>
   </div>
-  <p class="status pending">Waiting on truth. The hub has published through <b>2026-10-10</b>; this forecast covers 2026-10-17, 2026-10-24, 2026-10-31, 2026-11-07.</p>
+  <p class="status good">Ranked <b>41 of 60</b> teams &middot; WIS <b>0.61x</b> the flat baseline (better than doing nothing) &middot; did not beat the hub ensemble (1.46x). Horizons 1, 2, 3 are still waiting on truth.</p>
   <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-10-17">
 <line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
 <text class="axis" x="46" y="290.0" text-anchor="end">0</text>
@@ -72,76 +72,31 @@ document.addEventListener("DOMContentLoaded", function () {
 <text class="axis" x="46" y="77.3" text-anchor="end">30k</text>
 <line class="grid" x1="54" y1="2.4" x2="746" y2="2.4"/>
 <text class="axis" x="46" y="6.4" text-anchor="end">40k</text>
-<text class="axis" x="54.0" y="304.0" text-anchor="start">18 Apr</text>
-<text class="axis" x="125.6" y="304.0" text-anchor="middle">9 May</text>
-<text class="axis" x="197.2" y="304.0" text-anchor="middle">30 May</text>
-<text class="axis" x="268.8" y="304.0" text-anchor="middle">20 Jun</text>
-<text class="axis" x="340.3" y="304.0" text-anchor="middle">11 Jul</text>
-<text class="axis" x="411.9" y="304.0" text-anchor="middle">1 Aug</text>
-<text class="axis" x="483.5" y="304.0" text-anchor="middle">22 Aug</text>
-<text class="axis" x="555.1" y="304.0" text-anchor="middle">12 Sep</text>
-<text class="axis" x="626.7" y="304.0" text-anchor="middle">3 Oct</text>
-<text class="axis" x="698.3" y="304.0" text-anchor="middle">24 Oct</text>
-<polygon class="band-95" points="650.6,258.8 674.4,221.5 698.3,184.5 722.1,126.2 746.0,44.9 746.0,257.0 722.1,259.7 698.3,263.1 674.4,266.1 650.6,258.8"/>
-<polygon class="band-50" points="650.6,258.8 674.4,242.2 698.3,223.7 722.1,197.6 746.0,165.6 746.0,227.9 722.1,238.4 698.3,248.7 674.4,256.7 650.6,258.8"/>
-<polyline class="line-history" fill="none" points="54.0,272.2 77.9,272.6 101.7,274.3 125.6,275.5 149.4,276.6 173.3,277.1 197.2,278.4 221.0,278.6 244.9,279.8 268.8,280.4 292.6,280.7 316.5,280.8 340.3,280.7 364.2,281.3 388.1,281.1 411.9,281.3 435.8,281.5 459.7,281.1 483.5,279.8 507.4,279.5 531.2,277.2 555.1,275.0 579.0,271.3 602.8,267.1 626.7,261.8 650.6,258.8"/>
-<polyline class="line-other other-0" fill="none" points="650.6,258.8 674.4,258.8 698.3,258.8 722.1,258.8 746.0,258.8"/>
-<polyline class="line-other other-1" fill="none" points="650.6,258.8 674.4,251.8 698.3,245.7 722.1,237.9 746.0,230.3"/>
-<polyline class="line-median" fill="none" points="650.6,258.8 674.4,250.2 698.3,237.8 722.1,221.1 746.0,202.3"/>
-<circle class="dot-median" cx="674.4" cy="250.2" r="3.5"/>
-<circle class="dot-median" cx="698.3" cy="237.8" r="3.5"/>
-<circle class="dot-median" cx="722.1" cy="221.1" r="3.5"/>
+<text class="axis" x="54.0" y="304.0" text-anchor="start">25 Apr</text>
+<text class="axis" x="128.1" y="304.0" text-anchor="middle">16 May</text>
+<text class="axis" x="202.3" y="304.0" text-anchor="middle">6 Jun</text>
+<text class="axis" x="276.4" y="304.0" text-anchor="middle">27 Jun</text>
+<text class="axis" x="350.6" y="304.0" text-anchor="middle">18 Jul</text>
+<text class="axis" x="424.7" y="304.0" text-anchor="middle">8 Aug</text>
+<text class="axis" x="498.9" y="304.0" text-anchor="middle">29 Aug</text>
+<text class="axis" x="573.0" y="304.0" text-anchor="middle">19 Sep</text>
+<text class="axis" x="647.1" y="304.0" text-anchor="middle">10 Oct</text>
+<text class="axis" x="721.3" y="304.0" text-anchor="middle">31 Oct</text>
+<polygon class="band-95" points="671.9,252.7 671.9,221.5 696.6,184.5 721.3,126.2 746.0,44.9 746.0,257.0 721.3,259.7 696.6,263.1 671.9,266.1 671.9,252.7"/>
+<polygon class="band-50" points="671.9,252.7 671.9,242.2 696.6,223.7 721.3,197.6 746.0,165.6 746.0,227.9 721.3,238.4 696.6,248.7 671.9,256.7 671.9,252.7"/>
+<polyline class="line-history" fill="none" points="54.0,272.7 78.7,274.3 103.4,275.5 128.1,276.6 152.9,277.1 177.6,278.4 202.3,278.6 227.0,279.8 251.7,280.4 276.4,280.7 301.1,280.8 325.9,280.7 350.6,281.3 375.3,281.1 400.0,281.3 424.7,281.5 449.4,281.1 474.1,279.8 498.9,279.4 523.6,277.2 548.3,275.0 573.0,271.3 597.7,267.0 622.4,261.2 647.1,257.3 671.9,252.7"/>
+<polyline class="line-other other-0" fill="none" points="671.9,252.7 671.9,258.8 696.6,258.8 721.3,258.8 746.0,258.8"/>
+<polyline class="line-other other-1" fill="none" points="671.9,252.7 671.9,251.8 696.6,245.7 721.3,237.9 746.0,230.3"/>
+<polyline class="line-median" fill="none" points="671.9,252.7 671.9,250.2 696.6,237.8 721.3,221.1 746.0,202.3"/>
+<circle class="dot-median" cx="671.9" cy="250.2" r="3.5"/>
+<circle class="dot-median" cx="696.6" cy="237.8" r="3.5"/>
+<circle class="dot-median" cx="721.3" cy="221.1" r="3.5"/>
 <circle class="dot-median" cx="746.0" cy="202.3" r="3.5"/>
-</svg>
-  <p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval <span class="key k-other other-0"></span>FluSight-baseline <span class="key k-other other-1"></span>FluSight-ensemble</p>
-  <div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>baseline</th><th>ensemble</th></tr></thead><tbody><tr><td>0</td><td>2026-10-17</td><td><b>5,050</b></td><td>3,835 <span class="muted">(1.32x)</span></td><td>4,831 <span class="muted">(1.05x)</span></td></tr><tr><td>+1</td><td>2026-10-24</td><td><b>6,800</b></td><td>3,835 <span class="muted">(1.77x)</span></td><td>5,679 <span class="muted">(1.20x)</span></td></tr><tr><td>+2</td><td>2026-10-31</td><td><b>9,150</b></td><td>3,835 <span class="muted">(2.39x)</span></td><td>6,785 <span class="muted">(1.35x)</span></td></tr><tr><td>+3</td><td>2026-11-07</td><td><b>11,800</b></td><td>3,835 <span class="muted">(3.08x)</span></td><td>7,863 <span class="muted">(1.50x)</span></td></tr></tbody></table></div>
-  <div class="why"><h3>Why this forecast</h3><p>Anchor: the statistical-model consensus (h0 5348, h1 8117, h2 13225, h3 19112) vs the FluSight hub ensemble (h0 4831, h1 5679, h2 6785, h3 7863). The last observed week (2026-10-10) is 3835 and provisional, so it is a floor, not a centre. I split the gap between the two anchors but leaned toward the statistical models because the season is starting early and rising unusually fast: ILI has climbed from 0.87% (Aug 8) to 2.07% (Oct 10), and Truveta reports late-September influenza-associated hospitalization rates ~3x higher than the same point in the prior six seasons, with a rise 2.5x faster. That early/fast start supports the higher seasonal/gbt/loglinear estimates over the hub&#x27;s flatter trajectory. Medians: h0 5050, h1 6800, h2 9150, h3 11800. Intervals are right-skewed (upper tail ~1.9-2.5x the median, lower tail ~0.5-0.6x) and widen with horizon (sigma 0.30 -&gt; 0.54), reflecting the large method disagreement at h2/h3 (up to 2.2x spread), the inflection risk as flu accelerates, and the fact that recent weeks revise upward as late reports arrive.</p></div>
-</section>
-
-<section class="card">
-  <div class="card-head">
-    <h2>US
-        <span class="muted">week of 2026-10-10</span>
-        <span class="tag">most recent result</span></h2>
-    <a class="more" href="f/2026-10-10-US.html">full detail &rarr;</a>
-  </div>
-  <p class="status good">Ranked <b>22 of 51</b> teams &middot; WIS <b>0.52x</b> the flat baseline (better than doing nothing) &middot; did not beat the hub ensemble (1.21x). Horizons 1, 2, 3 are still waiting on truth.</p>
-  <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-10-10">
-<line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
-<text class="axis" x="46" y="290.0" text-anchor="end">0</text>
-<line class="grid" x1="54" y1="216.3" x2="746" y2="216.3"/>
-<text class="axis" x="46" y="220.3" text-anchor="end">5.0k</text>
-<line class="grid" x1="54" y1="146.7" x2="746" y2="146.7"/>
-<text class="axis" x="46" y="150.7" text-anchor="end">10k</text>
-<line class="grid" x1="54" y1="77.0" x2="746" y2="77.0"/>
-<text class="axis" x="46" y="81.0" text-anchor="end">15k</text>
-<line class="grid" x1="54" y1="7.4" x2="746" y2="7.4"/>
-<text class="axis" x="46" y="11.4" text-anchor="end">20k</text>
-<text class="axis" x="54.0" y="304.0" text-anchor="start">18 Apr</text>
-<text class="axis" x="128.1" y="304.0" text-anchor="middle">9 May</text>
-<text class="axis" x="202.3" y="304.0" text-anchor="middle">30 May</text>
-<text class="axis" x="276.4" y="304.0" text-anchor="middle">20 Jun</text>
-<text class="axis" x="350.6" y="304.0" text-anchor="middle">11 Jul</text>
-<text class="axis" x="424.7" y="304.0" text-anchor="middle">1 Aug</text>
-<text class="axis" x="498.9" y="304.0" text-anchor="middle">22 Aug</text>
-<text class="axis" x="573.0" y="304.0" text-anchor="middle">12 Sep</text>
-<text class="axis" x="647.1" y="304.0" text-anchor="middle">3 Oct</text>
-<text class="axis" x="721.3" y="304.0" text-anchor="middle">24 Oct</text>
-<polygon class="band-95" points="671.9,232.6 671.9,198.1 696.6,163.0 721.3,112.4 746.0,44.9 746.0,235.7 721.3,240.2 696.6,245.0 671.9,248.9 671.9,232.6"/>
-<polygon class="band-50" points="671.9,232.6 671.9,219.8 696.6,200.2 721.3,173.9 746.0,141.9 746.0,201.9 721.3,215.1 696.6,227.2 671.9,236.7 671.9,232.6"/>
-<polyline class="line-history" fill="none" points="54.0,258.8 78.7,259.8 103.4,263.0 128.1,265.3 152.9,267.6 177.6,268.4 202.3,271.1 227.0,271.4 251.7,273.9 276.4,274.9 301.1,275.5 325.9,275.8 350.6,275.5 375.3,276.7 400.0,276.3 424.7,276.8 449.4,277.2 474.1,276.3 498.9,273.8 523.6,273.2 548.3,268.6 573.0,264.3 597.7,257.2 622.4,248.9 647.1,238.4 671.9,232.6"/>
-<polyline class="line-other other-0" fill="none" points="671.9,232.6 671.9,240.8 696.6,240.8 721.3,240.8 746.0,240.8"/>
-<polyline class="line-other other-1" fill="none" points="671.9,232.6 671.9,230.8 696.6,223.4 721.3,208.3 746.0,195.7"/>
-<polyline class="line-median" fill="none" points="671.9,232.6 671.9,228.9 696.6,214.9 721.3,196.8 746.0,175.9"/>
-<circle class="dot-median" cx="671.9" cy="228.9" r="3.5"/>
-<circle class="dot-median" cx="696.6" cy="214.9" r="3.5"/>
-<circle class="dot-median" cx="721.3" cy="196.8" r="3.5"/>
-<circle class="dot-median" cx="746.0" cy="175.9" r="3.5"/>
-<circle class="dot-observed" cx="671.9" cy="232.6" r="4"/>
+<circle class="dot-observed" cx="671.9" cy="252.7" r="4"/>
 </svg>
   <p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval <span class="key k-other other-0"></span>FluSight-baseline <span class="key k-other other-1"></span>FluSight-ensemble <span class="key k-truth"></span>what happened</p>
-  <div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>baseline</th><th>ensemble</th><th>observed</th></tr></thead><tbody><tr><td>0</td><td>2026-10-10</td><td><b>4,100</b></td><td>3,246 <span class="muted">(1.26x)</span></td><td>3,959 <span class="muted">(1.04x)</span></td><td><b>3,835</b></td></tr><tr><td>+1</td><td>2026-10-17</td><td><b>5,100</b></td><td>3,246 <span class="muted">(1.57x)</span></td><td>4,490 <span class="muted">(1.14x)</span></td><td><span class="muted">pending</span></td></tr><tr><td>+2</td><td>2026-10-24</td><td><b>6,400</b></td><td>3,246 <span class="muted">(1.97x)</span></td><td>5,580 <span class="muted">(1.15x)</span></td><td><span class="muted">pending</span></td></tr><tr><td>+3</td><td>2026-10-31</td><td><b>7,900</b></td><td>3,246 <span class="muted">(2.43x)</span></td><td>6,480 <span class="muted">(1.22x)</span></td><td><span class="muted">pending</span></td></tr></tbody></table></div>
-  <div class="why"><h3>Why this forecast</h3><p>Anchor: the FluSight hub ensemble (medians 3959/4490/5580/6480 for h0-h3), cross-checked against the statistical model comparison where gbt had the best backtest MAE (556 at h3) and medians ran 4476/6357/10997/15961. The last observed week (3246, +24% wk/wk) is provisional and a floor, and ILI is still rising (1.85% and climbing), so I moved medians modestly above the ensemble: 4100/5100/6400/7900, i.e. roughly +4% at h0 to +22% at h3, tracking the observed ~24-27% weekly growth with mild deceleration as the season matures. I did not go as high as gbt/loglinear because the ensemble&#x27;s slower implied growth is a reasonable prior for the deceleration that typically follows the initial exponential phase, and the methods disagree by up to 2.4x at h3. Intervals are lognormal-shaped, right-skewed, and widened with horizon (95% spans ~2.4x at h0 to ~2.6x at h3, with 97.5% bounds reaching 6839/9782/14114/20031) to cover the method disagreement, the early-season inflection risk, and upward revision of recent weeks.</p></div>
+  <div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>baseline</th><th>ensemble</th><th>observed</th></tr></thead><tbody><tr><td>0</td><td>2026-10-17</td><td><b>5,050</b></td><td>3,835 <span class="muted">(1.32x)</span></td><td>4,831 <span class="muted">(1.05x)</span></td><td><b>4,698</b></td></tr><tr><td>+1</td><td>2026-10-24</td><td><b>6,800</b></td><td>3,835 <span class="muted">(1.77x)</span></td><td>5,679 <span class="muted">(1.20x)</span></td><td><span class="muted">pending</span></td></tr><tr><td>+2</td><td>2026-10-31</td><td><b>9,150</b></td><td>3,835 <span class="muted">(2.39x)</span></td><td>6,785 <span class="muted">(1.35x)</span></td><td><span class="muted">pending</span></td></tr><tr><td>+3</td><td>2026-11-07</td><td><b>11,800</b></td><td>3,835 <span class="muted">(3.08x)</span></td><td>7,863 <span class="muted">(1.50x)</span></td><td><span class="muted">pending</span></td></tr></tbody></table></div>
+  <div class="why"><h3>Why this forecast</h3><p>Anchor: the statistical-model consensus (h0 5348, h1 8117, h2 13225, h3 19112) vs the FluSight hub ensemble (h0 4831, h1 5679, h2 6785, h3 7863). The last observed week (2026-10-10) is 3835 and provisional, so it is a floor, not a centre. I split the gap between the two anchors but leaned toward the statistical models because the season is starting early and rising unusually fast: ILI has climbed from 0.87% (Aug 8) to 2.07% (Oct 10), and Truveta reports late-September influenza-associated hospitalization rates ~3x higher than the same point in the prior six seasons, with a rise 2.5x faster. That early/fast start supports the higher seasonal/gbt/loglinear estimates over the hub&#x27;s flatter trajectory. Medians: h0 5050, h1 6800, h2 9150, h3 11800. Intervals are right-skewed (upper tail ~1.9-2.5x the median, lower tail ~0.5-0.6x) and widen with horizon (sigma 0.30 -&gt; 0.54), reflecting the large method disagreement at h2/h3 (up to 2.2x spread), the inflection risk as flu accelerates, and the fact that recent weeks revise upward as late reports arrive.</p></div>
 </section>
 
 <section class="card">
@@ -150,29 +105,31 @@ document.addEventListener("DOMContentLoaded", function () {
      truth is published. Relative WIS is this forecast's score divided by
      FluSight-baseline's for the same weeks: below 1.0 beat doing nothing.</p>
   <svg viewBox="0 0 760 190" class="chart" role="img" aria-label="relative WIS by forecast">
-<line class="grid" x1="54" y1="146.5" x2="746" y2="146.5"/>
-<text class="axis" x="46" y="150.5" text-anchor="end">0.5x</text>
+<line class="grid" x1="54" y1="126.8" x2="746" y2="126.8"/>
+<text class="axis" x="46" y="130.8" text-anchor="end">0.5x</text>
 <line class="grid-strong" x1="54" y1="86.0" x2="746" y2="86.0"/>
 <text class="axis" x="46" y="90.0" text-anchor="end">1x</text>
-<line class="grid" x1="54" y1="25.5" x2="746" y2="25.5"/>
-<text class="axis" x="46" y="29.5" text-anchor="end">2x</text>
-<rect class="bar-good" x="381.0" y="86.0" width="38.0" height="57.6" rx="2"><title>2026-10-10 US: 0.52x baseline</title></rect>
-<text class="axis" x="400.0" y="176.0" text-anchor="middle">10-10</text>
+<line class="grid" x1="54" y1="45.2" x2="746" y2="45.2"/>
+<text class="axis" x="46" y="49.2" text-anchor="end">2x</text>
+<rect class="bar-good" x="208.0" y="86.0" width="38.0" height="57.6" rx="2"><title>2026-10-10 US: 0.38x baseline</title></rect>
+<text class="axis" x="227.0" y="176.0" text-anchor="middle">10-10</text>
+<rect class="bar-good" x="554.0" y="86.0" width="38.0" height="29.4" rx="2"><title>2026-10-17 US: 0.61x baseline</title></rect>
+<text class="axis" x="573.0" y="176.0" text-anchor="middle">10-17</text>
 </svg>
   <div class="scroll"><table class="grid">
     <thead><tr><th>week of</th><th>location</th><th>rank</th>
       <th>vs. baseline</th><th>vs. ensemble</th><th>WIS</th>
       <th>95% coverage</th></tr></thead>
-    <tbody><tr><td><a href="f/2026-10-17-US.html">2026-10-17</a></td><td>US</td><td><span class="muted">pending</span></td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td><a href="f/2026-10-10-US.html">2026-10-10</a></td><td>US</td><td>22 / 51</td><td><span class="good">0.52x</span></td><td>1.21x</td><td>222.2</td><td>100%</td></tr><tr><td><a href="f/2026-09-26-US.html">2026-09-26</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>158.8</td><td>100%</td></tr><tr><td><a href="f/2026-09-19-US.html">2026-09-19</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>226.1</td><td>100%</td></tr><tr><td><a href="f/2026-09-12-US.html">2026-09-12</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>279.9</td><td>100%</td></tr><tr><td><a href="f/2026-09-05-US.html">2026-09-05</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>319.9</td><td>75%</td></tr><tr><td><a href="f/2026-08-29-US.html">2026-08-29</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>385.9</td><td>25%</td></tr><tr><td><a href="f/2026-08-22-US.html">2026-08-22</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>149.6</td><td>100%</td></tr></tbody></table></div>
+    <tbody><tr><td><a href="f/2026-10-17-US.html">2026-10-17</a></td><td>US</td><td>41 / 60</td><td><span class="good">0.61x</span></td><td>1.46x</td><td>357.1</td><td>100%</td></tr><tr><td><a href="f/2026-10-10-US.html">2026-10-10</a></td><td>US</td><td>15 / 51</td><td><span class="good">0.38x</span></td><td>1.15x</td><td>272.9</td><td>100%</td></tr><tr><td><a href="f/2026-09-26-US.html">2026-09-26</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>418.9</td><td>100%</td></tr><tr><td><a href="f/2026-09-19-US.html">2026-09-19</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>232.5</td><td>100%</td></tr><tr><td><a href="f/2026-09-12-US.html">2026-09-12</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>279.9</td><td>100%</td></tr><tr><td><a href="f/2026-09-05-US.html">2026-09-05</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>319.9</td><td>75%</td></tr><tr><td><a href="f/2026-08-29-US.html">2026-08-29</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>385.9</td><td>25%</td></tr><tr><td><a href="f/2026-08-22-US.html">2026-08-22</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>149.6</td><td>100%</td></tr></tbody></table></div>
 </section></div>
 <div class="pane" id="pane-nhsn" data-pane="nhsn">
 <p class="status pending">Testing numbers. Scored against the latest NHSN
-   release, published through <b>2026-10-10</b>, which the
+   release, published through <b>2026-10-17</b>, which the
    CDC still revises for recent weeks. Out of season there is no FluSight field
    to rank against, so &ldquo;vs. flat&rdquo; is a flat baseline built here
    from the last NHSN week before each reference date &mdash; not
    FluSight-baseline. The hub tab is the official record.</p>
-<div class="strip"><div class="stat"><b>24/32</b><span>horizons with NHSN data</span></div><div class="stat"><b>261.6</b><span>mean WIS</span></div><div class="stat"><b>0.61x</b><span>mean WIS vs. flat</span></div><div class="stat"><b>6/7</b><span>beat the flat baseline</span></div><div class="stat"><b>50%</b><span>50% coverage</span></div><div class="stat"><b>79%</b><span>95% coverage</span></div></div>
+<div class="strip"><div class="stat"><b>27/32</b><span>horizons with NHSN data</span></div><div class="stat"><b>306.3</b><span>mean WIS</span></div><div class="stat"><b>0.65x</b><span>mean WIS vs. flat</span></div><div class="stat"><b>7/8</b><span>beat the flat baseline</span></div><div class="stat"><b>52%</b><span>50% coverage</span></div><div class="stat"><b>82%</b><span>95% coverage</span></div></div>
 
 <section class="card">
   <div class="card-head">
@@ -181,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <span class="tag">latest forecast</span></h2>
     <a class="more" href="f/2026-10-17-US.html#nhsn">full detail &rarr;</a>
   </div>
-  <p class="status pending">NHSN has published through <b>2026-10-10</b>; this forecast covers 2026-10-17, 2026-10-24, 2026-10-31, 2026-11-07.</p>
+  <p class="status good"><b>1 of 4</b> horizons have NHSN data &middot; WIS <b>357.1</b> &middot; <b>0.88x</b> the flat baseline's WIS (better) &middot; 95% interval coverage 100%.</p>
   <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-10-17">
 <line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
 <text class="axis" x="46" y="290.0" text-anchor="end">0</text>
@@ -193,29 +150,30 @@ document.addEventListener("DOMContentLoaded", function () {
 <text class="axis" x="46" y="77.3" text-anchor="end">30k</text>
 <line class="grid" x1="54" y1="2.4" x2="746" y2="2.4"/>
 <text class="axis" x="46" y="6.4" text-anchor="end">40k</text>
-<text class="axis" x="54.0" y="304.0" text-anchor="start">18 Apr</text>
-<text class="axis" x="125.6" y="304.0" text-anchor="middle">9 May</text>
-<text class="axis" x="197.2" y="304.0" text-anchor="middle">30 May</text>
-<text class="axis" x="268.8" y="304.0" text-anchor="middle">20 Jun</text>
-<text class="axis" x="340.3" y="304.0" text-anchor="middle">11 Jul</text>
-<text class="axis" x="411.9" y="304.0" text-anchor="middle">1 Aug</text>
-<text class="axis" x="483.5" y="304.0" text-anchor="middle">22 Aug</text>
-<text class="axis" x="555.1" y="304.0" text-anchor="middle">12 Sep</text>
-<text class="axis" x="626.7" y="304.0" text-anchor="middle">3 Oct</text>
-<text class="axis" x="698.3" y="304.0" text-anchor="middle">24 Oct</text>
-<polygon class="band-95" points="650.6,258.8 674.4,221.5 698.3,184.5 722.1,126.2 746.0,44.9 746.0,257.0 722.1,259.7 698.3,263.1 674.4,266.1 650.6,258.8"/>
-<polygon class="band-50" points="650.6,258.8 674.4,242.2 698.3,223.7 722.1,197.6 746.0,165.6 746.0,227.9 722.1,238.4 698.3,248.7 674.4,256.7 650.6,258.8"/>
-<polyline class="line-history" fill="none" points="54.0,272.2 77.9,272.6 101.7,274.3 125.6,275.5 149.4,276.6 173.3,277.1 197.2,278.4 221.0,278.6 244.9,279.8 268.8,280.4 292.6,280.7 316.5,280.8 340.3,280.7 364.2,281.3 388.1,281.1 411.9,281.3 435.8,281.5 459.7,281.1 483.5,279.8 507.4,279.5 531.2,277.2 555.1,275.0 579.0,271.3 602.8,267.1 626.7,261.8 650.6,258.8"/>
-<polyline class="line-other other-0" fill="none" points="650.6,258.8 674.4,258.8 698.3,258.8 722.1,258.8 746.0,258.8"/>
-<polyline class="line-other other-1" fill="none" points="650.6,258.8 674.4,251.8 698.3,245.7 722.1,237.9 746.0,230.3"/>
-<polyline class="line-median" fill="none" points="650.6,258.8 674.4,250.2 698.3,237.8 722.1,221.1 746.0,202.3"/>
-<circle class="dot-median" cx="674.4" cy="250.2" r="3.5"/>
-<circle class="dot-median" cx="698.3" cy="237.8" r="3.5"/>
-<circle class="dot-median" cx="722.1" cy="221.1" r="3.5"/>
+<text class="axis" x="54.0" y="304.0" text-anchor="start">25 Apr</text>
+<text class="axis" x="128.1" y="304.0" text-anchor="middle">16 May</text>
+<text class="axis" x="202.3" y="304.0" text-anchor="middle">6 Jun</text>
+<text class="axis" x="276.4" y="304.0" text-anchor="middle">27 Jun</text>
+<text class="axis" x="350.6" y="304.0" text-anchor="middle">18 Jul</text>
+<text class="axis" x="424.7" y="304.0" text-anchor="middle">8 Aug</text>
+<text class="axis" x="498.9" y="304.0" text-anchor="middle">29 Aug</text>
+<text class="axis" x="573.0" y="304.0" text-anchor="middle">19 Sep</text>
+<text class="axis" x="647.1" y="304.0" text-anchor="middle">10 Oct</text>
+<text class="axis" x="721.3" y="304.0" text-anchor="middle">31 Oct</text>
+<polygon class="band-95" points="671.9,252.7 671.9,221.5 696.6,184.5 721.3,126.2 746.0,44.9 746.0,257.0 721.3,259.7 696.6,263.1 671.9,266.1 671.9,252.7"/>
+<polygon class="band-50" points="671.9,252.7 671.9,242.2 696.6,223.7 721.3,197.6 746.0,165.6 746.0,227.9 721.3,238.4 696.6,248.7 671.9,256.7 671.9,252.7"/>
+<polyline class="line-history" fill="none" points="54.0,272.7 78.7,274.3 103.4,275.5 128.1,276.6 152.9,277.1 177.6,278.4 202.3,278.6 227.0,279.8 251.7,280.4 276.4,280.7 301.1,280.8 325.9,280.7 350.6,281.3 375.3,281.1 400.0,281.3 424.7,281.5 449.4,281.1 474.1,279.8 498.9,279.4 523.6,277.2 548.3,275.0 573.0,271.3 597.7,267.0 622.4,261.2 647.1,257.3 671.9,252.7"/>
+<polyline class="line-other other-0" fill="none" points="671.9,252.7 671.9,258.8 696.6,258.8 721.3,258.8 746.0,258.8"/>
+<polyline class="line-other other-1" fill="none" points="671.9,252.7 671.9,251.8 696.6,245.7 721.3,237.9 746.0,230.3"/>
+<polyline class="line-median" fill="none" points="671.9,252.7 671.9,250.2 696.6,237.8 721.3,221.1 746.0,202.3"/>
+<circle class="dot-median" cx="671.9" cy="250.2" r="3.5"/>
+<circle class="dot-median" cx="696.6" cy="237.8" r="3.5"/>
+<circle class="dot-median" cx="721.3" cy="221.1" r="3.5"/>
 <circle class="dot-median" cx="746.0" cy="202.3" r="3.5"/>
+<circle class="dot-observed" cx="671.9" cy="252.7" r="4"/>
 </svg>
-  <p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval <span class="key k-other other-0"></span>FluSight-baseline <span class="key k-other other-1"></span>FluSight-ensemble</p>
-  <div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>NHSN</th><th>WIS</th><th>abs error</th><th>in 50%</th><th>in 95%</th></tr></thead><tbody><tr><td>0</td><td>2026-10-17</td><td><b>5,050</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+1</td><td>2026-10-24</td><td><b>6,800</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+2</td><td>2026-10-31</td><td><b>9,150</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+3</td><td>2026-11-07</td><td><b>11,800</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr></tbody></table></div>
+  <p class="legend"><span class="key k-history"></span>observed admissions <span class="key k-median"></span>model median <span class="key k-band"></span>50% / 95% interval <span class="key k-other other-0"></span>FluSight-baseline <span class="key k-other other-1"></span>FluSight-ensemble <span class="key k-truth"></span>what happened</p>
+  <div class="scroll"><table class="grid"><thead><tr><th>horizon</th><th>week ending</th><th>model median</th><th>NHSN</th><th>WIS</th><th>abs error</th><th>in 50%</th><th>in 95%</th></tr></thead><tbody><tr><td>0</td><td>2026-10-17</td><td><b>5,050</b></td><td><b>4,698</b></td><td>357.1</td><td>352</td><td><span class="good">yes</span></td><td><span class="good">yes</span></td></tr><tr><td>+1</td><td>2026-10-24</td><td><b>6,800</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+2</td><td>2026-10-31</td><td><b>9,150</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td>+3</td><td>2026-11-07</td><td><b>11,800</b></td><td><span class="muted">pending</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr></tbody></table></div>
 </section>
 
 <section class="card">
@@ -226,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <thead><tr><th>week of</th><th>location</th><th>horizons</th>
       <th>WIS</th><th>vs. flat</th><th>MAE</th><th>50%</th>
       <th>95%</th></tr></thead>
-    <tbody><tr><td><a href="f/2026-10-17-US.html#nhsn">2026-10-17</a></td><td>US</td><td>0 / 4</td><td>&mdash;</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr><tr><td><a href="f/2026-10-10-US.html#nhsn">2026-10-10</a></td><td>US</td><td>1 / 4</td><td>222.2</td><td><span class="good">0.73x</span></td><td>265</td><td>100%</td><td>100%</td></tr><tr><td><a href="f/2026-09-26-US.html#nhsn">2026-09-26</a></td><td>US</td><td>3 / 4</td><td>158.8</td><td><span class="good">0.24x</span></td><td>182</td><td>100%</td><td>100%</td></tr><tr><td><a href="f/2026-09-19-US.html#nhsn">2026-09-19</a></td><td>US</td><td>4 / 4</td><td>226.1</td><td><span class="good">0.30x</span></td><td>179</td><td>100%</td><td>100%</td></tr><tr><td><a href="f/2026-09-12-US.html#nhsn">2026-09-12</a></td><td>US</td><td>4 / 4</td><td>279.9</td><td><span class="good">0.44x</span></td><td>514</td><td>50%</td><td>100%</td></tr><tr><td><a href="f/2026-09-05-US.html#nhsn">2026-09-05</a></td><td>US</td><td>4 / 4</td><td>334.0</td><td><span class="good">0.64x</span></td><td>538</td><td>0%</td><td>75%</td></tr><tr><td><a href="f/2026-08-29-US.html#nhsn">2026-08-29</a></td><td>US</td><td>4 / 4</td><td>400.2</td><td><span class="bad">1.29x</span></td><td>510</td><td>25%</td><td>25%</td></tr><tr><td><a href="f/2026-08-22-US.html#nhsn">2026-08-22</a></td><td>US</td><td>4 / 4</td><td>154.7</td><td><span class="good">0.65x</span></td><td>257</td><td>25%</td><td>75%</td></tr></tbody></table></div>
+    <tbody><tr><td><a href="f/2026-10-17-US.html#nhsn">2026-10-17</a></td><td>US</td><td>1 / 4</td><td>357.1</td><td><span class="good">0.88x</span></td><td>352</td><td>100%</td><td>100%</td></tr><tr><td><a href="f/2026-10-10-US.html#nhsn">2026-10-10</a></td><td>US</td><td>2 / 4</td><td>272.9</td><td><span class="good">0.51x</span></td><td>229</td><td>100%</td><td>100%</td></tr><tr><td><a href="f/2026-09-26-US.html#nhsn">2026-09-26</a></td><td>US</td><td>4 / 4</td><td>418.9</td><td><span class="good">0.49x</span></td><td>634</td><td>75%</td><td>100%</td></tr><tr><td><a href="f/2026-09-19-US.html#nhsn">2026-09-19</a></td><td>US</td><td>4 / 4</td><td>232.5</td><td><span class="good">0.29x</span></td><td>224</td><td>100%</td><td>100%</td></tr><tr><td><a href="f/2026-09-12-US.html#nhsn">2026-09-12</a></td><td>US</td><td>4 / 4</td><td>293.6</td><td><span class="good">0.45x</span></td><td>540</td><td>50%</td><td>100%</td></tr><tr><td><a href="f/2026-09-05-US.html#nhsn">2026-09-05</a></td><td>US</td><td>4 / 4</td><td>340.7</td><td><span class="good">0.65x</span></td><td>545</td><td>0%</td><td>75%</td></tr><tr><td><a href="f/2026-08-29-US.html#nhsn">2026-08-29</a></td><td>US</td><td>4 / 4</td><td>401.4</td><td><span class="bad">1.29x</span></td><td>512</td><td>25%</td><td>25%</td></tr><tr><td><a href="f/2026-08-22-US.html#nhsn">2026-08-22</a></td><td>US</td><td>4 / 4</td><td>154.8</td><td><span class="good">0.65x</span></td><td>257</td><td>25%</td><td>75%</td></tr></tbody></table></div>
 </section></div>
 
 <section class="card note">
