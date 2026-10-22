@@ -22,9 +22,15 @@
 # The mail only goes out for a week that forecast something or tried and
 # failed; a re-run that finds every location already in the archive is silent.
 #
-# Install (Wednesdays at 08:00, after the hub's submission deadline):
+# The forecast is for the coming Saturday and is made before the hub's
+# deadline for it (Wednesday 23:00 ET), as a real submission would be. Run any
+# later and the tools see data, news and other teams' forecasts that a real
+# team would not have had, so a run past the deadline forecasts nothing.
+#
+# Install (Wednesdays at 15:00 Pacific, after NHSN's Wednesday release and
+# before the 20:00 Pacific deadline):
 #   crontab -e
-#   0 8 * * 3 /accounts/grad/$USER/flu-forecasting-llm/scripts/weekly.sh
+#   0 15 * * 3 /accounts/grad/$USER/flu-forecasting-llm/scripts/weekly.sh
 
 set -uo pipefail
 
@@ -71,7 +77,7 @@ finish() {
         echo "$OUTCOME"
         echo
         echo "host      $(hostname -s)"
-        echo "reference $(cd "$REPO" && python3 -c 'import sys; sys.path.insert(0,"src"); from flufc.forecast import most_recent_saturday; print(most_recent_saturday())' 2>/dev/null || echo '?')"
+        echo "reference ${REFERENCE_DATE:-?}"
         echo "exit      $code"
         echo "log       $REPO/$LOG"
         echo
@@ -110,6 +116,26 @@ fi
 
 say "weekly run in $REPO, locations: $LOCATIONS"
 
+# The coming Saturday (today, on a Saturday), and whether its deadline has
+# passed. Prints the date, then 1 if the run is still in time and 0 if not.
+read -r REFERENCE_DATE IN_TIME < <(python3 - <<'EOF'
+import datetime as dt
+from zoneinfo import ZoneInfo
+et = ZoneInfo("America/New_York")
+now = dt.datetime.now(et)
+saturday = now.date() + dt.timedelta(days=(5 - now.weekday()) % 7)
+deadline = dt.datetime.combine(saturday - dt.timedelta(days=3),
+                               dt.time(23, 0), et)
+print(saturday.isoformat(), int(now < deadline))
+EOF
+)
+if [ "$IN_TIME" != "1" ]; then
+    say "past the deadline for $REFERENCE_DATE (Wednesday 23:00 ET); a forecast now would see data from after it, so nothing is forecast"
+    OUTCOME="missed the deadline for $REFERENCE_DATE"
+    exit 6
+fi
+say "reference date $REFERENCE_DATE, before its deadline"
+
 # Start from whatever is on the remote: the daily rescore writes to docs/ too,
 # and rebasing first is cheaper than resolving a conflict after the fact.
 if [ "$PUSH" = "1" ] && git remote get-url origin >/dev/null 2>&1; then
@@ -126,7 +152,8 @@ else
 fi
 
 say "forecasting"
-python3 -m flufc.cli weekly --locations $LOCATIONS
+python3 -m flufc.cli weekly --locations $LOCATIONS \
+    --reference-date "$REFERENCE_DATE"
 STATUS=$?
 say "flufc weekly exited $STATUS"
 SUMMARY=$(grep -E "^made [0-9]" "$LOG" | tail -1)
