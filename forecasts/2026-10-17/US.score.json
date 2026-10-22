@@ -18,7 +18,7 @@
   "truth_last_date": "2026-10-17",
   "baseline_wis": 587.857,
   "n_partial": 0,
-  "n_missing": 67,
+  "n_missing": 69,
   "entries": [
     {
       "model": "DMAPRIME-QR",
@@ -866,5 +866,5 @@
   },
   "vs_ensemble": 1.458,
   "version": 1,
-  "computed_at": "2026-10-21T17:23:51"
+  "computed_at": "2026-10-22T17:21:04"
 }
