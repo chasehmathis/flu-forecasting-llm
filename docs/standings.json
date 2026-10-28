@@ -1,27 +1,27 @@
 {
-  "generated_at": "2026-10-21T17:24:07+00:00",
+  "generated_at": "2026-10-28T18:23:51+00:00",
   "summary": {
     "n_forecasts": 8,
     "n_scored": 2,
     "n_pending": 6,
-    "mean_rel_wis": 0.491,
+    "mean_rel_wis": 0.408,
     "beat_baseline": 2,
-    "mean_rank": 28.0,
+    "mean_rank": 22.5,
     "mean_field": 54.5,
-    "beat_share": 0.505,
-    "beat_ensemble": 0,
+    "beat_share": 0.606,
+    "beat_ensemble": 1,
     "n_vs_ensemble": 2
   },
   "nhsn_preliminary_summary": {
     "n_forecasts": 8,
     "n_with_data": 8,
-    "n_scored": 27,
+    "n_scored": 29,
     "n_total": 32,
-    "mean_wis": 306.31,
-    "mean_abs_error": 431.852,
-    "coverage_50": 0.519,
-    "coverage_95": 0.815,
-    "mean_rel_wis": 0.65,
+    "mean_wis": 317.782,
+    "mean_abs_error": 417.241,
+    "coverage_50": 0.552,
+    "coverage_95": 0.828,
+    "mean_rel_wis": 0.601,
     "beat_baseline": 7,
     "n_rel": 8
   },
@@ -46,40 +46,40 @@
       },
       "score": {
         "scored_horizons": [
-          0
+          0,
+          1
         ],
         "unscored_horizons": [
-          1,
           2,
           3
         ],
-        "truth_last_date": "2026-10-17",
-        "baseline_wis": 587.857,
-        "vs_ensemble": 1.458,
+        "truth_last_date": "2026-10-24",
+        "baseline_wis": 1000.075,
+        "vs_ensemble": 1.49,
         "observed": {
-          "0": 4698.0,
-          "1": null,
+          "0": 4948.0,
+          "1": 6006.0,
           "2": null,
           "3": null
         },
         "you": {
-          "rank": 41,
+          "rank": 36,
           "field": 59,
-          "beat": 19,
-          "mean_wis": 357.088,
-          "rel_wis": 0.607,
-          "mean_abs_error": 352.0,
+          "beat": 24,
+          "mean_wis": 493.017,
+          "rel_wis": 0.493,
+          "mean_abs_error": 448.0,
           "coverage_50": 1.0,
           "coverage_95": 1.0
         }
       },
       "nhsn_preliminary": {
-        "truth_last_date": "2026-10-17",
-        "n_scored": 1,
-        "mean_wis": 357.088,
-        "rel_wis": 0.878,
-        "baseline_wis": 406.548,
-        "mean_abs_error": 352.0,
+        "truth_last_date": "2026-10-24",
+        "n_scored": 2,
+        "mean_wis": 493.017,
+        "rel_wis": 0.649,
+        "baseline_wis": 759.285,
+        "mean_abs_error": 448.0,
         "coverage_50": 1.0,
         "coverage_95": 1.0
       }
@@ -105,39 +105,39 @@
       "score": {
         "scored_horizons": [
           0,
-          1
+          1,
+          2
         ],
         "unscored_horizons": [
-          2,
           3
         ],
-        "truth_last_date": "2026-10-17",
-        "baseline_wis": 725.904,
-        "vs_ensemble": 1.15,
+        "truth_last_date": "2026-10-24",
+        "baseline_wis": 1039.744,
+        "vs_ensemble": 0.966,
         "observed": {
-          "0": 4044.0,
-          "1": 4698.0,
-          "2": null,
+          "0": 4079.0,
+          "1": 4948.0,
+          "2": 6006.0,
           "3": null
         },
         "you": {
-          "rank": 15,
+          "rank": 9,
           "field": 50,
-          "beat": 36,
-          "mean_wis": 272.875,
-          "rel_wis": 0.376,
-          "mean_abs_error": 229.0,
+          "beat": 42,
+          "mean_wis": 336.492,
+          "rel_wis": 0.324,
+          "mean_abs_error": 189.0,
           "coverage_50": 1.0,
           "coverage_95": 1.0
         }
       },
       "nhsn_preliminary": {
-        "truth_last_date": "2026-10-17",
-        "n_scored": 2,
-        "mean_wis": 272.875,
-        "rel_wis": 0.513,
-        "baseline_wis": 532.32,
-        "mean_abs_error": 229.0,
+        "truth_last_date": "2026-10-24",
+        "n_scored": 3,
+        "mean_wis": 336.492,
+        "rel_wis": 0.408,
+        "baseline_wis": 825.296,
+        "mean_abs_error": 189.0,
         "coverage_50": 1.0,
         "coverage_95": 1.0
       }
@@ -168,31 +168,31 @@
           3
         ],
         "unscored_horizons": [],
-        "truth_last_date": "2026-10-17",
+        "truth_last_date": "2026-10-24",
         "observed": {
           "0": 2686.0,
-          "1": 3494.0,
-          "2": 4044.0,
-          "3": 4698.0
+          "1": 3503.0,
+          "2": 4079.0,
+          "3": 4948.0
         },
         "you": {
           "rank": 1,
           "field": 0,
           "beat": 0,
-          "mean_wis": 418.942,
+          "mean_wis": 378.486,
           "rel_wis": null,
-          "mean_abs_error": 634.5,
+          "mean_abs_error": 565.5,
           "coverage_50": 0.75,
           "coverage_95": 1.0
         }
       },
       "nhsn_preliminary": {
-        "truth_last_date": "2026-10-17",
+        "truth_last_date": "2026-10-24",
         "n_scored": 4,
-        "mean_wis": 418.942,
-        "rel_wis": 0.487,
-        "baseline_wis": 859.492,
-        "mean_abs_error": 634.5,
+        "mean_wis": 378.486,
+        "rel_wis": 0.42,
+        "baseline_wis": 901.035,
+        "mean_abs_error": 565.5,
         "coverage_50": 0.75,
         "coverage_95": 1.0
       }
@@ -242,12 +242,12 @@
         }
       },
       "nhsn_preliminary": {
-        "truth_last_date": "2026-10-17",
+        "truth_last_date": "2026-10-24",
         "n_scored": 4,
-        "mean_wis": 232.493,
-        "rel_wis": 0.286,
-        "baseline_wis": 812.496,
-        "mean_abs_error": 224.5,
+        "mean_wis": 233.363,
+        "rel_wis": 0.285,
+        "baseline_wis": 818.193,
+        "mean_abs_error": 235.5,
         "coverage_50": 1.0,
         "coverage_95": 1.0
       }
@@ -297,12 +297,12 @@
         }
       },
       "nhsn_preliminary": {
-        "truth_last_date": "2026-10-17",
+        "truth_last_date": "2026-10-24",
         "n_scored": 4,
-        "mean_wis": 293.568,
-        "rel_wis": 0.453,
-        "baseline_wis": 647.732,
-        "mean_abs_error": 539.5,
+        "mean_wis": 294.861,
+        "rel_wis": 0.454,
+        "baseline_wis": 649.634,
+        "mean_abs_error": 542.25,
         "coverage_50": 0.5,
         "coverage_95": 1.0
       }
@@ -352,12 +352,12 @@
         }
       },
       "nhsn_preliminary": {
-        "truth_last_date": "2026-10-17",
+        "truth_last_date": "2026-10-24",
         "n_scored": 4,
-        "mean_wis": 340.667,
-        "rel_wis": 0.647,
-        "baseline_wis": 526.493,
-        "mean_abs_error": 545.25,
+        "mean_wis": 340.993,
+        "rel_wis": 0.648,
+        "baseline_wis": 526.014,
+        "mean_abs_error": 545.75,
         "coverage_50": 0.0,
         "coverage_95": 0.75
       }
@@ -407,12 +407,12 @@
         }
       },
       "nhsn_preliminary": {
-        "truth_last_date": "2026-10-17",
+        "truth_last_date": "2026-10-24",
         "n_scored": 4,
-        "mean_wis": 401.367,
-        "rel_wis": 1.289,
-        "baseline_wis": 311.4,
-        "mean_abs_error": 511.5,
+        "mean_wis": 401.965,
+        "rel_wis": 1.29,
+        "baseline_wis": 311.672,
+        "mean_abs_error": 512.25,
         "coverage_50": 0.25,
         "coverage_95": 0.25
       }
@@ -462,12 +462,12 @@
         }
       },
       "nhsn_preliminary": {
-        "truth_last_date": "2026-10-17",
+        "truth_last_date": "2026-10-24",
         "n_scored": 4,
-        "mean_wis": 154.844,
-        "rel_wis": 0.649,
-        "baseline_wis": 238.546,
-        "mean_abs_error": 257.25,
+        "mean_wis": 155.376,
+        "rel_wis": 0.652,
+        "baseline_wis": 238.468,
+        "mean_abs_error": 258.0,
         "coverage_50": 0.25,
         "coverage_95": 0.75
       }
