@@ -27,9 +27,18 @@
 # later and the tools see data, news and other teams' forecasts that a real
 # team would not have had, so a run past the deadline forecasts nothing.
 #
-# Install (Wednesdays at 15:00 Pacific, after NHSN's Wednesday release and
-# before the 20:00 Pacific deadline):
+# The GPU is the weak link. The group partitions can be full for the better
+# part of a day, and a single 20-minute wait for one lost 2026-10-31 (the job
+# finally started the next morning, after the deadline, and sat idle). So the
+# job is queued at noon, `./scripts/weekly.sh queue`, and the 15:00 run keeps
+# waiting for it until MARGIN minutes before the deadline. If the model is
+# still not up by then, the week is skipped and the queued job cancelled, so
+# nothing is left holding someone else's GPU.
+#
+# Install (Wednesdays: queue at 12:00 Pacific; forecast at 15:00, after NHSN's
+# Wednesday release and before the 20:00 Pacific deadline):
 #   crontab -e
+#   0 12 * * 3 /accounts/grad/$USER/flu-forecasting-llm/scripts/weekly.sh queue
 #   0 15 * * 3 /accounts/grad/$USER/flu-forecasting-llm/scripts/weekly.sh
 
 set -uo pipefail
@@ -37,9 +46,13 @@ set -uo pipefail
 REPO=${FLUFC_REPO:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}
 LOCATIONS=${FLUFC_LOCATIONS:-US}
 PUSH=${FLUFC_PUSH:-1}
-STOP_MODEL=${FLUFC_STOP_MODEL:-0}
+STOP_MODEL=${FLUFC_STOP_MODEL:-1}
 QWEN=${QWEN_BIN:-$HOME/.local/bin/qwen}
+QWEN_SBATCH=${QWEN_SBATCH:-$HOME/LLM-qwen/serve_qwen.sbatch}
 EMAIL=${FLUFC_EMAIL:-}
+# Minutes before the deadline at which the run stops waiting for a GPU. A
+# forecast takes about ten minutes once the model answers.
+MARGIN=${FLUFC_MARGIN_MIN:-30}
 
 # cron hands us a nearly empty environment, and USER is not in it. The qwen
 # helper indexes its Slurm job and its scratch log dir off USER under `set -u`,
@@ -50,6 +63,38 @@ export USER="${USER:-$(id -un)}"
 
 cd "$REPO" || { echo "no such directory: $REPO" >&2; exit 2; }
 export PYTHONPATH="$REPO/src${PYTHONPATH:+:$PYTHONPATH}"
+
+# The coming Saturday (today, on a Saturday), whether its deadline has passed
+# (1 if the run is still in time, 0 if not), and the epoch second at which to
+# stop waiting for a GPU.
+read -r REFERENCE_DATE IN_TIME CUTOFF < <(MARGIN="$MARGIN" python3 - <<'EOF'
+import datetime as dt, os
+from zoneinfo import ZoneInfo
+et = ZoneInfo("America/New_York")
+now = dt.datetime.now(et)
+saturday = now.date() + dt.timedelta(days=(5 - now.weekday()) % 7)
+deadline = dt.datetime.combine(saturday - dt.timedelta(days=3),
+                               dt.time(23, 0), et)
+cutoff = deadline - dt.timedelta(minutes=int(os.environ["MARGIN"]))
+print(saturday.isoformat(), int(now < deadline), int(cutoff.timestamp()))
+EOF
+)
+
+# `weekly.sh queue`: put the server job in the Slurm queue and leave, so it
+# has hours rather than minutes to find a node. Quiet, and no lock: it only
+# submits when no job exists and a forecast for this week is still to make.
+if [ "${1:-}" = queue ]; then
+    [ "$IN_TIME" = 1 ] || exit 0
+    todo=0
+    for loc in $LOCATIONS; do
+        [ -f "forecasts/$REFERENCE_DATE/$loc.json" ] || todo=1
+    done
+    [ "$todo" = 1 ] || exit 0
+    if [ -z "$(squeue -u "$USER" -h -n qwen-vllm 2>/dev/null)" ]; then
+        sbatch "$QWEN_SBATCH"
+    fi
+    exit 0
+fi
 
 mkdir -p outputs/logs
 STAMP=$(date +%Y%m%d-%H%M%S)
@@ -71,6 +116,12 @@ QUIET=0
 finish() {
     local code=$?
     rm -rf "$LOCK"
+    # Release the GPU however the run ended, so a crash or a missed deadline
+    # does not leave the server job idling on another group's node.
+    if [ "$STOP_MODEL" = "1" ] && [ -x "$QWEN" ]; then
+        say "releasing the GPU"
+        "$QWEN" down || true
+    fi
     [ -n "$EMAIL" ] || return
     [ "$QUIET" = 0 ] || { say "nothing forecast this week; no mail"; return; }
     {
@@ -116,19 +167,6 @@ fi
 
 say "weekly run in $REPO, locations: $LOCATIONS"
 
-# The coming Saturday (today, on a Saturday), and whether its deadline has
-# passed. Prints the date, then 1 if the run is still in time and 0 if not.
-read -r REFERENCE_DATE IN_TIME < <(python3 - <<'EOF'
-import datetime as dt
-from zoneinfo import ZoneInfo
-et = ZoneInfo("America/New_York")
-now = dt.datetime.now(et)
-saturday = now.date() + dt.timedelta(days=(5 - now.weekday()) % 7)
-deadline = dt.datetime.combine(saturday - dt.timedelta(days=3),
-                               dt.time(23, 0), et)
-print(saturday.isoformat(), int(now < deadline))
-EOF
-)
 if [ "$IN_TIME" != "1" ]; then
     say "past the deadline for $REFERENCE_DATE (Wednesday 23:00 ET); a forecast now would see data from after it, so nothing is forecast"
     OUTCOME="missed the deadline for $REFERENCE_DATE"
@@ -143,10 +181,23 @@ if [ "$PUSH" = "1" ] && git remote get-url origin >/dev/null 2>&1; then
 fi
 
 # `qwen up` starts the Slurm job if it is not already running and blocks until
-# the API answers, which takes about four minutes from cold.
+# the API answers, which takes about four minutes from cold -- but it gives up
+# after 20 minutes in the queue. A pending job stays queued when it does, so
+# calling it again keeps the job's place; this does that until the cutoff.
 if [ -x "$QWEN" ]; then
-    say "bringing the model up"
-    "$QWEN" up || { say "could not start the model"; exit 3; }
+    say "bringing the model up (waiting until $(date -d "@$CUTOFF" +%H:%M) at most)"
+    while :; do
+        # Checked before each try: `timeout 0` would mean no limit at all.
+        LEFT=$(( CUTOFF - $(date +%s) ))
+        if [ "$LEFT" -le 0 ]; then
+            say "no GPU before the cutoff; skipping $REFERENCE_DATE"
+            OUTCOME="no GPU before the deadline for $REFERENCE_DATE"
+            exit 3
+        fi
+        timeout "$LEFT" "$QWEN" up && break
+        say "model not up yet; still waiting"
+        sleep 60
+    done
 else
     say "no qwen helper at $QWEN; assuming a server is already reachable"
 fi
@@ -169,11 +220,6 @@ if [ "$STATUS" = 0 ] \
    && [ "$(awk '{print $6}' <<<"$SUMMARY")" = "0" ]; then
     QUIET=1
     say "made nothing (every location was already in the archive)"
-fi
-
-if [ "$STOP_MODEL" = "1" ] && [ -x "$QWEN" ]; then
-    say "releasing the GPU"
-    "$QWEN" down || true
 fi
 
 # Publish whatever was produced, even if one location failed: a partial week is
