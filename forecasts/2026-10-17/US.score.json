@@ -18,7 +18,7 @@
   "truth_last_date": "2026-10-24",
   "baseline_wis": 1000.075,
   "n_partial": 0,
-  "n_missing": 70,
+  "n_missing": 74,
   "entries": [
     {
       "model": "Gatech-ensemble_prob",
@@ -940,5 +940,5 @@
   },
   "vs_ensemble": 1.49,
   "version": 1,
-  "computed_at": "2026-10-28T18:23:47"
+  "computed_at": "2026-10-29T18:33:17"
 }
