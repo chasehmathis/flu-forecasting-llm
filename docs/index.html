@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <p class="crumb"><a href="index.html">flu-forecasting-llm</a>
        &middot; <a href="https://github.com/chasehmathis/flu-forecasting-llm">source</a></p>
     <h1>Flu forecasts</h1>
-    <p class="lede">A language model forecasts US influenza hospital admissions every week, and is scored against the FluSight-ensemble and the forty-odd other teams who submit to the CDC's FluSight hub. 8 forecast(s) on the record. Rebuilt 04 Nov 2026, 19:57 UTC.</p>
+    <p class="lede">A language model forecasts US influenza hospital admissions every week, and is scored against the FluSight-ensemble and the forty-odd other teams who submit to the CDC's FluSight hub. 8 forecast(s) on the record. Rebuilt 05 Nov 2026, 20:07 UTC.</p>
   </div>
 </header>
 <main class="wrap">
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   <a class="tab" role="tab" href="#hub" data-tab="hub">FluSight hub truth</a>
   <a class="tab" role="tab" href="#nhsn" data-tab="nhsn">NHSN (preliminary)</a>
 </nav>
-<div class="pane" id="pane-hub" data-pane="hub"><div class="strip"><div class="stat"><b>0.28x</b><span>mean WIS vs. baseline</span></div><div class="stat"><b>1/1</b><span>beat the baseline</span></div><div class="stat"><b>4</b><span>mean rank of ~47</span></div><div class="stat"><b>94%</b><span>of teams beaten</span></div><div class="stat"><b>1/1</b><span>beat the ensemble</span></div><div class="stat"><b>7</b><span>still pending</span></div></div>
+<div class="pane" id="pane-hub" data-pane="hub"><div class="strip"><div class="stat"><b>0.35x</b><span>mean WIS vs. baseline</span></div><div class="stat"><b>2/2</b><span>beat the baseline</span></div><div class="stat"><b>16</b><span>mean rank of ~55</span></div><div class="stat"><b>71%</b><span>of teams beaten</span></div><div class="stat"><b>1/2</b><span>beat the ensemble</span></div><div class="stat"><b>6</b><span>still pending</span></div></div>
 
 <section class="card">
   <div class="card-head">
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <span class="tag">latest forecast</span></h2>
     <a class="more" href="f/2026-10-17-US.html">full detail &rarr;</a>
   </div>
-  <p class="status bad">Ranked <b>25 of 56</b> teams &middot; did not beat the hub ensemble (1.25x). Horizons 3 are still waiting on truth.</p>
+  <p class="status good">Ranked <b>28 of 60</b> teams &middot; WIS <b>0.41x</b> the flat baseline (better than doing nothing) &middot; did not beat the hub ensemble (1.25x). Horizons 3 are still waiting on truth.</p>
   <svg viewBox="0 0 760 320" class="chart" role="img" aria-label="US forecast from 2026-10-17">
 <line class="grid" x1="54" y1="286.0" x2="746" y2="286.0"/>
 <text class="axis" x="46" y="290.0" text-anchor="end">0</text>
@@ -112,14 +112,16 @@ document.addEventListener("DOMContentLoaded", function () {
 <text class="axis" x="46" y="90.0" text-anchor="end">1x</text>
 <line class="grid" x1="54" y1="54.5" x2="746" y2="54.5"/>
 <text class="axis" x="46" y="58.5" text-anchor="end">2x</text>
-<rect class="bar-good" x="381.0" y="86.0" width="38.0" height="57.6" rx="2"><title>2026-10-10 US: 0.28x baseline</title></rect>
-<text class="axis" x="400.0" y="176.0" text-anchor="middle">10-10</text>
+<rect class="bar-good" x="208.0" y="86.0" width="38.0" height="57.6" rx="2"><title>2026-10-10 US: 0.28x baseline</title></rect>
+<text class="axis" x="227.0" y="176.0" text-anchor="middle">10-10</text>
+<rect class="bar-good" x="554.0" y="86.0" width="38.0" height="40.3" rx="2"><title>2026-10-17 US: 0.41x baseline</title></rect>
+<text class="axis" x="573.0" y="176.0" text-anchor="middle">10-17</text>
 </svg>
   <div class="scroll"><table class="grid">
     <thead><tr><th>week of</th><th>location</th><th>rank</th>
       <th>vs. baseline</th><th>vs. ensemble</th><th>WIS</th>
       <th>95% coverage</th></tr></thead>
-    <tbody><tr><td><a href="f/2026-10-17-US.html">2026-10-17</a></td><td>US</td><td>25 / 56</td><td><span class="muted">&mdash;</span></td><td>1.25x</td><td>642.2</td><td>100%</td></tr><tr><td><a href="f/2026-10-10-US.html">2026-10-10</a></td><td>US</td><td>4 / 47</td><td><span class="good">0.28x</span></td><td>0.73x</td><td>421.9</td><td>100%</td></tr><tr><td><a href="f/2026-09-26-US.html">2026-09-26</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>378.5</td><td>100%</td></tr><tr><td><a href="f/2026-09-19-US.html">2026-09-19</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>232.5</td><td>100%</td></tr><tr><td><a href="f/2026-09-12-US.html">2026-09-12</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>279.9</td><td>100%</td></tr><tr><td><a href="f/2026-09-05-US.html">2026-09-05</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>319.9</td><td>75%</td></tr><tr><td><a href="f/2026-08-29-US.html">2026-08-29</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>385.9</td><td>25%</td></tr><tr><td><a href="f/2026-08-22-US.html">2026-08-22</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>149.6</td><td>100%</td></tr></tbody></table></div>
+    <tbody><tr><td><a href="f/2026-10-17-US.html">2026-10-17</a></td><td>US</td><td>28 / 60</td><td><span class="good">0.41x</span></td><td>1.25x</td><td>642.2</td><td>100%</td></tr><tr><td><a href="f/2026-10-10-US.html">2026-10-10</a></td><td>US</td><td>5 / 50</td><td><span class="good">0.28x</span></td><td>0.73x</td><td>421.9</td><td>100%</td></tr><tr><td><a href="f/2026-09-26-US.html">2026-09-26</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>378.5</td><td>100%</td></tr><tr><td><a href="f/2026-09-19-US.html">2026-09-19</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>232.5</td><td>100%</td></tr><tr><td><a href="f/2026-09-12-US.html">2026-09-12</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>279.9</td><td>100%</td></tr><tr><td><a href="f/2026-09-05-US.html">2026-09-05</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>319.9</td><td>75%</td></tr><tr><td><a href="f/2026-08-29-US.html">2026-08-29</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>385.9</td><td>25%</td></tr><tr><td><a href="f/2026-08-22-US.html">2026-08-22</a></td><td>US</td><td>1 / 1</td><td><span class="muted">&mdash;</span></td><td>&mdash;</td><td>149.6</td><td>100%</td></tr></tbody></table></div>
 </section></div>
 <div class="pane" id="pane-nhsn" data-pane="nhsn">
 <p class="status pending">Testing numbers. Scored against the latest NHSN

@@ -17,7 +17,7 @@
   "truth_last_date": "2026-10-31",
   "baseline_wis": 1502.163,
   "n_partial": 1,
-  "n_missing": 86,
+  "n_missing": 91,
   "entries": [
     {
       "model": "PSI-PROF_MOA",
@@ -52,8 +52,24 @@
       "is_you": false
     },
     {
-      "model": "DMAPRIME-QR",
+      "model": "ACCIDDA-Chromantis",
       "rank": 3,
+      "mean_wis": 402.286,
+      "rel_wis": 0.268,
+      "mean_abs_error": 553.75,
+      "coverage_50": 1.0,
+      "coverage_95": 1.0,
+      "wis_by_horizon": {
+        "0": 168.609,
+        "1": 267.964,
+        "2": 449.573,
+        "3": 722.998
+      },
+      "is_you": false
+    },
+    {
+      "model": "DMAPRIME-QR",
+      "rank": 4,
       "mean_wis": 421.327,
       "rel_wis": 0.28,
       "mean_abs_error": 678.25,
@@ -69,7 +85,7 @@
     },
     {
       "model": "you (US)",
-      "rank": 4,
+      "rank": 5,
       "mean_wis": 421.909,
       "rel_wis": 0.281,
       "mean_abs_error": 132.5,
@@ -85,7 +101,7 @@
     },
     {
       "model": "Cornell_JHU-hierarchSIR",
-      "rank": 5,
+      "rank": 6,
       "mean_wis": 446.908,
       "rel_wis": 0.298,
       "mean_abs_error": 468.75,
@@ -101,7 +117,7 @@
     },
     {
       "model": "FluSight-HJudge_ensemble",
-      "rank": 6,
+      "rank": 7,
       "mean_wis": 455.868,
       "rel_wis": 0.303,
       "mean_abs_error": 459.25,
@@ -117,7 +133,7 @@
     },
     {
       "model": "DMAPRIME-HYB",
-      "rank": 7,
+      "rank": 8,
       "mean_wis": 494.041,
       "rel_wis": 0.329,
       "mean_abs_error": 791.25,
@@ -133,7 +149,7 @@
     },
     {
       "model": "Sentinel-Ens",
-      "rank": 8,
+      "rank": 9,
       "mean_wis": 495.745,
       "rel_wis": 0.33,
       "mean_abs_error": 498.5,
@@ -149,7 +165,7 @@
     },
     {
       "model": "FluSight-trained_mean",
-      "rank": 9,
+      "rank": 10,
       "mean_wis": 504.877,
       "rel_wis": 0.336,
       "mean_abs_error": 654.656,
@@ -165,7 +181,7 @@
     },
     {
       "model": "Xi_lab-GLEAM_AI_hybrid",
-      "rank": 10,
+      "rank": 11,
       "mean_wis": 521.039,
       "rel_wis": 0.347,
       "mean_abs_error": 318.0,
@@ -181,7 +197,7 @@
     },
     {
       "model": "Epistorm-Ensemble_Flu",
-      "rank": 11,
+      "rank": 12,
       "mean_wis": 525.212,
       "rel_wis": 0.35,
       "mean_abs_error": 670.25,
@@ -197,7 +213,7 @@
     },
     {
       "model": "NU-EMBERS",
-      "rank": 12,
+      "rank": 13,
       "mean_wis": 550.613,
       "rel_wis": 0.367,
       "mean_abs_error": 801.5,
@@ -213,7 +229,7 @@
     },
     {
       "model": "MIGHTE-Base",
-      "rank": 13,
+      "rank": 14,
       "mean_wis": 553.378,
       "rel_wis": 0.368,
       "mean_abs_error": 253.25,
@@ -229,7 +245,7 @@
     },
     {
       "model": "UGA_flucast-INFLAenza",
-      "rank": 14,
+      "rank": 15,
       "mean_wis": 561.176,
       "rel_wis": 0.374,
       "mean_abs_error": 963.75,
@@ -245,7 +261,7 @@
     },
     {
       "model": "MIGHTE-Nsemble",
-      "rank": 15,
+      "rank": 16,
       "mean_wis": 576.506,
       "rel_wis": 0.384,
       "mean_abs_error": 646.75,
@@ -261,7 +277,7 @@
     },
     {
       "model": "FluSight-ensemble",
-      "rank": 16,
+      "rank": 17,
       "mean_wis": 576.904,
       "rel_wis": 0.384,
       "mean_abs_error": 807.75,
@@ -277,7 +293,7 @@
     },
     {
       "model": "FluSight-trained_med",
-      "rank": 17,
+      "rank": 18,
       "mean_wis": 587.832,
       "rel_wis": 0.391,
       "mean_abs_error": 881.219,
@@ -292,8 +308,24 @@
       "is_you": false
     },
     {
+      "model": "Xi_lab-GLEAM_AI",
+      "rank": 19,
+      "mean_wis": 604.133,
+      "rel_wis": 0.402,
+      "mean_abs_error": 790.75,
+      "coverage_50": 1.0,
+      "coverage_95": 1.0,
+      "wis_by_horizon": {
+        "0": 303.544,
+        "1": 538.251,
+        "2": 719.7,
+        "3": 855.039
+      },
+      "is_you": false
+    },
+    {
       "model": "CU-ensemble",
-      "rank": 18,
+      "rank": 20,
       "mean_wis": 613.085,
       "rel_wis": 0.408,
       "mean_abs_error": 775.5,
@@ -309,7 +341,7 @@
     },
     {
       "model": "FluSight-lop_norm",
-      "rank": 19,
+      "rank": 21,
       "mean_wis": 626.254,
       "rel_wis": 0.417,
       "mean_abs_error": 796.75,
@@ -325,7 +357,7 @@
     },
     {
       "model": "PSI-PROF",
-      "rank": 20,
+      "rank": 22,
       "mean_wis": 646.137,
       "rel_wis": 0.43,
       "mean_abs_error": 1107.875,
@@ -341,7 +373,7 @@
     },
     {
       "model": "OHT_JHU-nbxd",
-      "rank": 21,
+      "rank": 23,
       "mean_wis": 662.595,
       "rel_wis": 0.441,
       "mean_abs_error": 1242.007,
@@ -357,7 +389,7 @@
     },
     {
       "model": "CEPH-Rtrend_fluH",
-      "rank": 22,
+      "rank": 24,
       "mean_wis": 707.913,
       "rel_wis": 0.471,
       "mean_abs_error": 1375.25,
@@ -373,7 +405,7 @@
     },
     {
       "model": "UMass-flusion",
-      "rank": 23,
+      "rank": 25,
       "mean_wis": 723.968,
       "rel_wis": 0.482,
       "mean_abs_error": 1295.837,
@@ -389,7 +421,7 @@
     },
     {
       "model": "CU-STS_Residual",
-      "rank": 24,
+      "rank": 26,
       "mean_wis": 727.882,
       "rel_wis": 0.485,
       "mean_abs_error": 1363.25,
@@ -405,7 +437,7 @@
     },
     {
       "model": "GT_Influencers-ensemble",
-      "rank": 25,
+      "rank": 27,
       "mean_wis": 756.213,
       "rel_wis": 0.503,
       "mean_abs_error": 418.0,
@@ -421,7 +453,7 @@
     },
     {
       "model": "NAU-vulPES",
-      "rank": 26,
+      "rank": 28,
       "mean_wis": 764.164,
       "rel_wis": 0.509,
       "mean_abs_error": 220.25,
@@ -437,7 +469,7 @@
     },
     {
       "model": "NAU-epymorph",
-      "rank": 27,
+      "rank": 29,
       "mean_wis": 770.351,
       "rel_wis": 0.513,
       "mean_abs_error": 1040.5,
@@ -453,7 +485,7 @@
     },
     {
       "model": "CMU-TimeSeries_Cal",
-      "rank": 28,
+      "rank": 30,
       "mean_wis": 787.353,
       "rel_wis": 0.524,
       "mean_abs_error": 1266.351,
@@ -469,7 +501,7 @@
     },
     {
       "model": "CU-STS_base",
-      "rank": 29,
+      "rank": 31,
       "mean_wis": 804.501,
       "rel_wis": 0.536,
       "mean_abs_error": 1528.5,
@@ -485,7 +517,7 @@
     },
     {
       "model": "NAU-FourCAT",
-      "rank": 30,
+      "rank": 32,
       "mean_wis": 824.435,
       "rel_wis": 0.549,
       "mean_abs_error": 1332.75,
@@ -501,7 +533,7 @@
     },
     {
       "model": "NAU_PyBNF-OracleSIHRS",
-      "rank": 31,
+      "rank": 33,
       "mean_wis": 869.941,
       "rel_wis": 0.579,
       "mean_abs_error": 1475.25,
@@ -517,7 +549,7 @@
     },
     {
       "model": "Gatech-ensemble_stat",
-      "rank": 32,
+      "rank": 34,
       "mean_wis": 897.015,
       "rel_wis": 0.597,
       "mean_abs_error": 1434.115,
@@ -532,8 +564,24 @@
       "is_you": false
     },
     {
+      "model": "BYFlu-STMGGP",
+      "rank": 35,
+      "mean_wis": 912.218,
+      "rel_wis": 0.607,
+      "mean_abs_error": 1536.75,
+      "coverage_50": 0.0,
+      "coverage_95": 1.0,
+      "wis_by_horizon": {
+        "0": 258.801,
+        "1": 506.315,
+        "2": 1025.703,
+        "3": 1858.052
+      },
+      "is_you": false
+    },
+    {
       "model": "MIGHTE-Linear",
-      "rank": 33,
+      "rank": 36,
       "mean_wis": 1012.486,
       "rel_wis": 0.674,
       "mean_abs_error": 1779.0,
@@ -549,7 +597,7 @@
     },
     {
       "model": "NEU_ISI-FluBcast",
-      "rank": 34,
+      "rank": 37,
       "mean_wis": 1047.666,
       "rel_wis": 0.697,
       "mean_abs_error": 2086.0,
@@ -565,7 +613,7 @@
     },
     {
       "model": "CMU-TimeSeries",
-      "rank": 35,
+      "rank": 38,
       "mean_wis": 1056.236,
       "rel_wis": 0.703,
       "mean_abs_error": 1794.211,
@@ -581,7 +629,7 @@
     },
     {
       "model": "UMass-AR2",
-      "rank": 36,
+      "rank": 39,
       "mean_wis": 1067.491,
       "rel_wis": 0.711,
       "mean_abs_error": 1926.166,
@@ -597,7 +645,7 @@
     },
     {
       "model": "docxology-panelqr",
-      "rank": 37,
+      "rank": 40,
       "mean_wis": 1134.069,
       "rel_wis": 0.755,
       "mean_abs_error": 2230.0,
@@ -613,7 +661,7 @@
     },
     {
       "model": "NAU_PyBNF-GroundHogCGR",
-      "rank": 38,
+      "rank": 41,
       "mean_wis": 1142.555,
       "rel_wis": 0.761,
       "mean_abs_error": 935.75,
@@ -629,7 +677,7 @@
     },
     {
       "model": "LUcompUncertLab-puca",
-      "rank": 39,
+      "rank": 42,
       "mean_wis": 1217.7,
       "rel_wis": 0.811,
       "mean_abs_error": 1889.75,
@@ -645,7 +693,7 @@
     },
     {
       "model": "UM-DeepOutbreak",
-      "rank": 40,
+      "rank": 43,
       "mean_wis": 1364.787,
       "rel_wis": 0.909,
       "mean_abs_error": 2075.0,
@@ -661,7 +709,7 @@
     },
     {
       "model": "UGA_CEID-auto_AVG_LB",
-      "rank": 41,
+      "rank": 44,
       "mean_wis": 1374.957,
       "rel_wis": 0.915,
       "mean_abs_error": 2318.928,
@@ -677,7 +725,7 @@
     },
     {
       "model": "FluSight-baseline",
-      "rank": 42,
+      "rank": 45,
       "mean_wis": 1502.163,
       "rel_wis": 1.0,
       "mean_abs_error": 2689.0,
@@ -693,7 +741,7 @@
     },
     {
       "model": "VTSanghani-PRIME",
-      "rank": 43,
+      "rank": 46,
       "mean_wis": 1719.172,
       "rel_wis": 1.144,
       "mean_abs_error": 2690.0,
@@ -709,7 +757,7 @@
     },
     {
       "model": "UVAFluX-Ensemble",
-      "rank": 44,
+      "rank": 47,
       "mean_wis": 1820.736,
       "rel_wis": 1.212,
       "mean_abs_error": 1935.0,
@@ -725,7 +773,7 @@
     },
     {
       "model": "UGA_flucast-Copycat",
-      "rank": 45,
+      "rank": 48,
       "mean_wis": 2283.321,
       "rel_wis": 1.52,
       "mean_abs_error": 4987.375,
@@ -741,7 +789,7 @@
     },
     {
       "model": "UGA_CEID-Walk",
-      "rank": 46,
+      "rank": 49,
       "mean_wis": 2810.759,
       "rel_wis": 1.871,
       "mean_abs_error": 3280.159,
@@ -757,7 +805,7 @@
     },
     {
       "model": "Cornell_JHU-SCARCHhierarSIR",
-      "rank": 47,
+      "rank": 50,
       "mean_wis": 4821.872,
       "rel_wis": 3.21,
       "mean_abs_error": 5747.75,
@@ -795,7 +843,7 @@
   },
   "you": {
     "model": "you (US)",
-    "rank": 4,
+    "rank": 5,
     "mean_wis": 421.909,
     "rel_wis": 0.281,
     "mean_abs_error": 132.5,
@@ -808,8 +856,8 @@
       "3": 705.726
     },
     "is_you": true,
-    "beat": 43,
-    "field": 46,
+    "beat": 45,
+    "field": 49,
     "rows": [
       {
         "location": "US",
@@ -863,7 +911,7 @@
   },
   "ensemble": {
     "model": "FluSight-ensemble",
-    "rank": 16,
+    "rank": 17,
     "mean_wis": 576.904,
     "rel_wis": 0.384,
     "mean_abs_error": 807.75,
@@ -879,5 +927,5 @@
   },
   "vs_ensemble": 0.731,
   "version": 1,
-  "computed_at": "2026-11-04T19:57:13"
+  "computed_at": "2026-11-05T20:07:39"
 }
