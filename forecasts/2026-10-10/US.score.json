@@ -17,7 +17,7 @@
   "truth_last_date": "2026-10-31",
   "baseline_wis": 1502.163,
   "n_partial": 1,
-  "n_missing": 91,
+  "n_missing": 93,
   "entries": [
     {
       "model": "PSI-PROF_MOA",
@@ -927,5 +927,5 @@
   },
   "vs_ensemble": 0.731,
   "version": 1,
-  "computed_at": "2026-11-05T20:07:39"
+  "computed_at": "2026-11-06T19:33:30"
 }
