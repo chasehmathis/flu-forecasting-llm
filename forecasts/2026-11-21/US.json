@@ -1,0 +1,46 @@
+{
+  "reference_date": "2026-11-21",
+  "location": "US",
+  "location_name": "US",
+  "target": "wk inc flu hosp",
+  "model_id": "qwen-agent/qwen3.8-27b",
+  "created_at": "2026-11-18T15:06:16",
+  "rationale": "Anchor: the statistical-model consensus (median across methods) from compare_forecast_models, which sits at 16.9k/21.2k/25.6k/31.6k for h0-h3. I trimmed the h0-h2 medians slightly toward the backtest-best methods (seasonal MAE 1349, gbt 2469, loglinear 1630) to 16.5k/20.0k/23.5k, and set h3 at 27.0k, below the seasonal analogue's 41k because last year's peak (42.5k in early Jan) came ~6 weeks after this point with growth still accelerating, whereas this season's growth is decelerating (+33% -> +16% -> +14% wk/wk) and the season started earlier (mid-October high activity, 7 states at high ILI by Nov 7), implying the peak arrives sooner and the h3 week is closer to it. The hub ensemble had no submission for this week, so I had no ensemble prior to lean on; the flat baseline (11.5k) is clearly wrong given the rising trajectory. Evidence for the upward tilt vs persistence: ILI at 3.23% and still rising, 11.3% of lab tests positive, CDC reporting an early season with 36k hospitalizations already, and last year from this exact point admissions went 11.5k -> 21k -> 37.5k -> 42.5k. I keep the medians below the seasonal analogue because the decelerating growth rate and earlier start argue for a flatter, earlier peak. Intervals are lognormal, right-skewed, and widened with horizon (sigma 0.16 -> 0.24) to cover the method disagreement (1.2-1.5x spread in medians), the upward revision risk in the provisional last week, and the possibility of a faster surge as Thanksgiving gatherings drive transmission. What would change my mind: if next week's actual comes in below ~15k (growth stalling), the whole trajectory is lower and the peak is modest; if it exceeds ~20k, the seasonal-analogue path is back in play and h2-h3 should be raised toward 30k-40k.",
+  "medians": {
+    "0": 16500.0,
+    "1": 20000.0,
+    "2": 23500.0,
+    "3": 27000.0
+  },
+  "target_end_dates": {
+    "0": "2026-11-21",
+    "1": "2026-11-28",
+    "2": "2026-12-05",
+    "3": "2026-12-12"
+  },
+  "csv": "US.csv",
+  "run": {
+    "stopped": "terminal",
+    "tool_calls": 14,
+    "seconds": 367.3,
+    "prompt_tokens": 14322,
+    "completion_tokens": 15873,
+    "tools": [
+      "get_flu_hospitalizations",
+      "compare_forecast_models",
+      "get_hub_forecasts",
+      "search_web",
+      "get_ili",
+      "list_hub_models",
+      "fetch_url",
+      "calculate",
+      "calculate",
+      "calculate",
+      "calculate",
+      "calculate",
+      "calculate",
+      "submit_forecast"
+    ],
+    "transcript": "/accounts/grad/cmathis/flu-forecasting-llm/outputs/runs/forecast-20261118-150616/transcript.json"
+  }
+}
