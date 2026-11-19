@@ -20,6 +20,12 @@
   "n_missing": 0,
   "entries": [],
   "hub_medians": {
+    "FluSight-ensemble": {
+      "0": 14331.0,
+      "1": 16686.0,
+      "2": 18887.0,
+      "3": 21256.0
+    },
     "FluSight-baseline": {
       "-1": 11513.0,
       "0": 11513.0,
@@ -36,5 +42,5 @@
   },
   "you": null,
   "version": 1,
-  "computed_at": "2026-11-18T15:06:17"
+  "computed_at": "2026-11-19T20:49:12"
 }
